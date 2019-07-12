@@ -1,3 +1,3 @@
-# Практические работы курса "Сетевой инженер" от OTUS.
+# Практические работы курса "Сетевой инженер" от OTUS
 
-* 1. [IPv4/v6](https://github.com/mbfx/otus-netwroks/tree/master/lab01)
+1. [IPv4/v6](https://github.com/mbfx/otus-netwroks/tree/master/lab01)
