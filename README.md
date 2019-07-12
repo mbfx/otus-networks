@@ -27,7 +27,7 @@
 
 12. [Фильтрация в BGP](https://github.com/mbfx/otus-networks/tree/master/lab12)
 
-13. [Атрибцты выбора пути в BGP](https://github.com/mbfx/otus-networks/tree/master/lab13)
+13. [Атрибуты выбора пути в BGP](https://github.com/mbfx/otus-networks/tree/master/lab13)
 
 14. [iBGP](https://github.com/mbfx/otus-networks/tree/master/lab14)
 
