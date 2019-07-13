@@ -11,12 +11,14 @@
 
 ###  Решение:
 
+  1. [Задокументируем используемое адресное пространство с использованием IPv4 и IPv6.](README.md#1-%D0%B7%D0%B0%D0%B4%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B8%D1%80%D1%83%D0%B5%D0%BC-%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B5-%D0%B0%D0%B4%D1%80%D0%B5%D1%81%D0%BD%D0%BE%D0%B5-%D0%BF%D1%80%D0%BE%D1%81%D1%82%D1%80%D0%B0%D0%BD%D1%81%D1%82%D0%B2%D0%BE-%D1%81-%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5%D0%BC-ipv4-%D0%B8-ipv6)
+
 ###  1. Задокументируем используемое адресное пространство с использованием IPv4 и IPv6.
 
 
   Общая таблица сетей.
 
-| №  | Network IPv4     | Summ net IPv4  | Network IPv6     | Summ net IPv6       | Description   | Equip and port  |
+| №  | Network IPv4     | Summary net    | Network IPv6             | Summary net         | Description   | Equip&port      |
 |:--:|-----------------:|:---------------|-------------------------:|:--------------------|:-------------:|-----------------|
 | 1  | 90.90.128.0/24   | 90.90.128.0/22 | 20FF:CCFF:FFFF:1::/64    | 20FF:CCFF:FFFF::/48 | ISP network   | R17e0/1 R18e0/1 |
 | 2  | 90.90.129.0/24   | 90.90.128.0/22 | 20FF:CCFF:FFFF:2::/64    | 20FF:CCFF:FFFF::/48 | ISP network   | R17e0/2 R19e0/2 |
@@ -314,6 +316,5 @@ conf t
  exit
 ```
 
-
-Маршрутизатор R2:
+Все изменения приведены в соответствующих файлах [здесь](configs/).
 
