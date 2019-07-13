@@ -72,7 +72,7 @@
 
 Маршрутизатор R1:
 
-
+```
 conf t
  ipv6 unicast-routing
 !
@@ -109,6 +109,7 @@ conf t
   shutdown
   exit
  exit
+```
 
 
 Маршрутизатор R2:
