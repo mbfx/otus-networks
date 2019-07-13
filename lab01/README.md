@@ -22,7 +22,7 @@
 
   Общая таблица сетей.
 
-| Network IPv4     | Summary net    | Network IPv6             | Summary net         | Description   | Equip&port      |
+| Network IPv4     | Summary net    | Network IPv6             | Summary net         | Description   | Eq&port         |
 |-----------------:|:---------------|-------------------------:|:--------------------|:-------------:|-----------------|
 | 90.90.128.0/24   | 90.90.128.0/22 | 20FF:CCFF:FFFF:1::/64    | 20FF:CCFF:FFFF::/48 | ISP network   | R17e0/1 R18e0/1 |
 | 90.90.129.0/24   | 90.90.128.0/22 | 20FF:CCFF:FFFF:2::/64    | 20FF:CCFF:FFFF::/48 | ISP network   | R17e0/2 R19e0/2 |
