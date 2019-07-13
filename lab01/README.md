@@ -261,13 +261,13 @@
 | R22   | e0/0 | IPv6 LL | FE80::22                 | FE80::/10              | link-local e0/0 |
 | R22   | e0/1 | IPv4    | 35.10.192.22/24          | 35.10.192.0/24         | R22 to R24      |
 | R22   | e0/1 | IPv6    | 20FF:CCFF:200C:D2::22/64 | 20FF:CCFF:200C:D2::/64 | R22 to R24      |
-| R22   | e0/1 | IPv6 LL | FE80::22                 | FE80::/10              | link-local e0/2 |
+| R22   | e0/1 | IPv6 LL | FE80::22                 | FE80::/10              | link-local e0/1 |
 | R23   | e0/0 | IPv4    | 35.10.194.23/25          | 35.10.194.0/25         | R23 to R22      |
 | R23   | e0/0 | IPv6    | 20FF:CCFF:200C:D3::23/64 | 20FF:CCFF:200C:D3::/64 | R23 to R22      |
 | R23   | e0/0 | IPv6 LL | FE80::23                 | FE80::/10              | link-local e0/0 |
 | R23   | e0/2 | IPv4    | 35.10.193.23/24          | 35.10.193.0/24         | R23 to R24      |
 | R23   | e0/2 | IPv6    | 20FF:CCFF:200C:D1::23/64 | 20FF:CCFF:200C:D1::/64 | R23 to R24      |
-| R23   | e0/2 | IPv6 LL | FE80::23                 | FE80::/10              | link-local e0/1 |
+| R23   | e0/2 | IPv6 LL | FE80::23                 | FE80::/10              | link-local e0/2 |
 | R24   | e0/0 | IPv4    | 35.10.128.24/26          | 35.10.128.0/26         | R24 to R2       |
 | R24   | e0/0 | IPv6    | 20FF:CCFF:200C:C1::24/64 | 20FF:CCFF:200C:C1::/64 | R24 to R2       |
 | R24   | e0/0 | IPv6 LL | FE80::24                 | FE80::/10              | link-local e0/0 |
