@@ -1,0 +1,34 @@
+conf t
+ ipv6 unicast-routing
+!
+ interface Ethernet0/0
+  description "R6 to R7"
+  ip address 50.50.105.129 255.255.255.128
+  ipv6 address FE80::6 link-local
+  ipv6 address 20FF:CCFF:200B:A3::6/64
+  ipv6 enable
+  no shutdown
+  exit 
+ !
+ interface Ethernet0/1
+  description "R6 to R5"
+  ip address 50.50.105.6 255.255.255.128
+  ipv6 address FE80::6 link-local
+  ipv6 address 20FF:CCFF:200B:A2::6/64
+  ipv6 enable
+  no shutdown
+  exit 
+ !
+ interface Ethernet0/2
+  description "not used"
+  no ip address
+  shutdown
+  exit
+ !
+ interface Ethernet0/3
+  description "not used"
+  no ip address
+  shutdown
+  exit
+ exit
+

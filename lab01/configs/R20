@@ -1,0 +1,39 @@
+conf t
+ ipv6 unicast-routing
+!
+ interface Ethernet0/0
+  description "to client (R13)"
+  ip address 172.16.20.1 255.255.255.248
+  ipv6 address FE80::20 link-local
+  ipv6 address 20FF:CCFF:1000:20::1/64
+  ipv6 enable
+  no shutdown
+  exit
+!
+ interface Ethernet0/1
+  description "R20 to R19"
+  ip address 90.90.130.130 255.255.255.128
+  ipv6 address FE80::20 link-local
+  ipv6 address 20FF:CCFF:FFFF:4::20/64
+  ipv6 enable
+  no shutdown
+  exit
+!
+ interface Ethernet0/2
+  description "R20 to R18"
+  ip address 90.90.130.20 255.255.255.128
+  ipv6 address FE80::20 link-local
+  ipv6 address 20FF:CCFF:FFFF:3::20/64
+  ipv6 enable
+  no shutdown
+  exit
+!
+ interface Ethernet0/3
+  description "R20 to R17"
+  ip address 90.90.131.20 255.255.255.128
+  ipv6 address FE80::20 link-local
+  ipv6 address 20FF:CCFF:FFFF:5::20/64
+  ipv6 enable
+  no shutdown
+  exit
+ exit
