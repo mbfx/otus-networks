@@ -49,6 +49,11 @@
 | R13   | tun0 | IPv6 LL | FE80::13                  | FE80::/10                | link-local tun0 |
 
 
+  Графическая схема статических маршрутов через VPN:
+
+![](static_over_vpn.png)
+
+
   Таблица статических маршрутов с суммаризацией для VPN.
 
 | Eq  | Prot | Destination              | Gateway                | M | Comment (name)                       |

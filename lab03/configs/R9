@@ -1,0 +1,29 @@
+conf t
+!
+ interface Tunnel1
+  description "IPv4 GRE tun1 to R1"
+  ip address 172.31.254.9 255.255.255.0
+  tunnel source 172.16.18.2
+  tunnel destination 172.16.19.2
+  exit
+!
+ interface Tunnel2
+  description "IPv6 GRE tun2 to R1"
+  ipv6 address FE80::9 link-local
+  ipv6 address 20FF:CCFF:3000:1001::9/64
+  tunnel source 20FF:CCFF:1000:18::2
+  tunnel destination 20FF:CCFF:1000:19::2
+  tunnel mode gre ipv6
+  exit
+!
+ ip route 172.31.255.0 255.255.255.0 172.31.254.1 1 name "to dmvpn network through gre tunnel"
+ ip route 50.50.104.0 255.255.254.0 172.31.254.1 1 name "to R5 through gre tunnel"
+ ip route 35.10.0.0 255.255.0.0 172.31.254.1 1 name "to R1 through gre tunnel"
+ ip route 35.11.0.0 255.255.252.0 172.31.254.1 1 name "to R13 through gre tunnel"
+!
+ ipv6 route 20FF:CCFF:3000:1::/64 20FF:CCFF:3000:1001::1 1 name "to dmvpn network through gre tunnel"
+ ipv6 route 20FF:CCFF:200B::/48 20FF:CCFF:3000:1001::1 1 name "to R5 through gre tunnel"
+ ipv6 route 20FF:CCFF:200C::/48 20FF:CCFF:3000:1001::1 1 name "to R1 through gre tunnel"
+ ipv6 route 20FF:CCFF:200D::/48 20FF:CCFF:3000:1001::1 1 name "to R13 through gre tunnel"
+ exit
+ 

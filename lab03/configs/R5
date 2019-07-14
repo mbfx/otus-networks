@@ -1,0 +1,33 @@
+conf t
+!
+ interface Tunnel0
+  description "DMVPN spoke to R1 hub"
+  ip address 172.16.31.5 255.255.255.0
+  ip nhrp map 172.16.31.1 172.16.19.2
+  ip nhrp map multicast 172.16.19.2
+  ip nhrp network-id 1
+  ip nhrp nhs 172.31.255.1
+  ip nhrp authentication dmvpnpas
+  ip nhrp registration timeout 4
+  tunnel source e0/0
+  tunnel mode gre multipoint
+  ipv6 address FE80::5 link-local
+  ipv6 address 20FF:CCFF:3000:1::5/64
+  ipv6 nhrp map 20FF:CCFF:3000:1::1/64 172.16.19.2
+  ipv6 nhrp map multicast 172.16.19.2
+  ipv6 nhrp network-id 1
+  ipv6 nhrp nhs 20FF:CCFF:3000:1::1
+  ipv6 nhrp authentication dmvpnpas 
+  ipv6 nhrp registration timeout 4
+  exit
+!
+ ip route 172.31.254.0 255.255.255.0 172.31.255.1 1 name "to gre tunnel networks through dmvpn"
+ ip route 35.10.0.0 255.255.0.0 172.31.255.1 1 name "to R1 through dmvpn"
+ ip route 50.50.96.0 255.255.248.0 172.31.255.1 1 name "to R9 through dmvpn"
+ ip route 35.11.0.0 255.255.252.0 172.31.255.1 1 name "to R13 through dmvpn"
+!
+ ipv6 route 20FF:CCFF:3000:1001::/64 20FF:CCFF:3000:1::1 1 name "to gre tunnel networks through dmvpn"
+ ipv6 route 20FF:CCFF:200C::/48 20FF:CCFF:3000:1::1 1 name "to R1 through dmvpn"
+ ipv6 route 20FF:CCFF:200A::/48 20FF:CCFF:3000:1::1 1 name "to R9 through dmvpn"
+ ipv6 route 20FF:CCFF:200D::/48 20FF:CCFF:3000:1::1 1 name "to R13 through dmvpn"
+ exit

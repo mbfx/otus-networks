@@ -1,0 +1,41 @@
+conf t
+!
+ interface Tunnel0
+  description "DMVPN hub"
+  tunnel source e0/0
+  tunnel mode gre multipoint
+  ip address 172.31.255.1 255.255.255.0
+  ip nhrp map multicast dynamic
+  ip nhrp network-id 1
+  ip nhrp authentication dmvpnpas 
+  ipv6 address FE80::1 link-local
+  ipv6 address 20FF:CCFF:3000:1::1/64
+  ipv6 nhrp map multicast dynamic
+  ipv6 nhrp network-id 1
+  ipv6 nhrp authentication dmvpnpas
+  exit
+!
+ interface Tunnel1
+  description "IPv4 GRE tun to R9"
+  ip address 172.31.254.1 255.255.255.0
+  tunnel source 172.16.19.2
+  tunnel destination 172.16.18.2
+  exit
+!
+ interface Tunnel2
+  description "IPv6 GRE tun to R9"
+  ipv6 address FE80::1 link-local
+  ipv6 address 20FF:CCFF:3000:1001::1/64
+  tunnel source 20FF:CCFF:1000:19::2
+  tunnel destination 20FF:CCFF:1000:18::2
+  tunnel mode gre ipv6
+  exit
+!
+ ip route 50.50.104.0 255.255.254.0 172.31.255.5 1 name "to R5 through dmvpn"
+ ip route 50.50.96.0 255.255.248.0 172.31.254.9 1 name "to R9 through gre tunnel"
+ ip route 35.11.0.0 255.255.252.0 172.31.255.13 1 name "to R13 through dmvpn"
+!
+ ipv6 route 20FF:CCFF:200B::/48 20FF:CCFF:3000:1::5 1 name "to R5 through dmvpn"
+ ipv6 route 20FF:CCFF:200A::/48 20FF:CCFF:3000:1001::9 1 name "to R9 through gre tunnel"
+ ipv6 route 20FF:CCFF:200D::/48 20FF:CCFF:3000:1::13 1 name "to R13 through dmvpn"
+ exit
