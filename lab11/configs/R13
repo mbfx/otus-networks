@@ -1,0 +1,16 @@
+conf t
+!
+ router bgp 65313
+  neighbor 172.16.20.1 remote-as 65220
+  neighbor 20FF:CCFF:1000:20::1 remote-as 65220
+!
+  address-family ipv4
+   neighbor 172.16.20.1 activate
+   exit-address-family
+!
+  address-family ipv6
+   neighbor 20FF:CCFF:1000:20::1 activate
+   exit-address-family
+  exit
+ exit
+  

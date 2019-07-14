@@ -1,0 +1,33 @@
+conf t
+!
+ router bgp 65220
+  neighbor 172.16.20.2 remote-as 65313
+  neighbor 90.90.130.129 remote-as 65219
+  neighbor 90.90.130.18 remote-as 65218
+  neighbor 90.90.131.17 remote-as 65217
+  neighbor 20FF:CCFF:1000:20::2 remote-as 65313
+  neighbor 20FF:CCFF:FFFF:4::19 remote-as 65219
+  neighbor 20FF:CCFF:FFFF:3::18 remote-as 65218
+  neighbor 20FF:CCFF:FFFF:5::17 remote-as 65217
+!
+  address-family ipv4
+   neighbor 172.16.20.2 activate
+   neighbor 90.90.130.129 activate
+   neighbor 90.90.130.18 activate
+   neighbor 90.90.131.17 activate
+   network 90.90.130.128 mask 255.255.255.128
+   network 90.90.130.0 mask 255.255.255.128
+   network 90.90.131.0 mask 255.255.255.128
+   exit-address-family
+!
+  address-family ipv6
+   neighbor 20FF:CCFF:1000:20::2 activate
+   neighbor 20FF:CCFF:FFFF:4::19 activate
+   neighbor 20FF:CCFF:FFFF:3::18 activate
+   neighbor 20FF:CCFF:FFFF:5::17 activate
+   network 20FF:CCFF:FFFF:4::/64
+   network 20FF:CCFF:FFFF:3::/64
+   network 20FF:CCFF:FFFF:5::/64
+   exit-address-family
+  exit
+ exit
