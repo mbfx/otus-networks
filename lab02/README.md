@@ -79,13 +79,19 @@ show ip route static
 show ipv6 route static
 ```
 
-###  1. Маршрутизация на основе политик (Policy-based routing)
+Полные файлы изменений приведены [здесь](configs/).
+
+###  2. Маршрутизация на основе политик (Policy-based routing).
+
+Маршрутизация на основе политик (policy based routing, PBR) позволяет маршрутизировать трафик на основании заданных политик,
+ тогда как в обычной маршрутизации, только IP-адрес получателя определяет каким образом будет передан пакет. 
 
 ###  Графическая схема PBR по заданию:
 
 ![](pbr.png)
 
-Суть настроки сводится к созданию корректного access-list, привязке его к соответствующему route-map, который впоследствии навешивается на интерфейс.   
+Суть настройки в данном случае сводится к созданию корректного access-list,
+ привязке его к соответствующему route-map, который впоследствии навешивается на интерфейс.   
 
 ###  Пример настройки PBR
 
@@ -107,7 +113,7 @@ conf t
  exit
 ```
 
-###  Просмотр настроек PBR
+###  Просмотр настроек и результатов работы PBR
 
 ```
 show access-lists
@@ -116,5 +122,52 @@ show ip policy
 show ipv6 policy
 ```
 
-Все файлы изменений приведены [здесь](configs/).
+Полные файлы изменений приведены [здесь](configs/).
+
+###  3. IP SLA
+
+Суть в привязке тестов IP SLA к route-map. Применяется route-map или нет теперь будет зависеть от результатов тестирования.
+
+###  Пример настройки PBR с SLA
+
+```
+conf t
+ ip access-list extended ACL_PBR_TO_R13
+  permit ip any host 172.16.20.2
+  deny ip any any
+  exit
+!
+ ip sla 1
+  icmp-echo 90.90.131.129 source-interface e0/3
+  threshold 1000
+  timeout 1500
+  frequency 3
+  exit
+ ip sla schedule 1 life forever start-time now
+!
+ track 100 ip sla 1 reachability
+  delay down 10 up 5
+  exit
+!
+ route-map PBR_TO_R13_AND_R5 permit 10
+  match ip address ACL_PBR_TO_R13
+  set ip next-hop 90.90.131.129
+  set ip next-hop verify-availability 90.90.131.129 1 track 100
+  exit
+!
+ interface e0/0
+  ip policy route-map PBR_TO_R13_AND_R5
+  exit
+ exit
+```
+
+###  Просмотр настроек и результатов работы SLA
+
+```
+sh run | s sla
+sh ip sla summary
+sh ip sla statistics
+```
+
+Полные файлы изменений приведены [здесь](configs/).
 
