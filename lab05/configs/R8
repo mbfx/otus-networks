@@ -1,0 +1,29 @@
+conf t
+!
+ router ospf 10
+  router-id 0.0.0.8
+  auto-cost reference-bandwidth 1000
+  area 42 authentication message-digest
+  network 35.10.64.0 0.0.0.255 area 42
+  network 35.10.65.128 0.0.0.31 area 42
+  passive-interface Ethernet0/2
+  passive-interface Ethernet0/3
+  exit
+! 
+ interface Ethernet0/0
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 100 md5 ospfpassarea42
+  ip ospf hello-interval 3
+  ip ospf dead-interval 12
+!--- NOTE --- increased parameter OSPF COST -- see the documentation
+  ip ospf cost 201
+  exit
+! 
+ interface Ethernet0/1
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 100 md5 ospfpassarea42
+  ip ospf hello-interval 3
+  ip ospf dead-interval 12
+  exit
+ exit
+ 

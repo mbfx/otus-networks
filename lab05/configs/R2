@@ -1,0 +1,15 @@
+conf t
+!
+ router ospf 10
+  area 10 authentication message-digest
+  network 35.10.128.0 0.0.0.63 area 10
+  no passive-interface Ethernet0/0
+  exit
+! 
+ interface Ethernet0/0
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 100 md5 ospfpassarea10
+  ip ospf hello-interval 3
+  ip ospf dead-interval 12
+  exit
+ exit
