@@ -1,0 +1,6 @@
+conf t
+!
+ router ospf 10
+  default-information originate
+  exit
+ exit

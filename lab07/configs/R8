@@ -1,0 +1,6 @@
+conf t
+!
+ router ospf 10
+  area 42 stub
+  exit
+ exit

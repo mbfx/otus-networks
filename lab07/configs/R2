@@ -1,0 +1,10 @@
+conf t
+!
+ ip prefix-list FILTER-area42to10 deny 35.10.64.0/24
+ ip prefix-list FILTER-area42to10 deny 35.10.65.0/25
+ ip prefix-list FILTER-area42to10 deny 35.10.65.128/27
+ ip prefix-list FILTER-area42to10 permit 0.0.0.0/0 le 32
+ router ospf 10
+  area 10 filter-list prefix FILTER-area42to10 in
+  exit
+ exit
