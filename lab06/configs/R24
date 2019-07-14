@@ -9,6 +9,7 @@ conf t
   network 35.10.192.0 0.0.0.255 area 0
   network 35.10.193.0 0.0.0.255 area 0
   passive-interface Ethernet0/3
+  area 10 virtual-link 0.0.0.2
  exit
 !
  interface Ethernet0/0

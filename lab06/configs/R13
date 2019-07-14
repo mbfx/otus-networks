@@ -1,0 +1,16 @@
+conf t
+!
+ router ospf 10
+  no passive-interface Tunnel0
+  network 172.31.255.0 0.0.0.255 area 0
+  exit
+! 
+ interface Tunnel0
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 101 md5 ospfpassarea0dmvpn
+  ip ospf network non-broadcast
+  ip ospf priority 0
+  ip ospf hello-interval 20
+  ip ospf dead-interval 60
+  exit
+ exit

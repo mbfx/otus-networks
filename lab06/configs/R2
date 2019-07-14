@@ -1,0 +1,6 @@
+conf t
+!
+ router ospf 10
+  area 10 virtual-link 0.0.0.24
+  exit
+ exit
