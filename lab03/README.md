@@ -28,6 +28,11 @@
 | 172.31.254.0/24  | not used       | 20FF:CCFF:3000:1001::/64 | not used            | GRE tun net   |
 
 
+  Графическая схема сетей и адресов VPN:
+
+![](vpn_addresses.png)
+
+
   Таблица сетевых адресов на tun-интерфейсах маршрутизаторов.
 
 | Equip | Port | AddrTyp | Address                   | Network                  | Description     |
