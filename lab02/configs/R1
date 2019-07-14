@@ -1,0 +1,4 @@
+conf t
+ ip route 0.0.0.0 0.0.0.0 172.16.19.1 1 name "to R19 (ISP)"
+ ipv6 route ::/0 20FF:CCFF:1000:19::1 1 name "to R19 (ISP)"
+ exit

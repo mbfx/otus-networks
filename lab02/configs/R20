@@ -1,0 +1,9 @@
+conf t
+ ip route 172.16.17.0 255.255.255.252 90.90.131.17 1 name "to R17"
+ ip route 172.16.18.0 255.255.255.248 90.90.130.18 1 name "to R18"
+ ip route 172.16.19.0 255.255.255.252 90.90.130.129 1 name "to R19"
+ ipv6 route 20FF:CCFF:1000:17::/64 20FF:CCFF:FFFF:5::17 1 name "to R17"
+ ipv6 route 20FF:CCFF:1000:18::/64 20FF:CCFF:FFFF:3::18 1 name "to R18"
+ ipv6 route 20FF:CCFF:1000:19::/64 20FF:CCFF:FFFF:4::19 1 name "to R19"
+ exit
+ 

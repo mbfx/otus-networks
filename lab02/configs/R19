@@ -1,0 +1,72 @@
+conf t
+ ip route 172.16.17.0 255.255.255.252 90.90.128.17 1 name "to R17"
+ ip route 172.16.18.0 255.255.255.248 90.90.131.129 1 name "to R18"
+ ip route 172.16.20.0 255.255.255.252 90.90.130.130 1 name "to R20"
+ ipv6 route 20FF:CCFF:1000:17::/64 20FF:CCFF:FFFF:1::17 1 name "to R17"
+ ipv6 route 20FF:CCFF:1000:18::/64 20FF:CCFF:FFFF:6::18 1 name "to R18"
+ ipv6 route 20FF:CCFF:1000:20::/64 20FF:CCFF:FFFF:4::20 1 name "to R20"
+!
+ ip access-list extended ACL_PBR_TO_R13
+  permit ip any host 172.16.20.2
+  deny ip any any
+  exit
+ route-map PBR_TO_R13_AND_R5 permit 10
+  match ip address ACL_PBR_TO_R13
+  set ip next-hop verify-availability 90.90.131.129 1 track 100
+  exit
+!
+ ipv6 access-list ACLV6_PBR_TO_R13
+  permit any host 20FF:CCFF:1000:20::2
+  deny any any
+  exit
+ route-map PBR-to-R13-v6 permit 10
+  match ip address ACLV6_PBR_TO_R13
+  set ipv6 next-hop verify-availability 20FF:CCFF:FFFF:6::18 1 track 200
+  exit
+
+ ip access-list extended ACL_PBR_TO_R5
+  permit ip any host 172.16.17.2
+  deny ip any any
+  exit
+ route-map PBRV6_TO_R13_AND_R5 permit 20
+  match ip address ACL_PBR_TO_R5
+  set ip next-hop verify-availability 90.90.131.129 2 track 100
+  exit
+!
+ ipv6 access-list ACLV6_PBR_TO_R5
+  permit any host 20FF:CCFF:1000:17::2
+  deny any any
+  exit
+ route-map PBRV6_TO_R13_AND_R5 permit 20
+  match ip address ACLV6_PBR_TO_R5
+  set ipv6 next-hop verify-availability 20FF:CCFF:FFFF:6::18 2 track 200
+  exit
+!
+ interface e0/0
+  ip policy route-map PBR_TO_R13_AND_R5
+  ipv6 policy route-map PBRV6_TO_R13_AND_R5
+  exit
+!
+ ip sla 1
+  icmp-echo 90.90.131.129 source-interface e0/3
+  threshold 1000
+  timeout 1500
+  frequency 3
+  exit
+ ip sla schedule 1 life forever start-time now
+!
+ track 100 ip sla 1 reachability
+  delay down 10 up 5
+  exit
+!
+ ip sla 2
+  icmp-echo 20ff:ccff:ffff:6::18 source-interface e0/3
+  threshold 1000
+  timeout 1500
+  frequency 3
+ ip sla schedule 2 life forever start-time now
+! 
+ track 200 ip sla 2 reachability
+  delay down 10 up 5
+  exit
+ exit
