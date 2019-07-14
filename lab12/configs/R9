@@ -1,0 +1,26 @@
+conf t
+!
+ ip route 0.0.0.0 0.0.0.0 172.16.18.1 30 name to_R18_(ISP)
+ ipv6 route ::/0 20FF:CCFF:1000:18::1 30 name to_R18_(ISP)
+!
+ ip prefix-list PRLIST_BGP_65218_IN seq 5 permit 0.0.0.0/0
+ ip prefix-list PRLIST_BGP_65218_IN seq 10 permit 50.50.104.0/23
+ ip prefix-list PRLIST_BGP_65218_IN seq 100 deny 0.0.0.0/0 le 32
+!
+ ipv6 prefix-list PRLISTV6_BGP_65218_IN seq 5 permit ::/0
+ ipv6 prefix-list PRLISTV6_BGP_65218_IN seq 10 permit 20FF:CCFF:200B::/48
+ ipv6 prefix-list PRLISTV6_BGP_65218_IN seq 100 deny ::/0 le 128
+!
+ router bgp 65309
+  address-family ipv4
+   network 50.50.96.0 mask 255.255.248.0
+   neighbor 172.16.18.1 prefix-list PRLIST_BGP_65218_IN in
+   exit-address-family
+!
+  address-family ipv6
+   network 20FF:CCFF:200A::/48
+   neighbor 20FF:CCFF:1000:18::1 prefix-list PRLISTV6_BGP_65218_IN in
+   exit-address-family
+  exit
+ exit
+  

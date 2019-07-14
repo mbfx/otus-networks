@@ -1,0 +1,24 @@
+conf t
+!
+ ip route 0.0.0.0 0.0.0.0 172.16.17.1 30 name to_R17_(ISP)
+ ipv6 route ::/0 20FF:CCFF:1000:17::1 30 name to_R17_(ISP)
+!
+ ip prefix-list PRLIST_FROM_R17 seq 5 permit 0.0.0.0/0
+ ip prefix-list PRLIST_FROM_R17 seq 100 deny 0.0.0.0/0 le 32
+!
+ ipv6 prefix-list PRLISTV6_FROM_R17 seq 5 permit ::/0
+ ipv6 prefix-list PRLISTV6_FROM_R17 seq 100 deny ::/0 le 128
+!
+ router bgp 65305
+  address-family ipv4
+   network 50.50.104.0 mask 255.255.254.0
+   neighbor 172.16.17.1 prefix-list PRLIST_FROM_R17 in
+   exit-address-family
+!
+  address-family ipv6
+   network 20FF:CCFF:200B::/48
+   neighbor 20FF:CCFF:1000:17::1 prefix-list PRLISTV6_FROM_R17 in
+   exit-address-family
+  exit
+ exit 
+ 

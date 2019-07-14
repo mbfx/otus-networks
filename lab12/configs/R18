@@ -1,0 +1,23 @@
+conf t
+!
+ ip prefix-list PRLIST_TO_R9 seq 5 permit 0.0.0.0/0
+ ip prefix-list PRLIST_TO_R9 seq 10 permit 50.50.104.0/23
+ ip prefix-list PRLIST_TO_R9 seq 100 deny 0.0.0.0/0 le 32
+!
+ ipv6 prefix-list PRLISTV6_TO_R9 seq 5 permit ::/0
+ ipv6 prefix-list PRLISTV6_TO_R9 seq 10 permit 20FF:CCFF:200B::/48
+ ipv6 prefix-list PRLISTV6_TO_R9 seq 100 deny ::/0 le 128
+!
+ router bgp 65218
+  address-family ipv4  
+   neighbor 172.16.18.2 default-originate
+   neighbor 172.16.18.2 prefix-list PRLIST_TO_R9 out
+   exit-address-family
+!
+  address-family ipv6  
+   neighbor 20FF:CCFF:1000:18::2 default-originate
+   neighbor 20FF:CCFF:1000:18::2 prefix-list PRLISTV6_TO_R9 out
+   exit-address-family
+  exit
+ exit
+  

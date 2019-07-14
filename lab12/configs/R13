@@ -1,0 +1,30 @@
+conf t
+!
+ ip route 0.0.0.0 0.0.0.0 172.16.20.1 30 name to_R20_(ISP)
+ ipv6 route ::/0 20FF:CCFF:1000:20::1 30 name to_R20_(ISP)
+!
+ ip prefix-list PRLIST_FROM_R20 seq 5 permit 0.0.0.0/0
+ ip prefix-list PRLIST_FROM_R20 seq 100 deny 0.0.0.0/0 le 32
+!
+ ipv6 prefix-list PRLISTV6_FROM_R20 seq 5 permit ::/0
+ ipv6 prefix-list PRLISTV6_FROM_R20 seq 100 deny ::/0 le 128
+!
+ router bgp 65313
+  address-family ipv4
+   network 35.11.0.0 mask 255.255.255.0
+   network 35.11.1.0 mask 255.255.255.0
+   network 35.11.2.0 mask 255.255.255.128
+   aggregate-address 35.11.0.0 255.255.252.0 summary-only
+   neighbor 172.16.20.1 prefix-list PRLIST_FROM_R20 in
+   exit-address-family
+!
+  address-family ipv6
+   network 20FF:CCFF:200D:A1::/64
+   network 20FF:CCFF:200D:A2::/64
+   network 20FF:CCFF:200D:A3::/64
+   aggregate-address 20FF:CCFF:200D::/48 summary-only
+   neighbor 20FF:CCFF:1000:20::1 prefix-list PRLISTV6_FROM_R20 in
+   exit-address-family
+  exit
+ exit
+  

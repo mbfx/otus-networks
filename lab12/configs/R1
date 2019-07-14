@@ -1,0 +1,48 @@
+conf t 
+!
+ ip route 0.0.0.0 0.0.0.0 172.16.19.1 30 name to_R19_(ISP)
+ ipv6 route ::/0 20FF:CCFF:1000:19::1 30 name to_R19_(ISP)
+!
+ ip prefix-list PRLIST_FROM_R19 seq 5 permit 0.0.0.0/0
+ ip prefix-list PRLIST_FROM_R19 seq 100 deny 0.0.0.0/0 le 32
+!
+ ipv6 prefix-list PRLISTV6_FROM_R19 seq 5 permit ::/0
+ ipv6 prefix-list PRLISTV6_FROM_R19 seq 100 deny ::/0 le 128
+!
+ router bgp 65301
+  address-family ipv4
+   network 35.10.0.0 mask 255.255.248.0
+   network 35.10.8.0 mask 255.255.254.0
+   network 35.10.10.0 mask 255.255.254.0
+   network 35.10.12.0 mask 255.255.255.0
+   aggregate-address 35.10.0.0 255.255.192.0 summary-only
+   network 35.10.64.0 mask 255.255.255.0
+   network 35.10.65.0 mask 255.255.255.128
+   network 35.10.65.128 mask 255.255.255.224
+   aggregate-address 35.10.64.0 255.255.192.0 summary-only
+   network 35.10.128.0 mask 255.255.255.192
+   aggregate-address 35.10.128.0 255.255.192.0 summary-only
+   network 35.10.192.0 mask 255.255.255.0
+   network 35.10.193.0 mask 255.255.255.0
+   network 35.10.194.0 mask 255.255.255.128
+   aggregate-address 35.10.192.0 255.255.192.0 summary-only
+   neighbor 172.16.19.1 prefix-list PRLIST_FROM_R19 in
+   exit-address-family
+!
+  address-family ipv6
+   network 20FF:CCFF:200C:A1::/64
+   network 20FF:CCFF:200C:A2::/64
+   network 20FF:CCFF:200C:A3::/64
+   network 20FF:CCFF:200C:A4::/64
+   network 20FF:CCFF:200C:B1::/64
+   network 20FF:CCFF:200C:B2::/64
+   network 20FF:CCFF:200C:B3::/64
+   network 20FF:CCFF:200C:C1::/64
+   network 20FF:CCFF:200C:D1::/64
+   network 20FF:CCFF:200C:D2::/64
+   network 20FF:CCFF:200C:D3::/64
+   aggregate-address 20FF:CCFF:200C::/48 summary-only
+   neighbor 20FF:CCFF:1000:19::1 prefix-list PRLISTV6_FROM_R19 in
+  exit-address-family
+ exit
+ 
