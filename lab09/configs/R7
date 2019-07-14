@@ -1,0 +1,67 @@
+conf t
+!
+ key chain EIGRP1
+  key 1
+   key-string eigrp1secretpass
+   exit
+  exit
+!
+ router eigrp EIGRP1
+  address-family ipv4 unicast autonomous-system 1
+   eigrp router-id 0.0.0.7
+   network 50.50.104.0 0.0.0.255
+   network 50.50.105.128 0.0.0.127
+   no shutdown
+   af-interface default
+    shutdown
+    passive-interface
+    exit-af-interface
+!
+   af-interface Ethernet0/0
+    authentication key-chain EIGRP1
+    authentication mode md5
+    no shutdown
+    no passive-interface
+    exit-af-interface
+!
+   af-interface Ethernet0/2
+    authentication key-chain EIGRP1
+    authentication mode md5
+    no shutdown
+    no passive-interface
+    exit-af-interface 
+!   
+   topology base
+    no auto-summary
+    exit-af-topology
+   exit-address-family
+!
+!
+  address-family ipv6 unicast autonomous-system 1
+   eigrp router-id 6.0.0.7
+   no shutdown
+   af-interface default
+    shutdown
+    passive-interface
+    exit-af-interface
+!
+   af-interface Ethernet0/0
+    authentication key-chain EIGRP1
+    authentication mode md5
+    no shutdown
+    no passive-interface
+    exit-af-interface
+!
+   af-interface Ethernet0/2
+    authentication key-chain EIGRP1
+    authentication mode md5
+    no shutdown
+    no passive-interface
+    exit-af-interface  
+!  
+   topology base
+    exit-af-topology
+   exit-address-family
+  exit
+ exit
+ 

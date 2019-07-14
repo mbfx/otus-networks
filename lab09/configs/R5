@@ -1,0 +1,99 @@
+conf t
+!
+ ip route 50.50.96.0 255.255.248.0 172.31.255.1 95 name "to R9 through dmvpn"
+ ipv6 route 20FF:CCFF:200A::/48 20FF:CCFF:3000:1::1 95 name "to R9 through dmvpn"
+!
+ key chain EIGRP1
+  key 1
+   key-string eigrp1secretpass
+   exit
+  exit
+!
+ router eigrp EIGRP1
+  address-family ipv4 unicast autonomous-system 1
+   eigrp router-id 0.0.0.5
+   no shutdown
+   network 50.50.105.0 0.0.0.127
+   network 50.50.104.0 0.0.0.255
+   network 172.31.255.0 0.0.0.255
+   neighbor 172.31.254.9 Tunnel0 remote 2
+   af-interface default
+    shutdown
+    passive-interface
+    exit-af-interface
+!
+   af-interface Ethernet0/1
+    authentication key-chain EIGRP1
+    authentication mode md5
+    no shutdown
+    no passive-interface
+    exit-af-interface   
+!
+   af-interface Ethernet0/2
+    authentication key-chain EIGRP1
+    authentication mode md5
+    no shutdown
+    no passive-interface
+    exit-af-interface
+!
+   af-interface Tunnel0
+    authentication key-chain EIGRP1
+    authentication mode md5
+    no shutdown
+    no passive-interface
+    summary-address 50.50.104.0 255.255.254.0
+    exit-af-interface
+!
+   topology base
+    no auto-summary
+    redistribute ospf 10 metric 1000 1000 255 127 1500
+    exit-af-topology
+   exit-address-family
+!
+!
+  address-family ipv6 unicast autonomous-system 1
+   eigrp router-id 6.0.0.5
+   no shutdown
+   neighbor 20FF:CCFF:3000:1001::9 Tunnel0 remote 2
+   af-interface default
+    shutdown
+    passive-interface
+    exit-af-interface
+!
+   af-interface Ethernet0/1
+    authentication key-chain EIGRP1
+    authentication mode md5
+    no shutdown
+    no passive-interface
+    exit-af-interface   
+!
+   af-interface Ethernet0/2
+    authentication key-chain EIGRP1
+    authentication mode md5
+    no shutdown
+    no passive-interface
+    exit-af-interface
+!
+   af-interface Tunnel0
+    authentication key-chain EIGRP1
+    authentication mode md5
+    no shutdown
+    no passive-interface
+    summary-address 20FF:CCFF:200B::/48
+    exit-af-interface
+!
+   topology base
+    redistribute ospf 10 metric 1000 1000 255 127 1500
+    exit-af-topology
+   exit-address-family
+  exit
+!
+!
+ router ospf 10
+  redistribute eigrp 1 subnets
+  exit
+ ipv6 router ospf 10
+  redistribute eigrp 1
+  exit
+ exit
+ 
