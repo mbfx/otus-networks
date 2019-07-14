@@ -13,6 +13,7 @@ conf t
   tunnel mode gre multipoint
   ipv6 address FE80::5 link-local
   ipv6 address 20FF:CCFF:3000:1::5/64
+  ipv6 enable
   ipv6 nhrp map 20FF:CCFF:3000:1::1/64 172.16.19.2
   ipv6 nhrp map multicast 172.16.19.2
   ipv6 nhrp network-id 1

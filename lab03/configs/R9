@@ -11,6 +11,7 @@ conf t
   description "IPv6 GRE tun2 to R1"
   ipv6 address FE80::9 link-local
   ipv6 address 20FF:CCFF:3000:1001::9/64
+  ipv6 enable
   tunnel source 20FF:CCFF:1000:18::2
   tunnel destination 20FF:CCFF:1000:19::2
   tunnel mode gre ipv6

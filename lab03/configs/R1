@@ -13,6 +13,7 @@ conf t
   ipv6 nhrp map multicast dynamic
   ipv6 nhrp network-id 1
   ipv6 nhrp authentication dmvpnpas
+  ipv6 enable
   exit
 !
  interface Tunnel1
@@ -26,6 +27,7 @@ conf t
   description "IPv6 GRE tun to R9"
   ipv6 address FE80::1 link-local
   ipv6 address 20FF:CCFF:3000:1001::1/64
+  ipv6 enable
   tunnel source 20FF:CCFF:1000:19::2
   tunnel destination 20FF:CCFF:1000:18::2
   tunnel mode gre ipv6

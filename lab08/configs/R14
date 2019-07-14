@@ -1,0 +1,26 @@
+conf t
+!
+ ipv6 router ospf 10
+  router-id 6.0.0.14
+  auto-cost reference-bandwidth 1000
+  passive-interface Ethernet0/1
+  passive-interface Ethernet0/2
+  area 42 stub
+  exit
+!
+ interface Ethernet0/0
+  ipv6 ospf authentication ipsec spi 502 md5 1234567890abcdef1234567890abcded
+  ipv6 ospf hello-interval 3
+  ipv6 ospf dead-interval 12
+  ipv6 ospf 10 area 42
+  exit
+!
+ interface Ethernet0/3
+  ipv6 ospf authentication ipsec spi 502 md5 1234567890abcdef1234567890abcded
+  ipv6 ospf hello-interval 3
+  ipv6 ospf dead-interval 12
+  ipv6 ospf 10 area 42
+!--- NOTE --- increased parameter OSPF COST --- see the documentation
+  ipv6 ospf cost 201
+  exit
+ exit

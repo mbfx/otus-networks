@@ -7,6 +7,7 @@ conf t
   passive-interface Ethernet0/0
   passive-interface Ethernet0/1
   passive-interface Ethernet0/2
+  passive-interface Ethernet0/3
   network 172.31.255.0 0.0.0.255 area 0
   exit
 ! 
