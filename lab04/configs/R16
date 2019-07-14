@@ -1,0 +1,24 @@
+conf t
+!
+ router ospf 10
+  router-id 0.0.0.16
+  auto-cost reference-bandwidth 1000
+  area 0 authentication message-digest
+  passive-interface Ethernet0/2
+  passive-interface Ethernet0/3
+  network 35.11.1.0 0.0.0.255 area 0
+  network 35.11.2.0 0.0.0.127 area 0
+  exit
+! 
+ interface Ethernet0/0
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 100 md5 ospfpassarea0
+  ip ospf dead-interval minimal hello-multiplier 5
+  exit
+! 
+ interface Ethernet0/1
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 100 md5 ospfpassarea0
+  ip ospf dead-interval minimal hello-multiplier 5
+  exit
+ exit
