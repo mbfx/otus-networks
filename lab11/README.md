@@ -12,16 +12,16 @@
   
   Задокументируем номера автономных систем.
 
-| Eq  | ASN   | Office   | Comment        |
-|-----|-------|----------|----------------|
-| R1  | 65301 | Трым-пым | Enterprise ASN |
-| R5  | 65305 | Трам-пам | Enterprise ASN | 
-| R9  | 65309 | Трум-пум | Enterprise ASN |
-| R13 | 65313 | Трям-пам | Enterprise ASN |
-| R17 | 65217 | ISP      | ISP ASN        |
-| R18 | 65218 | ISP      | ISP ASN        |
-| R19 | 65219 | ISP      | ISP ASN        |
-| R20 | 65220 | ISP      | ISP ASN        |	
+| Eq  | ASN   | Office   | Comment       |
+|-----|-------|----------|---------------|
+| R1  | 65301 | Трым-пым | Enterprise AS |
+| R5  | 65305 | Трам-пам | Enterprise AS | 
+| R9  | 65309 | Трум-пум | Enterprise AS |
+| R13 | 65313 | Трям-пам | Enterprise AS |
+| R17 | 65217 | ISP      | ISP AS        |
+| R18 | 65218 | ISP      | ISP AS        |
+| R19 | 65219 | ISP      | ISP AS        |
+| R20 | 65220 | ISP      | ISP AS        |	
 
   Все файлы изменений приведены [здесь](configs/).
 
