@@ -15,6 +15,8 @@
 
 ###  Решение:
 
+  Оборудование, правила и использованные средства.
+
 | Eq   | Rule | Tools |
 |------|------|-------|
 | R18  | all prefixes from R20 - set local-preference 100 | as-path access-list 20, as-path access-list 500, route-map RM_BGP_R20_IN |
@@ -28,3 +30,8 @@
 | R17  | prefix 35.10.128.0/18 from R19 - set weight 60 | prefix-list PRLIST_BGP_65219_IN, prefix-list PRLIST_PERMIT_ALL, route-map RM_BGP_R19_IN |
 | R17  | prefix 20FF:CCFF:FFFF:1::19 from R19 - set weight 60 | prefix-list PRLISTV6_BGP_65219_IN, prefix-list PRLISTV6_PERMIT_ALL, route-map RM_BGP_R19_IN_V6 |
 | R20  | all prefixes from R17 - set weight 40 | as-path access-list 17, as-path access-list 500, route-map RM_BGP_R17_IN |
+
+  Все файлы изменений приведены [здесь](configs/).
+
+  Для манипуляций с префиксами используем route-map. В зависимости от того, к каким группам мы хотим применить route-map можно использовать ip as-path access-list, ip prefix-list и иные инструменты.
+  
