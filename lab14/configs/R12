@@ -2,6 +2,7 @@ conf t
 !
  interface Loopback65309
   ip address 10.0.0.12 255.255.255.255
+  ipv6 enable
   ipv6 address FC00::12/128
   ipv6 address FE80::12 link-local
   exit
@@ -12,6 +13,8 @@ conf t
    af-interface Loopback65309
     no shutdown
     passive-interface
+    authentication key-chain EIGRP1
+    authentication mode md5
     exit-af-interface
    exit-address-family
 !
@@ -19,6 +22,8 @@ conf t
    af-interface Loopback65309
     no shutdown
     passive-interface
+    authentication key-chain EIGRP1
+    authentication mode md5
     exit-af-interface
    exit-address-family    
   exit

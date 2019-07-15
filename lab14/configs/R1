@@ -1,0 +1,92 @@
+conf t
+!
+ interface Loopback65301
+  ip address 10.0.0.1 255.255.255.255
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 100 md5 ospfpassarea0
+  ipv6 enable
+  ipv6 address FC00::1/128
+  ipv6 address FE80::1 link-local
+  ipv6 ospf authentication ipsec spi 500 md5 1234567890abcdef1234567890abcdef
+  ipv6 ospf 10 area 0
+  exit
+! 
+ router ospf 10
+  passive-interface Loopback65301
+  network 10.0.0.1 255.255.255.255 area 0
+  exit
+ ipv6 router ospf 10
+  passive-interface Loopback65301
+  exit
+ 
+ router bgp 65301
+!
+  no neighbor 35.10.8.2 remote-as 65301
+  no neighbor 35.10.0.2 remote-as 65301
+  no neighbor 20FF:CCFF:200C:A2::2 remote-as 65301
+  no neighbor 20FF:CCFF:200C:A1::3 remote-as 65301
+!
+  neighbor 65301AS peer-group
+  neighbor 65301AS remote-as 65301
+  neighbor 65301AS update-source Loopback65301
+  neighbor 65301AS password bgppass
+  neighbor 10.0.0.2 peer-group 65301AS
+  neighbor 10.0.0.3 peer-group 65301AS
+  neighbor 10.0.0.4 peer-group 65301AS
+  neighbor 10.0.0.8 peer-group 65301AS
+  neighbor 10.0.0.14 peer-group 65301AS
+  neighbor 10.0.0.24 peer-group 65301AS
+  neighbor FC00::2 peer-group 65301AS
+  neighbor FC00::3 peer-group 65301AS
+  neighbor FC00::4 peer-group 65301AS
+  neighbor FC00::8 peer-group 65301AS
+  neighbor FC00::14 peer-group 65301AS
+  neighbor FC00::24 peer-group 65301AS
+  
+  address-family ipv4
+!
+   no network 35.10.10.0 mask 255.255.254.0
+   no network 35.10.12.0 mask 255.255.255.0
+   no network 35.10.64.0 mask 255.255.255.0
+   no network 35.10.65.0 mask 255.255.255.128
+   no network 35.10.65.128 mask 255.255.255.224
+   no network 35.10.128.0 mask 255.255.255.192
+   no network 35.10.192.0 mask 255.255.255.0
+   no network 35.10.193.0 mask 255.255.255.0
+   no network 35.10.194.0 mask 255.255.255.128
+!
+   no neighbor FC00::2 activate
+   no neighbor FC00::3 activate
+   no neighbor FC00::4 activate
+   no neighbor FC00::8 activate
+   no neighbor FC00::14 activate
+   no neighbor FC00::24 activate
+   neighbor 10.0.0.2 activate
+   neighbor 10.0.0.3 activate
+   neighbor 10.0.0.4 activate
+   neighbor 10.0.0.8 activate
+   neighbor 10.0.0.14 activate
+   neighbor 10.0.0.24 activate
+   exit-address-family
+ 
+  address-family ipv6
+!
+   no network 20FF:CCFF:200C:A3::/64
+   no network 20FF:CCFF:200C:A4::/64
+   no network 20FF:CCFF:200C:B1::/64
+   no network 20FF:CCFF:200C:B2::/64
+   no network 20FF:CCFF:200C:B3::/64
+   no network 20FF:CCFF:200C:C1::/64
+   no network 20FF:CCFF:200C:D1::/64
+   no network 20FF:CCFF:200C:D2::/64
+   no network 20FF:CCFF:200C:D3::/64
+!
+   neighbor FC00::2 activate
+   neighbor FC00::3 activate
+   neighbor FC00::4 activate
+   neighbor FC00::8 activate
+   neighbor FC00::14 activate
+   neighbor FC00::24 activate
+   exit-address-family
+  exit
+ exit

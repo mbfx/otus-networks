@@ -5,6 +5,7 @@ conf t
   neighbor 20FF:CCFF:1000:19::1 remote-as 65219
 !
   address-family ipv4
+   no neighbor 20FF:CCFF:1000:19::1 activate
    neighbor 172.16.19.1 activate
    exit-address-family
 !

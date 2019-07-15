@@ -15,6 +15,10 @@ conf t
    neighbor 90.90.130.129 activate
    neighbor 90.90.130.18 activate
    neighbor 90.90.131.17 activate
+   no neighbor 20FF:CCFF:1000:20::2 activate
+   no neighbor 20FF:CCFF:FFFF:4::19 activate
+   no neighbor 20FF:CCFF:FFFF:3::18 activate
+   no neighbor 20FF:CCFF:FFFF:5::17 activate
    network 90.90.130.128 mask 255.255.255.128
    network 90.90.130.0 mask 255.255.255.128
    network 90.90.131.0 mask 255.255.255.128
