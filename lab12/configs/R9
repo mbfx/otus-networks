@@ -1,7 +1,7 @@
 conf t
 !
- ip route 0.0.0.0 0.0.0.0 172.16.18.1 30 name to_R18_(ISP)
- ipv6 route ::/0 20FF:CCFF:1000:18::1 30 name to_R18_(ISP)
+ ip route 0.0.0.0 0.0.0.0 172.16.18.1 30 name "to R18 (ISP)"
+ ipv6 route ::/0 20FF:CCFF:1000:18::1 30 name "to R18 (ISP)"
 !
  ip prefix-list PRLIST_BGP_65218_IN seq 5 permit 0.0.0.0/0
  ip prefix-list PRLIST_BGP_65218_IN seq 10 permit 50.50.104.0/23

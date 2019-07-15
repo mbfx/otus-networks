@@ -1,7 +1,7 @@
 conf t 
 !
- ip route 0.0.0.0 0.0.0.0 172.16.19.1 30 name to_R19_(ISP)
- ipv6 route ::/0 20FF:CCFF:1000:19::1 30 name to_R19_(ISP)
+ ip route 0.0.0.0 0.0.0.0 172.16.19.1 30 name "to R19 (ISP)"
+ ipv6 route ::/0 20FF:CCFF:1000:19::1 30 name "to R19 (ISP)"
 !
  ip prefix-list PRLIST_FROM_R19 seq 5 permit 0.0.0.0/0
  ip prefix-list PRLIST_FROM_R19 seq 100 deny 0.0.0.0/0 le 32
