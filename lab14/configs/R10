@@ -1,0 +1,47 @@
+conf t
+!
+ interface Loopback65309
+  ip address 10.0.0.10 255.255.255.255
+  ipv6 address FC00::10/128
+  ipv6 address FE80::10 link-local
+  exit
+! 
+ router eigrp EIGRP1
+  address-family ipv4 unicast autonomous-system 1
+   network 10.0.0.10 0.0.0.0
+   af-interface Loopback65309
+    no shutdown
+    passive-interface
+    exit-af-interface
+   exit-address-family
+!
+  address-family ipv6 unicast autonomous-system 1
+   af-interface Loopback65309
+    no shutdown
+    passive-interface
+    exit-af-interface
+   exit-address-family    
+  exit
+! 
+ router bgp 65309
+  neighbor 10.0.0.9 remote-as 65309
+  neighbor 10.0.0.9 update-source Loopback65309
+  neighbor 10.0.0.9 password bgppass
+  neighbor FC00::9 remote-as 65309
+  neighbor FC00::9 update-source Loopback65309
+  neighbor FC00::9 password bgppass
+! 
+  address-family ipv4
+   network 50.50.100.0 mask 255.255.255.0
+   network 50.50.101.0 mask 255.255.255.0
+   no neighbor FC00::9 activate
+   neighbor 10.0.0.9 activate
+   exit-address-family
+! 
+  address-family ipv6
+   network 20FF:CCFF:200A:A3::/64
+   network 20FF:CCFF:200A:A4::/64
+   neighbor FC00::9 activate
+   exit-address-family
+  exit
+ exit

@@ -1,0 +1,61 @@
+conf t
+!
+ interface Loopback65309
+  ip address 10.0.0.9 255.255.255.255
+  ipv6 address FC00::9/128
+  ipv6 address FE80::11 link-local
+  exit
+! 
+ router eigrp EIGRP1
+  address-family ipv4 unicast autonomous-system 1
+   network 10.0.0.9 0.0.0.0
+   af-interface Loopback65309
+    no shutdown
+    passive-interface
+    exit-af-interface
+   exit-address-family
+!
+  address-family ipv6 unicast autonomous-system 1
+   af-interface Loopback65309
+    no shutdown
+    passive-interface
+    exit-af-interface
+   exit-address-family    
+  exit
+!
+ router bgp 65309
+  neighbor 65309AS peer-group
+  neighbor 65309AS remote-as 65309
+  neighbor 65309AS update-source Loopback65309
+  neighbor 65309AS route-reflector-client
+  neighbor 65309AS next-hop-self
+  neighbor 65309AS password bgppass
+  neighbor 10.0.0.10 peer-group 65309AS
+  neighbor FC00::10 peer-group 65309AS
+  neighbor 10.0.0.11 peer-group 65309AS
+  neighbor FC00::11 peer-group 65309AS
+  neighbor 10.0.0.12 peer-group 65309AS
+  neighbor FC00::12 peer-group 65309AS
+! 
+  address-family ipv4
+   network 50.50.100.0 mask 255.255.255.0
+   network 50.50.102.8 mask 255.255.255.248
+   network 50.50.96.0 mask 255.255.254.0
+   no neighbor FC00::10 activate
+   no neighbor FC00::11 activate
+   no neighbor FC00::12 activate
+   neighbor 10.0.0.10 activate
+   neighbor 10.0.0.11 activate
+   neighbor 10.0.0.12 activate
+   exit-address-family
+! 
+  address-family ipv6
+   network 20FF:CCFF:200A:A3::/64
+   network 20FF:CCFF:200A:A5::/64
+   network 20FF:CCFF:200A:A1::/64
+   neighbor FC00::10 activate
+   neighbor FC00::11 activate
+   neighbor FC00::12 activate
+   exit-address-family
+  exit
+ exit
