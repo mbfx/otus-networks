@@ -1,0 +1,51 @@
+conf t
+!
+ ip as-path access-list 20 permit ^65220_
+ ip as-path access-list 20 deny .*
+!
+ ip as-path access-list 19 permit ^65219_
+ ip as-path access-list 19 deny .*
+!
+ ip as-path access-list 17 permit ^65217_
+ ip as-path access-list 17 deny .*
+!
+ ip as-path access-list 500 permit .*
+!
+ route-map RM_BGP_R20_IN permit 10
+  match as-path 20
+  set local-preference 100
+  exit
+ route-map RM_BGP_R20_IN permit 65000
+  match as-path 500
+  exit
+!
+ route-map RM_BGP_R19_IN permit 10
+  match as-path 19
+  set local-preference 160
+  exit
+ route-map RM_BGP_R19_IN permit 65000
+  match as-path 500
+  exit
+!
+ route-map RM_BGP_R17_IN permit 10
+  match as-path 17
+  set local-preference 200
+  exit
+ route-map RM_BGP_R17_IN permit 65000
+  match as-path 500
+  exit
+!
+ router bgp 65218
+  address-family ipv4
+   neighbor 90.90.130.20 route-map RM_BGP_R20_IN in
+   neighbor 90.90.129.17 route-map RM_BGP_R17_IN in
+   neighbor 90.90.131.130 route-map RM_BGP_R19_IN in
+   exit-address-family
+!
+  address-family ipv6
+   neighbor 20FF:CCFF:FFFF:3::20 route-map RM_BGP_R20_IN in
+   neighbor 20FF:CCFF:FFFF:2::17 route-map RM_BGP_R17_IN in
+   neighbor 20FF:CCFF:FFFF:6::19 route-map RM_BGP_R19_IN in
+   exit-address-family
+  exit
+ exit

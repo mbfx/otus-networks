@@ -1,0 +1,33 @@
+conf t
+!
+ ip as-path access-list 500 permit .*
+! 
+ route-map RM_iBGP_R2_OUT permit 65301
+  match as-path 500
+  set metric 1500
+  exit
+ route-map RM_iBGP_R3_OUT permit 65301
+  match as-path 500
+  set metric 1500
+  exit
+!
+ router bgp 65301
+  neighbor 35.10.8.2 remote-as 65301
+  neighbor 35.10.0.2 remote-as 65301
+  neighbor 20FF:CCFF:200C:A2::2 remote-as 65301
+  neighbor 20FF:CCFF:200C:A1::3 remote-as 65301
+!
+  address-family ipv4
+   neighbor 35.10.8.2 route-map RM_iBGP_R2_OUT out
+   neighbor 35.10.0.2 route-map RM_iBGP_R3_OUT out
+   exit-address-family
+!
+  address-family ipv6
+   neighbor 20FF:CCFF:200C:A2::2 activate
+   neighbor 20FF:CCFF:200C:A1::3 activate
+   neighbor 20FF:CCFF:200C:A2::2 route-map RM_iBGP_R2_OUT out
+   neighbor 20FF:CCFF:200C:A1::3 route-map RM_iBGP_R3_OUT out
+   exit-address-family
+  exit
+ exit
+ 
