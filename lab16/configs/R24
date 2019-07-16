@@ -1,0 +1,51 @@
+conf t
+!
+ ip dhcp excluded-address 0.0.0.0 35.10.192.1
+ ip dhcp excluded-address 35.10.192.24
+ ip dhcp excluded-address 35.10.193.24
+ ip dhcp excluded-address 35.10.194.22
+ ip dhcp excluded-address 35.10.194.23
+ ip dhcp excluded-address 35.10.194.129 255.255.255.255
+! 
+ ip dhcp pool DHCP_POOL_LAN_1
+  network 35.10.192.0 255.255.255.0
+  default-router 35.10.192.24
+  exit
+! 
+ ip dhcp pool DHCP_POOL_LAN_2
+  network 35.10.193.0 255.255.255.0
+  default-router 35.10.193.24
+  exit
+! 
+ ip dhcp pool DHCP_POOL_LAN_3
+  network 35.10.194.0 255.255.255.128
+  default-router 35.10.194.22
+  exit
+! 
+ ip dhcp pool DHCP_POOL_LAN_SPECIAL
+  host 35.10.192.22 255.255.255.0
+  client-identifier 0063.6973.636f.2d61.6162.622e.6363.3031.2e36.3031.302d.4574.302f.31
+  client-name R22
+  exit
+! 
+ ipv6 dhcp pool DHCP_POOL_IPV6_LAN_1_STATEFUL
+  address prefix 20FF:CCFF:200C:D1::/64 lifetime 2592000 604800
+  exit
+! 
+ ipv6 dhcp pool DHCP_POOL_IPV6_LAN_2_STATEFUL
+  address prefix 20FF:CCFF:200C:D2::/64 lifetime 2592000 604800
+  exit
+! 
+ service dhcp
+!
+ interface Ethernet0/1
+  ipv6 dhcp server DHCP_POOL_IPV6_LAN_1_STATEFUL
+  ipv6 nd managed-config-flag
+  exit
+! 
+ interface Ethernet0/2
+  ipv6 dhcp server DHCP_POOL_IPV6_LAN_2_STATEFUL
+  ipv6 nd managed-config-flag
+  exit
+ exit
+ 

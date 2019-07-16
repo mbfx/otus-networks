@@ -1,0 +1,12 @@
+conf t
+!
+ interface Ethernet0/0
+  ip helper-address 35.10.193.24
+  ipv6 dhcp relay destination FE80::22
+  exit
+! 
+ interface Ethernet0/2
+  ip helper-address 35.10.193.24
+  ipv6 dhcp relay destination FE80::24
+  exit
+ exit

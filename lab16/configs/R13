@@ -1,0 +1,21 @@
+conf t
+!
+ ip nat pool NAT_POOL 172.16.20.3 172.16.20.6 netmask 255.255.255.248
+ access-list 1 permit 35.11.0.0 0.0.3.255
+ ip nat inside source list 1 pool NAT_POOL overload
+!
+ ip nat inside source static tcp 35.11.0.15 80 172.16.20.2 80
+!
+ interface Ethernet0/2
+  ip nat inside
+  exit
+!
+ interface Ethernet0/0
+  ip nat outside
+  exit
+! 
+ interface Ethernet0/1
+  ip nat inside
+  exit
+ exit
+  

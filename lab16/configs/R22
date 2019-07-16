@@ -1,0 +1,23 @@
+conf t
+!
+ ipv6 dhcp pool DHCP_POOL_IPV6_LAN_3_STATEFUL
+  address prefix 20FF:CCFF:200C:D3::/64 lifetime 2592000 604800
+  exit
+!
+ service dhcp
+! 
+ interface Ethernet0/1
+  no ip address
+  ip address dhcp
+  ip helper-address 35.10.192.24
+  ipv6 address dhcp
+  ipv6 dhcp relay destination FE80::24
+  exit
+! 
+ interface Ethernet0/0
+  ip helper-address 35.10.192.24
+  ipv6 dhcp server DHCP_POOL_IPV6_LAN_3_STATEFUL
+  ipv6 nd managed-config-flag 
+  exit
+ exit
+ 
