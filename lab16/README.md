@@ -24,6 +24,10 @@
 | R13 | 35.11.0.0/16 | any | 172.16.20.3 - 172.16.20.6 | any | NAT overload |
 | R13 | 35.11.0.15 | tcp 80 | 172.16.20.2 | tcp 80 | NAT static |
 
+###  Схема NAT
+
+![](nat.png)
+
 
   Таблица серверов DHCP.
 
@@ -49,10 +53,9 @@
 | R22 | DHCP_POOL_IPV6_LAN_3_STATEFUL | ND on e0/0 |
 
 
-
   Таблица DHCP relay.
 
-| Eq  | Interface | which server? | whicr Equip? |
+| Eq  | Interface | DHCP server IP | DHCP server Eq |
 |-----|-----------|---------------|--------------|
 | R22 | e0/0 | 35.10.192.24 | R24 |
 | R22 | e0/1 | 35.10.192.24 | R24 |
@@ -62,10 +65,20 @@
 | R23 | e0/2 | 35.10.193.24 | R24 |
 | R23 | e0/2 | FE80::24 | R24 |
 
+###  Схема DHCPv4
+
+![](dhcpv4.png)
+
+
+###  Схема DHCPv6
+
+![](dhcpv6.png)
+
+
   Таблица DHCP клиентов.
 
 | Eq  | Interface | Proto | DHCP static mapping | Client-name | Client-ID |
-|
+|-----|-----------|-------|---------------------|-------------|-----------|
 | R22 | e0/1 | IPv4 | yes, see below | R22 | 0063.6973.636f.2d61.6162.622e.6363.3031.2e36.3031.302d.4574.302f.31 |
 | R22 | e0/1 | IPv6 | no | R22 | 0063.6973.636f.2d61.6162.622e.6363.3031.2e36.3031.302d.4574.302f.31 |
 
