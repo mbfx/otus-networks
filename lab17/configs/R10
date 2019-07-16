@@ -1,0 +1,28 @@
+conf t
+!
+ ntp server 50.50.100.9 prefer
+ ntp server FE80::9 prefer
+ ntp server 20FF:CCFF:200A:A3::9 prefer
+ ntp server 50.50.96.9
+ ntp server 20FF:CCFF:200A:A5::9
+ ntp server 50.50.102.9
+ ntp server 20FF:CCFF:200A:A1::9
+ ntp authenticate
+ ntp authentication-key 1 md5 ntpkey
+ ntp trusted-key 1
+!
+ access-list 2 permit 50.50.100.9 0.0.0.0
+ access-list 2 permit 50.50.96.9 0.0.0.0
+ access-list 2 permit 50.50.102.9 0.0.0.0
+ access-list 2 deny any
+ ntp access-group ipv4 peer 2
+!
+ ipv6 access-list NTPSERVER_IPV6_ACL
+  permit host FE80::9 any
+  permit host 20FF:CCFF:200A:A3::9 any
+  permit host 20FF:CCFF:200A:A5::9 any
+  permit host 20FF:CCFF:200A:A1::9 any
+  deny any any
+  exit
+ ntp access-group ipv6 peer NTPSERVER_IPV6_ACL
+ exit

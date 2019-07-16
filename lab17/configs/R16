@@ -1,0 +1,20 @@
+conf t
+!
+ aaa new-model
+ aaa authentication login default local
+!
+ username admin privilege 15 algorithm-type scrypt secret adminpassword
+ enable algorithm-type scrypt secret level 15 adminpassword
+!
+ username support privilege 1 algorithm-type scrypt secret supppass
+ enable algorithm-type scrypt secret level 1 supppass
+!
+ username descedit privilege 2 algorithm-type scrypt secret descedit
+ enable algorithm-type scrypt secret level 2 editdescnow
+!
+ privilege exec level 2 configure terminal
+ privilege configure level 2 interface 
+ privilege interface level 2 description
+!
+ aaa authorization console
+ exit
