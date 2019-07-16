@@ -4,7 +4,7 @@ conf t
   ip address 10.0.0.9 255.255.255.255
   ipv6 enable
   ipv6 address FC00::9/128
-  ipv6 address FE80::11 link-local
+  ipv6 address FE80::9 link-local
   exit
 ! 
  router eigrp EIGRP1
