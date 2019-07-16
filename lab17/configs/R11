@@ -11,18 +11,20 @@ conf t
  ntp authentication-key 1 md5 ntpkey
  ntp trusted-key 1
 !
- access-list 2 permit 50.50.102.9 0.0.0.0
- access-list 2 permit 50.50.100.9 0.0.0.0
- access-list 2 permit 50.50.96.9 0.0.0.0
- access-list 2 deny any
+ ip access-list standard 2
+  10 permit 50.50.100.9 0.0.0.0
+  20 permit 50.50.96.9 0.0.0.0
+  30 permit 50.50.102.9 0.0.0.0
+  500 deny any
+  exit
  ntp access-group ipv4 peer 2
 !
  ipv6 access-list NTPSERVER_IPV6_ACL
-  permit host FE80::9 any
-  permit host 20FF:CCFF:200A:A3::9 any
-  permit host 20FF:CCFF:200A:A5::9 any
-  permit host 20FF:CCFF:200A:A1::9 any
-  deny any any
+  permit ipv6 host FE80::9 any sequence 10
+  permit ipv6 host 20FF:CCFF:200A:A3::9 any sequence 20
+  permit ipv6 host 20FF:CCFF:200A:A5::9 any sequence 30
+  permit ipv6 host 20FF:CCFF:200A:A1::9 any sequence 40
+  deny ipv6 any any sequence 500
   exit
  ntp access-group ipv6 peer NTPSERVER_IPV6_ACL
  exit

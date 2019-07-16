@@ -1,0 +1,24 @@
+conf t
+!
+ ip access-list standard 2
+  60 permit 172.16.17.2 0.0.0.0
+  70 permit 172.31.255.5 0.0.0.0
+  80 permit 172.16.20.2 0.0.0.0
+  90 permit 172.31.255.13 0.0.0.0
+  exit
+!
+ ipv6 access-list NTPSERVER_IPV6_ACL
+  permit ipv6 host FE80::5 host FE80::9 sequence 100
+  permit ipv6 host FE80::13 host FE80::9 sequence 110
+  permit ipv6 host 20FF:CCFF:1000:17::2 host 20FF:CCFF:1000:18::2 sequence 120
+  permit ipv6 host 20FF:CCFF:3000:1::5 host 20FF:CCFF:3000:1001::9 sequence 130
+  permit ipv6 host 20FF:CCFF:1000:20::2 host 20FF:CCFF:1000:18::2 sequence 140
+  permit ipv6 host 20FF:CCFF:3000:1::13 host 20FF:CCFF:3000:1001::9 sequence 150
+  exit
+!
+ ip access-list standard 4
+  40 permit 172.16.17.2 0.0.0.0
+  50 permit 172.31.255.5 0.0.0.0
+  60 permit 172.16.20.2 0.0.0.0
+  70 permit 172.31.255.13 0.0.0.0
+  exit

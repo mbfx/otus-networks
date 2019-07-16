@@ -1,7 +1,10 @@
 conf t
 !
  ip nat pool NAT_POOL 172.16.18.3 172.16.18.6 netmask 255.255.255.248
- access-list 1 permit 50.50.96.0 0.0.7.255
+ ip access-list standard 1
+  10 permit 50.50.96.0 0.0.7.255
+  500 deny any
+  exit
  ip nat inside source list 1 pool NAT_POOL overload
 ! 
  interface Ethernet0/1

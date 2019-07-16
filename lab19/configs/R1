@@ -1,0 +1,11 @@
+conf t
+!
+ interface Tunnel0
+  ip nhrp redirect
+  ipv6 nhrp redirect
+  exit
+!
+ interface Tunnel0
+  tunnel protection ipsec profile IPSEC_PROFILE_1
+  exit
+ exit

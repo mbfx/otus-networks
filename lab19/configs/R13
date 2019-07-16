@@ -1,0 +1,60 @@
+conf t 
+!
+ interface Tunnel0
+  ip nhrp shortcut
+  ip nhrp redirect
+  ipv6 nhrp shortcut
+  ipv6 nhrp redirect
+  exit
+!
+ ntp server 172.31.254.9 prefer
+ ntp server 20FF:CCFF:3000:1001::9 prefer
+ ntp server 172.16.18.2
+ ntp server 20FF:CCFF:1000:18::2
+ ntp authenticate
+ ntp authentication-key 1 md5 ntpkey
+ ntp trusted-key 1
+!
+ ip access-list standard 2
+  10 permit 172.31.254.9 0.0.0.0
+  20 permit 172.16.18.2 0.0.0.0
+  500 deny any
+  exit
+ ntp access-group ipv4 peer 2
+!
+ ipv6 access-list NTPSERVER_IPV6_ACL
+  permit ipv6 host 20FF:CCFF:3000:1001::9 any sequence 10
+  permit ipv6 host 20FF:CCFF:1000:18::2 any sequence 20
+  deny ipv6 any any sequence 500
+  exit
+ ntp access-group ipv6 peer NTPSERVER_IPV6_ACL
+!
+ ip domain-name otus.ru
+!
+ crypto key generate rsa label IPSECDMVPN modulus 2048
+ crypto pki trustpoint IPSECDMVPNR13TP
+  enrollment url http://172.16.18.2
+  subject-name CN=R13,OU=IPSECDMVPN,O=otus,C=ru
+  rsakeypair IPSECDMVPN
+  revocation-check none
+  exit
+!
+ crypto pki authenticate IPSECDMVPNR13TP
+ crypto pki enroll IPSECDMVPNR13TP
+!
+ crypto isakmp policy 1
+  authentication rsa-sig
+  exit
+!
+ crypto ipsec transform-set IPSEC_TRANSF_SET_1 esp-aes esp-sha-hmac
+  mode tunnel
+  exit
+ crypto ipsec profile IPSEC_PROFILE_1
+  set transform-set IPSEC_TRANSF_SET_1
+  set pfs group1
+  exit
+!
+ interface Tunnel0
+  tunnel protection ipsec profile IPSEC_PROFILE_1
+  exit
+ exit
