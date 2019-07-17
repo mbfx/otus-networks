@@ -1,0 +1,4 @@
+conf t
+!
+ hostname "PF-R1"
+!
