@@ -1,0 +1,103 @@
+conf t
+
+ hostname "ZL-R3"
+
+ ipv6 unicast-routing
+
+ interface Loopback64500
+  description "loopback"
+  ip address 10.0.0.3 255.255.255.255
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 100 md5 ospfpassarea0
+  ipv6 enable
+  ipv6 address FD00:CCFF:200A::3/128
+  ipv6 address FE80::3 link-local
+  ipv6 ospf authentication ipsec spi 500 md5 1234567890abcdef1234567890abcdef
+  ipv6 ospf 64500 area 0
+  no shutdown
+  exit
+
+ interface Ethernet0/0
+  description "to ZL-R4"
+  ip address 35.10.12.1 255.255.255.0
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 100 md5 ospfpassarea0
+  ip ospf dead-interval minimal hello-multiplier 5
+  ipv6 enable
+  ipv6 address FE80::1 link-local
+  ipv6 address 20FF:CCFF:200A:A4::1/64
+  ipv6 ospf authentication ipsec spi 509 md5 1234567890abcdef1234567890abcdef
+  ipv6 ospf hello-interval 1
+  ipv6 ospf dead-interval 4
+  ipv6 ospf 64500 area 0
+  no shutdown
+  exit
+
+ interface Ethernet0/1
+  description "to ZL-R5"
+  ip address 35.10.65.1 255.255.255.128
+  ip ospf message-digest-key 100 md5 ospfpassarea42
+  ip ospf hello-interval 3
+  ip ospf dead-interval 12
+  ipv6 enable
+  ipv6 address FE80::1 link-local
+  ipv6 address 20FF:CCFF:200A:B2::1/64
+  ipv6 ospf authentication ipsec spi 507 md5 1234567890abcdef1234567890abcded
+  ipv6 ospf hello-interval 3
+  ipv6 ospf dead-interval 12
+  ipv6 ospf 64500 area 42
+  no shutdown
+  exit
+
+ interface Ethernet0/2
+  description "to ZL-R1"
+  ip address 35.10.8.2 255.255.254.0
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 100 md5 ospfpassarea0
+  ip ospf dead-interval minimal hello-multiplier 5
+  ipv6 enable
+  ipv6 address FE80::2 link-local
+  ipv6 address 20FF:CCFF:200A:A2::2/64
+  ipv6 ospf authentication ipsec spi 502 md5 1234567890abcdef1234567890abcdef
+  ipv6 ospf hello-interval 1
+  ipv6 ospf dead-interval 4
+  ipv6 ospf 64500 area 0
+  no shutdown
+  exit
+
+ interface Ethernet0/3
+  description "to ZL-R6"
+  ip address 35.10.65.129 255.255.255.128
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 100 md5 ospfpassarea42
+  ip ospf hello-interval 3
+  ip ospf dead-interval 12
+  ipv6 enable
+  ipv6 address FE80::1 link-local
+  ipv6 address 20FF:CCFF:200A:B3::1/64
+  ipv6 ospf authentication ipsec spi 508 md5 1234567890abcdef1234567890abcded
+  ipv6 ospf hello-interval 3
+  ipv6 ospf dead-interval 12
+  ipv6 ospf 64500 area 42
+  no shutdown
+  exit
+
+
+ router ospf 64500
+  router-id 10.0.0.3
+  auto-cost reference-bandwidth 1000
+  area 0 authentication message-digest
+  area 42 authentication message-digest
+  network 10.0.0.3 255.255.255.255 area 0
+  network 35.10.65.0 0.0.0.127 area 42
+  network 35.10.8.0 0.0.1.255 area 0
+  network 35.10.12.0 0.0.0.255 area 0
+  network 35.10.65.128 0.0.0.127 area 42
+  area 42 stub no-summary
+  exit
+
+ ipv6 router ospf 64500
+  router-id 6.0.0.3
+  auto-cost reference-bandwidth 1000
+  area 42 stub no-summary
+  exit

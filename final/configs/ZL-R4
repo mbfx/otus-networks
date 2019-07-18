@@ -1,0 +1,80 @@
+conf t
+
+ hostname "ZL-R4"
+
+ ipv6 unicast-routing
+
+ interface Loopback64500
+  description "loopback"
+  ip address 10.0.0.4 255.255.255.255
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 100 md5 ospfpassarea0
+  ipv6 enable
+  ipv6 address FD00:CCFF:200A::4/128
+  ipv6 address FE80::4 link-local
+  ipv6 ospf authentication ipsec spi 500 md5 1234567890abcdef1234567890abcdef
+  ipv6 ospf 64500 area 0
+  no shutdown
+  exit
+
+ interface Ethernet0/0
+  description "to ZL-R3"
+  ip address 35.10.12.2 255.255.255.0
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 100 md5 ospfpassarea0
+  ip ospf dead-interval minimal hello-multiplier 5
+  ipv6 enable
+  ipv6 address FE80::2 link-local
+  ipv6 address 20FF:CCFF:200A:A4::2/64
+  ipv6 ospf authentication ipsec spi 509 md5 1234567890abcdef1234567890abcdef
+  ipv6 ospf hello-interval 1
+  ipv6 ospf dead-interval 4
+  ipv6 ospf 64500 area 0
+  no shutdown
+  exit
+
+ interface Ethernet0/1
+  description "not used"
+  no ip address
+  shutdown
+  exit
+
+ interface Ethernet0/2
+  description "not used"
+  no ip address
+  shutdown
+  exit
+
+ interface Ethernet0/3
+  description "to ZL-R2"
+  ip address 35.10.10.2 255.255.254.0
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 100 md5 ospfpassarea0
+  ip ospf dead-interval minimal hello-multiplier 5
+  ipv6 enable
+  ipv6 address FE80::2 link-local
+  ipv6 address 20FF:CCFF:200A:A3::2/64
+  ipv6 ospf authentication ipsec spi 506 md5 1234567890abcdef1234567890abcdef
+  ipv6 ospf hello-interval 1
+  ipv6 ospf dead-interval 4
+  ipv6 ospf 64500 area 0
+  no shutdown
+  exit
+
+ router ospf 64500
+  router-id 10.0.0.4
+  auto-cost reference-bandwidth 1000
+  area 0 authentication message-digest
+  passive-interface Ethernet0/1
+  passive-interface Ethernet0/2
+  network 10.0.0.4 255.255.255.255 area 0
+  network 35.10.12.0 0.0.0.255 area 0
+  network 35.10.10.0 0.0.1.255 area 0
+  exit
+
+ ipv6 router ospf 64500
+  router-id 6.0.0.4
+  auto-cost reference-bandwidth 1000
+  passive-interface Ethernet0/1
+  passive-interface Ethernet0/2
+  exit

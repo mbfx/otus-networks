@@ -1,0 +1,88 @@
+conf t
+
+ hostname "ZL-R5"
+
+ ipv6 unicast-routing
+
+ interface Loopback64500
+  description "loopback"
+  ip address 10.0.0.5 255.255.255.255
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 100 md5 ospfpassarea0
+  ipv6 enable
+  ipv6 address FD00:CCFF:200A::5/128
+  ipv6 address FE80::5 link-local
+  ipv6 ospf authentication ipsec spi 500 md5 1234567890abcdef1234567890abcdef
+  ipv6 ospf 64500 area 42
+  no shutdown
+  exit
+
+ interface Ethernet0/0
+  description "to ZL-R6"
+  ip address 35.10.64.1 255.255.255.0
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 100 md5 ospfpassarea42
+  ip ospf hello-interval 3
+  ip ospf dead-interval 12
+!--- NOTE --- increased parameter OSPF COST -- see the documentation
+  ip ospf cost 201
+  ipv6 enable
+  ipv6 address FE80::1 link-local
+  ipv6 address 20FF:CCFF:200A:B1::1/64
+  ipv6 ospf authentication ipsec spi 510 md5 1234567890abcdef1234567890abcded
+  ipv6 ospf hello-interval 3
+  ipv6 ospf dead-interval 12
+  ipv6 ospf 64500 area 42
+!--- NOTE --- increased parameter OSPF COST -- see the documentation
+  ipv6 ospf cost 201
+  no shutdown
+  exit
+
+ interface Ethernet0/1
+  description "to ZL-R3"
+  ip address 35.10.65.2 255.255.255.128
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 100 md5 ospfpassarea42
+  ip ospf hello-interval 3
+  ip ospf dead-interval 12
+  ipv6 enable
+  ipv6 address FE80::2 link-local
+  ipv6 address 20FF:CCFF:200A:B2::2/64
+  ipv6 ospf authentication ipsec spi 507 md5 1234567890abcdef1234567890abcded
+  ipv6 ospf hello-interval 3
+  ipv6 ospf dead-interval 12
+  ipv6 ospf 64500 area 42
+  no shutdown
+  exit 
+
+ interface Ethernet0/2
+  description "not used"
+  no ip address
+  shutdown
+  exit
+
+ interface Ethernet0/3
+  description "not used"
+  no ip address
+  shutdown
+  exit
+
+ router ospf 64500
+  router-id 10.0.0.5
+  auto-cost reference-bandwidth 1000
+  area 42 authentication message-digest
+  passive-interface Ethernet0/2
+  passive-interface Ethernet0/3
+  network 10.0.0.5 255.255.255.255 area 42
+  network 35.10.64.0 0.0.0.255 area 42
+  network 35.10.65.0 0.0.0.127 area 42
+  area 42 stub
+  exit
+
+ ipv6 router ospf 64500
+  router-id 6.0.0.5
+  auto-cost reference-bandwidth 1000
+  passive-interface Ethernet0/2
+  passive-interface Ethernet0/3
+  area 42 stub
+  exit
