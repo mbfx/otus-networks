@@ -3,7 +3,7 @@ conf t
  router ospf 10
   no passive-interface Tunnel0
   network 172.31.255.0 0.0.0.255 area 0
-  neighbor 172.31.255.5
+  neighbor 172.31.255.1
   exit
 ! 
  interface Tunnel0

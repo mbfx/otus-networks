@@ -1,0 +1,138 @@
+conf t
+
+ hostname "LP-R1"
+
+ ipv6 unicast-routing
+
+ interface Loopback64500
+  description "loopback"
+  ip address 10.0.0.1 255.255.255.255
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 100 md5 ospfpassarea0
+  ipv6 enable
+  ipv6 address FD00:CCFF:200B::1/128
+  ipv6 address FE80::1 link-local
+  ipv6 ospf authentication ipsec spi 500 md5 1234567890abcdef1234567890abcdef
+  ipv6 ospf 64500 area 0
+  no shutdown
+  exit
+
+ interface Ethernet0/0
+  description "to PG-R1"
+  ip address 99.99.148.1 255.255.255.254
+  ipv6 enable
+  ipv6 address FE80::2 link-local
+  ipv6 address 20FF:CCFF:FFFF:3::1/127
+  no shutdown
+  exit
+
+ interface Ethernet0/1
+  description "to LP-R3"
+  ip address 35.11.1.1 255.255.255.0
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 100 md5 ospfpassarea0
+  ip ospf dead-interval minimal hello-multiplier 5
+  ipv6 enable
+  ipv6 address FE80::1 link-local
+  ipv6 address 20FF:CCFF:200B:A2::1/64
+  ipv6 ospf authentication ipsec spi 501 md5 1234567890abcdef1234567890abcdef
+  ipv6 ospf hello-interval 1
+  ipv6 ospf dead-interval 4
+  ipv6 ospf 10 area 0
+  no shutdown
+  exit
+
+ interface Ethernet0/2
+  description "to LP-R2"
+  ip address 35.11.0.1 255.255.255.0
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 100 md5 ospfpassarea0
+  ip ospf dead-interval minimal hello-multiplier 5
+  ipv6 enable
+  ipv6 address FE80::1 link-local
+  ipv6 address 20FF:CCFF:200B:A1::1/64
+  ipv6 ospf authentication ipsec spi 502 md5 1234567890abcdef1234567890abcdef
+  ipv6 ospf hello-interval 1
+  ipv6 ospf dead-interval 4
+  ipv6 ospf 10 area 0
+  no shutdown
+  exit
+
+ interface Ethernet0/3
+  description "not used"
+  no ip address
+  shutdown
+  exit
+
+ ip route 0.0.0.0 0.0.0.0 99.99.148.0 30 name "to ISP"
+ ipv6 route ::/0 20FF:CCFF:FFFF:3::0 30 name "to ISP"
+
+ ip route 172.31.254.0 255.255.255.254 172.31.255.1 1 name "to GRE tunnel networks through DMVPN"
+ ipv6 route FD00:CCFF:3001::/127 FE00:CCFF:3000::1 1 name "to GRE tunnel networks through DMVPN"
+
+ ip route 35.10.0.0 255.255.0.0 172.31.255.1 1 name "to ZL-R1 through DMVPN"
+ ip route 50.50.96.0 255.255.248.0 172.31.255.1 1 name "to DP-R1 through DMVPN"
+ ip route 50.50.104.0 255.255.254.0 172.31.255.1 1 name "to OV-R1 through DMVPN"
+
+ ipv6 route 20FF:CCFF:200A::/48 FE00:CCFF:3000::1 1 name "to ZL-R1 through DMVPN"
+ ipv6 route 20FF:CCFF:200C::/48 FE00:CCFF:3000::1 1 name "to DP-R1 through DMVPN"
+ ipv6 route 20FF:CCFF:200D::/48 FE00:CCFF:3000::1 1 name "to OV-R1 through DMVPN"
+
+ interface Tunnel0
+  description "DMVPN spoke to ZL-R1 hub"
+  ip address 172.31.255.2 255.255.255.0
+  ip nhrp map 172.31.255.1 99.99.144.1
+  ip nhrp map multicast 99.99.144.1
+  ip nhrp network-id 1
+  ip nhrp nhs 172.31.255.1
+  ip nhrp authentication dmvpnpas
+  ip nhrp registration timeout 4
+  ip nhrp shortcut
+  ip nhrp redirect
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 101 md5 ospfpassarea0dmvpn
+  ip ospf network non-broadcast
+  ip ospf priority 0
+  ip ospf hello-interval 20
+  ip ospf dead-interval 60
+  tunnel source e0/0
+  tunnel mode gre multipoint
+  ipv6 address FE80::2 link-local
+  ipv6 address FD00:CCFF:3000::2/48
+  ipv6 enable
+  ipv6 nhrp map FD00:CCFF:3000::1/48 99.99.144.1
+  ipv6 nhrp map multicast 99.99.144.1
+  ipv6 nhrp network-id 1
+  ipv6 nhrp nhs FD00:CCFF:3000::1
+  ipv6 nhrp authentication dmvpnpas 
+  ipv6 nhrp registration timeout 4
+  ipv6 nhrp shortcut
+  ipv6 nhrp redirect
+  ipv6 ospf authentication ipsec spi 503 md5 1234567890abcdef1234567890abcdef
+  ipv6 ospf hello-interval 20
+  ipv6 ospf dead-interval 60
+  ipv6 ospf 64500 area 0
+  ipv6 ospf priority 0
+  ipv6 ospf network non-broadcast
+  ipv6 ospf neighbor FE80::1
+  exit
+
+ router ospf 64500
+  router-id 10.0.2.1
+  auto-cost reference-bandwidth 1000
+  area 0 authentication message-digest
+  passive-interface Ethernet0/0
+  passive-interface Ethernet0/3
+  network 35.11.0.0 0.0.0.255 area 0
+  network 35.11.1.0 0.0.0.255 area 0
+  network 172.31.255.0 0.0.0.255 area 0
+  neighbor 172.31.255.1
+  exit
+
+ ipv6 router ospf 64500
+  router-id 6.0.2.1
+  auto-cost reference-bandwidth 1000
+  passive-interface Ethernet0/0
+  passive-interface Ethernet0/3
+  exit
+ exit

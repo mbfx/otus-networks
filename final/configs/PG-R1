@@ -1,0 +1,59 @@
+conf t
+
+ hostname "PG-R1"
+
+ ipv6 unicast-routing
+
+ ip route 99.99.144.0 255.255.255.254 99.99.136.2 25 name "to ZL-R1 through PF-R1"
+ ip route 99.99.144.2 255.255.255.254 99.99.138.2 25 name "to OV-R1 through PF-R2"
+ ip route 99.99.140.0 255.255.255.254 99.99.130.1 25 name "to DP-R1 through PC-R1"
+
+ ipv6 route 20FF:CCFE:FFFF:3::/127 20FF:CCFF:FFFF:1::2 25 name "to ZL-R1 through PF-R1"
+ ipv6 route 20FF:CCFE:FFFF:3::2/127 20FF:CCFF:FFFF:2::2 25 name "to OV-R1 through PF-R2"
+ ipv6 route 20FF:CCFD:FFFF:3::/127 20FF:CCFD:FFFF:2::1 25 name "to DP-R1 through PC-R1"
+
+ interface Loopback64511
+  description "loopback"
+  ip address 10.0.0.1 255.255.255.255
+  ipv6 enable
+  ipv6 address FD00:CCFF:FFFF::1/128
+  ipv6 address FE80::1 link-local
+  no shutdown
+  exit
+
+ interface Ethernet0/0
+  description "to LP-R1"
+  ip address 99.99.148.0 255.255.255.254
+  ipv6 enable
+  ipv6 address FE80::1 link-local
+  ipv6 address 20FF:CCFF:FFFF:3::0/127
+  no shutdown
+  exit
+
+ interface Ethernet0/1
+  description "to PC-R1"
+  ip address 99.99.130.2 255.255.254.0
+  ipv6 enable
+  ipv6 address FE80::2 link-local
+  ipv6 address 20FF:CCFD:FFFF:2::2/64
+  no shutdown
+  exit
+
+ interface Ethernet0/2
+  description "to PF-R1"
+  ip address 99.99.136.1 255.255.254.0
+  ipv6 address FE80::1 link-local
+  ipv6 address 20FF:CCFF:FFFF:1::1/64
+  ipv6 enable
+  no shutdown
+  exit
+
+ interface Ethernet0/3
+  description "to PF-R2"
+  ip address 99.99.138.1 255.255.254.0
+  ipv6 enable
+  ipv6 address FE80::1 link-local
+  ipv6 address 20FF:CCFF:FFFF:2::1/64
+  no shutdown
+  exit
+ exit
