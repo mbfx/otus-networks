@@ -6,7 +6,7 @@ conf t
 
  interface Loopback64501
   description "loopback"
-  ip address 10.0.0.3 255.255.255.255
+  ip address 10.0.3.3 255.255.255.255
   ip ospf authentication message-digest
   ip ospf message-digest-key 100 md5 ospfpassarea0
   ipv6 enable
@@ -58,6 +58,7 @@ conf t
    eigrp router-id 10.0.3.3
    network 50.50.104.0 0.0.0.255
    network 50.50.105.128 0.0.0.127
+   network 10.0.3.3 0.0.0.0
    no shutdown
    af-interface default
     shutdown

@@ -6,7 +6,7 @@ conf t
 
  interface Loopback64500
   description "loopback"
-  ip address 10.0.0.1 255.255.255.255
+  ip address 10.0.2.1 255.255.255.255
   ip ospf authentication message-digest
   ip ospf message-digest-key 100 md5 ospfpassarea0
   ipv6 enable
@@ -126,6 +126,7 @@ conf t
   network 35.11.0.0 0.0.0.255 area 0
   network 35.11.1.0 0.0.0.255 area 0
   network 172.31.255.0 0.0.0.255 area 0
+  network 10.0.2.1 0.0.0.0 area 0
   neighbor 172.31.255.1
   exit
 
