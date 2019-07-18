@@ -18,6 +18,7 @@ conf t
   ipv6 enable
   ipv6 address FD00:CCFE:FFFF::2/128
   ipv6 address FE80::2 link-local
+  ipv6 ospf 64510 area 0
   no shutdown
   exit
 
@@ -33,18 +34,25 @@ conf t
  interface Ethernet0/1
   description "to PF-R1"
   ip address 99.99.132.2 255.255.254.0
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 100 md5 ospfpassarea0
+  ip ospf dead-interval minimal hello-multiplier 5
   ipv6 enable
   ipv6 address FE80::2 link-local
   ipv6 address 20FF:CCFE:FFFF:1::2/64
+  ipv6 ospf authentication ipsec spi 500 md5 1234567890abcdef1234567890abcdef
+  ipv6 ospf hello-interval 1
+  ipv6 ospf dead-interval 4
+  ipv6 ospf 64510 area 0
   no shutdown
   exit
 
  interface Ethernet0/2
   description "to PC-R1"
   ip address 99.99.128.2 255.255.254.0
+  ipv6 enable
   ipv6 address FE80::2 link-local
   ipv6 address 20FF:CCFD:FFFF:1::2/64
-  ipv6 enable
   no shutdown
   exit
 
@@ -55,5 +63,27 @@ conf t
   ipv6 address FE80::2 link-local
   ipv6 address 20FF:CCFF:FFFF:2::2/64
   no shutdown
+  exit
+ exit
+
+ router ospf 64510
+  router-id 99.99.132.2
+  auto-cost reference-bandwidth 1000
+  area 0 authentication message-digest
+  passive-interface Loopback64510
+  passive-interface Ethernet0/0
+  passive-interface Ethernet0/2
+  passive-interface Ethernet0/3
+  network 99.99.132.0 255.255.254.0 area 0
+  network 10.0.0.2 255.255.255.255 area 0
+  exit
+
+ ipv6 router ospf 64510
+  router-id 6.99.132.2
+  auto-cost reference-bandwidth 1000
+  passive-interface Loopback64510
+  passive-interface Ethernet0/0
+  passive-interface Ethernet0/2
+  passive-interface Ethernet0/3
   exit
  exit
