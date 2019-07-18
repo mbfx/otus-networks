@@ -417,3 +417,24 @@
 | ZL-R7 | Loopback64500 | IPv4 | 10.0.0.7 | 10.0.0.7/32 | for iBGP |
 | ZL-R7 | Loopback64500 | IPv6 | FD00:CCFF:200A::7 | FD00:CCFF:200A::/128 | for iBGP |
 | ZL-R7 | Loopback64500 | IPv6 LL | FE80::7 | FE80::/10 | link-local |
+| OL-R1 | e0/0 | IPv4 | 35.10.194.1 | 35.10.194.0/25 | to OL-R2 |
+| OL-R1 | e0/0 | IPv6 | 20FF:CCFF:200A:D3::1 | 20FF:CCFF:200A:D3::/64 | to OL-R2 |
+| OL-R1 | e0/0 | IPv6 LL | FE80::1 | FE80::/10 | link-local |
+| OL-R1 | e0/2 | IPv4 | 35.10.192.2 | 35.10.192.0/24 | to ZL-R7 |
+| OL-R1 | e0/2 | IPv6 | 20FF:CCFF:200A:D1::2 | 20FF:CCFF:200A:D1::/64 | to ZL-R7 |
+| OL-R1 | e0/2 | IPv6 LL | FE80::2 | FE80::/10 | link-local |
+| OL-R1 | Loopback64500 | IPv4 | 10.0.0.8 | 10.0.0.8/32 | loopback |
+| OL-R1 | Loopback64500 | IPv6 | FD00:CCFF:200A::8 | FD00:CCFF:200A::/128 | loopback |
+| OL-R1 | Loopback64500 | IPv6 LL | FE80::8 | FE80::/10 | link-local |
+
+| OL-R2 | e0/0 | IPv4 | 35.10.194.2 | 35.10.194.0/25 | to OL-R1 |
+| OL-R2 | e0/0 | IPv6 | 20FF:CCFF:200A:D3::2 | 20FF:CCFF:200A:D3::/64 | to OL-R1 |
+| OL-R2 | e0/0 | IPv6 LL | FE80::2 | FE80::/10 | link-local |
+
+| OL-R2 | e0/1 | IPv4 | 35.10.193.2 | 35.10.193.0/24 | to ZL-R7 |
+| OL-R2 | e0/1 | IPv6 | 20FF:CCFF:200A:D2::2 | 20FF:CCFF:200A:D2::/64 | to ZL-R7 |
+| OL-R2 | e0/1 | IPv6 LL | FE80::2 | FE80::/10 | link-local |
+
+| OL-R2 | Loopback64500 | IPv4 | 10.0.0.9 | 10.0.0.9/32 | loopback |
+| OL-R2 | Loopback64500 | IPv6 | FD00:CCFF:200A::9 | FD00:CCFF:200A::/128 | loopback |
+| OL-R2 | Loopback64500 | IPv6 LL | FE80::9 | FE80::/10 | link-local |

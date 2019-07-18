@@ -1,0 +1,82 @@
+conf t
+
+ hostname "OL-R1"
+
+ ipv6 unicast-routing
+
+ interface Loopback64500
+  description "loopback"
+  ip address 10.0.0.8 255.255.255.255
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 100 md5 ospfpassarea0
+  ipv6 enable
+  ipv6 address FD00:CCFF:200A::8/128
+  ipv6 address FE80::8 link-local
+  ipv6 ospf authentication ipsec spi 500 md5 1234567890abcdef1234567890abcdef
+  ipv6 ospf 64500 area 0
+  no shutdown
+  exit
+
+ interface Ethernet0/0
+  description "to OL-R2"
+  ip address 35.10.194.1 255.255.255.128
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 100 md5 ospfpassarea10
+  ip ospf hello-interval 3
+  ip ospf dead-interval 12
+  ipv6 enable
+  ipv6 address FE80::1 link-local
+  ipv6 address 20FF:CCFF:200A:D3::1/64
+  ipv6 ospf authentication ipsec spi 513 md5 1234567890abcdef1234567890abcdee
+  ipv6 ospf hello-interval 3
+  ipv6 ospf dead-interval 12
+  ipv6 ospf 64500 area 0
+  no shutdown
+  exit
+
+ interface Ethernet0/1
+  description "not used"
+  no ip address
+  shutdown
+  exit
+
+ interface Ethernet0/2
+  description "to ZL-R7"
+  ip address 35.10.192.2 255.255.255.0
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 100 md5 ospfpassarea0
+  ip ospf dead-interval minimal hello-multiplier 5
+  ipv6 enable
+  ipv6 address FE80::2 link-local
+  ipv6 address 20FF:CCFF:200A:D1::2/64
+  ipv6 ospf authentication ipsec spi 512 md5 1234567890abcdef1234567890abcdee
+  ipv6 ospf hello-interval 1
+  ipv6 ospf dead-interval 4
+  ipv6 ospf 64500 area 0
+  no shutdown
+  exit
+
+ interface Ethernet0/3
+  description "not used"
+  no ip address
+  shutdown
+  exit
+
+ router ospf 64500
+  router-id 10.0.0.8
+  auto-cost reference-bandwidth 1000
+  area 0 authentication message-digest
+  passive-interface Ethernet0/1
+  passive-interface Ethernet0/3
+  network 10.0.0.8 255.255.255.255 area 0
+  network 35.10.194.0 0.0.0.127 area 0
+  network 35.10.192.0 0.0.0.255 area 0
+  exit
+
+ ipv6 router ospf 64500
+  router-id 6.0.0.8
+  auto-cost reference-bandwidth 1000
+  passive-interface Ethernet0/1
+  passive-interface Ethernet0/3
+  exit
+  
