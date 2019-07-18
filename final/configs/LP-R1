@@ -38,7 +38,7 @@ conf t
   ipv6 ospf authentication ipsec spi 501 md5 1234567890abcdef1234567890abcdef
   ipv6 ospf hello-interval 1
   ipv6 ospf dead-interval 4
-  ipv6 ospf 10 area 0
+  ipv6 ospf 64500 area 0
   no shutdown
   exit
 
@@ -54,7 +54,7 @@ conf t
   ipv6 ospf authentication ipsec spi 502 md5 1234567890abcdef1234567890abcdef
   ipv6 ospf hello-interval 1
   ipv6 ospf dead-interval 4
-  ipv6 ospf 10 area 0
+  ipv6 ospf 64500 area 0
   no shutdown
   exit
 

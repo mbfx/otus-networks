@@ -54,7 +54,7 @@ conf t
  ipv6 route ::/0 20FF:CCFE:FFFF:3::2 30 name "to ISP"
 
  ip route 172.31.254.0 255.255.255.0 172.31.255.1 1 name "to GRE tunnel networks through DMVPN"
- ipv6 route 20FF:CCFF:3000:1001::/64 20FF:CCFF:3000:1::1 1 name "to GRE tunnel networks through DMVPN"
+ ipv6 route FD00:CCFF:3001::/127 FE00:CCFF:3000::1 1 name "to GRE tunnel networks through DMVPN"
 
  ip route 35.10.0.0 255.255.0.0 172.31.255.1 1 name "to ZL-R1 through DMVPN"
  ip route 50.50.96.0 255.255.248.0 172.31.255.1 95 name "to DP-R1 through DMVPN"
@@ -97,7 +97,7 @@ conf t
   ipv6 ospf authentication ipsec spi 503 md5 1234567890abcdef1234567890abcdef
   ipv6 ospf hello-interval 20
   ipv6 ospf dead-interval 60
-  ipv6 ospf 64500 area 0
+  ipv6 ospf 64501 area 0
   ipv6 ospf priority 0
   ipv6 ospf network non-broadcast
   ipv6 ospf neighbor FE80::1
