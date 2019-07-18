@@ -87,3 +87,30 @@ conf t
   passive-interface Ethernet0/3
   exit
  exit
+
+ route-map PBRv4_TO_ETH00 permit 10
+  match ip address PBRv4_FROM_ZL-R1
+  set ip next-hop 99.99.134.2
+  exit
+ ip access-list extended PBRv4_FROM_ZL-R1
+  remark "PBR FROM ZL-R1 TO OV-R1 AND LP-R1 THROUGH PC-R1"
+  10 permit ip host 99.99.144.1 host 99.99.144.3
+  20 permit ip host 99.99.144.1 host 99.99.148.1
+  500 deny ip any any
+  exit
+
+ route-map PBRv6_TO_ETH00 permit 10
+  match ipv6 address PBRv6_FROM_ZL-R1
+  set ipv6 next-hop 20FF:CCFE:FFFF:2::2
+  exit 
+ ipv6 access-list PBRv6_FROM_ZL-R1
+  remark "PBR FROM ZL-R1 TO OV-R1 AND LP-R1 THROUGH PC-R1"
+  permit ipv6 host 20FF:CCFE:FFFF:3::1 host 20FF:CCFE:FFFF:3::3 sequence 10
+  permit ipv6 host 20FF:CCFE:FFFF:3::1 host 20FF:CCFF:FFFF:3::1 sequence 20
+  deny ipv6 any any sequence 500
+  exit
+
+ interface e0/0
+  ip policy route-map PBRv4_TO_ETH00
+  ipv6 policy route-map PBRv6_TO_ETH00
+  exit
