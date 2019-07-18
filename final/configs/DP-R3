@@ -1,0 +1,113 @@
+conf t
+
+ hostname "DP-R3"
+
+ ipv6 unicast-routing
+
+ interface Loopback64501
+  description "for iBGP"
+  ip address 10.0.1.3 255.255.255.255
+  ipv6 enable
+  ipv6 address FD00:CCFF:200C::3/128
+  ipv6 address FE80::3 link-local
+  no shutdown
+  exit
+
+ interface Ethernet0/0
+  description "not used"
+  no ip address
+  shutdown
+  exit
+
+ interface Ethernet0/1
+  description "to DP-R2"
+  ip address 50.50.101.2 255.255.255.0
+  ipv6 enable
+  ipv6 address FE80::2 link-local
+  ipv6 address 20FF:CCFF:200C:A4::2/64
+  no shutdown
+  exit
+
+ interface Ethernet0/2
+  description "to DP-R1"
+  ip address 50.50.96.2 255.255.254.0
+  ipv6 enable
+  ipv6 address FE80::2 link-local
+  ipv6 address 20FF:CCFF:200C:A1::2/64
+  no shutdown
+  exit
+
+ interface Ethernet0/3
+  description "not used"
+  no ip address
+  shutdown
+  exit
+
+ key chain EIGRP64501
+  key 1
+   key-string eigrp64501secretpass
+   exit
+  exit
+
+ router eigrp EIGRP64501
+  address-family ipv4 unicast autonomous-system 1
+   eigrp router-id 10.0.1.3
+   no shutdown
+   network 50.50.96.0 0.0.1.255
+   network 50.50.101.0 0.0.0.255
+   network 10.0.1.3 0.0.0.0
+   af-interface default
+    shutdown
+    passive-interface
+    exit-af-interface
+   af-interface Ethernet0/1
+    authentication key-chain EIGRP64501
+    authentication mode md5
+    no shutdown
+    no passive-interface
+    exit-af-interface   
+   af-interface Ethernet0/2
+    authentication key-chain EIGRP64501
+    authentication mode md5
+    no shutdown
+    no passive-interface
+    exit-af-interface
+   af-interface Loopback64501
+    authentication key-chain EIGRP64501
+    authentication mode md5
+    no shutdown
+    passive-interface
+    exit-af-interface
+   topology base
+    no auto-summary
+    exit-af-topology
+  address-family ipv6 unicast autonomous-system 1
+   eigrp router-id 6.0.1.3
+   no shutdown
+   af-interface default
+    shutdown
+    passive-interface
+    exit-af-interface
+   af-interface Ethernet0/1
+    authentication key-chain EIGRP64501
+    authentication mode md5
+    no shutdown
+    no passive-interface
+    exit-af-interface   
+   af-interface Ethernet0/2
+    authentication key-chain EIGRP64501
+    authentication mode md5
+    no shutdown
+    no passive-interface
+    exit-af-interface
+   af-interface Loopback64501
+    authentication key-chain EIGRP64501
+    authentication mode md5
+    no shutdown
+    passive-interface
+    exit-af-interface
+   topology base
+    exit-af-topology
+   exit-address-family
+  exit
+ exit

@@ -5,7 +5,7 @@ conf t
  ipv6 unicast-routing
 
  interface Loopback64501
-  description "loopback"
+  description "for iBGP"
   ip address 10.0.1.1 255.255.255.255
   ip ospf authentication message-digest
   ip ospf message-digest-key 100 md5 ospfpassarea0

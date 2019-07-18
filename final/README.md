@@ -258,7 +258,7 @@
 | DP-R1 | e0/3 | IPv4 | 50.50.100.1 | 50.50.100.0/24 | to DP-R3 |
 | DP-R1 | e0/3 | IPv6 | 20FF:CCFF:200C:A3::1 | 20FF:CCFF:200C:A3::/64 | to DP-R3 |
 | DP-R1 | e0/3 | IPv6 LL | FE80::1 | FE80::/10 | link-local |
-| DP-R1 | Loopback64501 | IPv4 | 10.0.0.1 | 10.0.0.1/32 | for iBGP |
+| DP-R1 | Loopback64501 | IPv4 | 10.0.1.1 | 10.0.1.1/32 | for iBGP |
 | DP-R1 | Loopback64501 | IPv6 | FD00:CCFF:200C::1 | FD00:CCFF:200C::/128 | for iBGP |
 | DP-R1 | Loopback64501 | IPv6 LL | FE80::1 | FE80::/10 | link-local |
 | LP-R1 | e0/0 | IPv4 | 99.99.148.1 | 99.99.148/31 | to PG-R1 |
@@ -270,7 +270,7 @@
 | LP-R1 | e0/2 | IPv4 | 35.11.0.1 | 35.11.0.0/24 | to LP-R2 |
 | LP-R1 | e0/2 | IPv6 | 20FF:CCFF:200B:A1::1 | 20FF:CCFF:200B:A1::/64 | to LP-R2 |
 | LP-R1 | e0/2 | IPv6 LL | FE80::1 | FE80::/10 | link-local |
-| LP-R1 | Loopback64500 | IPv4 | 10.0.0.1 | 10.0.0.1/32 | loopback |
+| LP-R1 | Loopback64500 | IPv4 | 10.0.2.1 | 10.0.2.1/32 | loopback |
 | LP-R1 | Loopback64500 | IPv6 | FD00:CCFF:200B::1 | FD00:CCFF:200B::/128 | loopback |
 | LP-R1 | Loopback64500 | IPv6 LL | FE80::1 | FE80::/10 | link-local |
 | OV-R1 | e0/0 | IPv4 | 99.99.144.3 | 99.99.144.2/31 | to PF-R2 |
@@ -282,7 +282,7 @@
 | OV-R1 | e0/2 | IPv4 | 50.50.105.1 | 50.50.105.0/25 | to OV-R2 |
 | OV-R1 | e0/2 | IPv6 | 20FF:CCFF:200D:A2::1 | 20FF:CCFF:200D:A2::/64 | to OV-R2 |
 | OV-R1 | e0/2 | IPv6 LL | FE80::1 | FE80::/10 | link-local |
-| OV-R1 | Loopback64501 | IPv4 | 10.0.0.1 | 10.0.0.1/32 | loopback |
+| OV-R1 | Loopback64501 | IPv4 | 10.0.3.1 | 10.0.3.1/32 | loopback |
 | OV-R1 | Loopback64501 | IPv6 | FD00:CCFF:200D::1 | FD00:CCFF:200D::/128 | loopback |
 | OV-R1 | Loopback64501 | IPv6 LL | FE80::1 | FE80::/10 | link-local |
 | OV-R2 | e0/0 | IPv4 | 50.50.104.1 | 50.50.104.0/24 | to OV-R3 |
@@ -291,7 +291,7 @@
 | OV-R2 | e0/2 | IPv4 | 50.50.105.2 | 50.50.105.0/25 | to OV-R1 |
 | OV-R2 | e0/2 | IPv6 | 20FF:CCFF:200D:A2::2 | 20FF:CCFF:200D:A2::/64 | to OV-R1 |
 | OV-R2 | e0/2 | IPv6 LL | FE80::2 | FE80::/10 | loopback |
-| OV-R2 | Loopback64501 | IPv4 | 10.0.0.2 | 10.0.0.2/32 | loopback |
+| OV-R2 | Loopback64501 | IPv4 | 10.0.3.2 | 10.0.3.2/32 | loopback |
 | OV-R2 | Loopback64501 | IPv6 | FD00:CCFF:200D::2 | FD00:CCFF:200D::/128 | loopback |
 | OV-R2 | Loopback64501 | IPv6 LL | FE80::2 | FE80::/10 | link-local |
 | OV-R3 | e0/0 | IPv4 | 50.50.104.2 | 50.50.104.0/24 | to OV-R2 |
@@ -300,7 +300,7 @@
 | OV-R3 | e0/1 | IPv4 | 50.50.105.130 | 50.50.105.128/25 | to OV-R1 |
 | OV-R3 | e0/1 | IPv6 | 20FF:CCFF:200D:A3::2 | 20FF:CCFF:200D:A3::/64 | to OV-R1 |
 | OV-R3 | e0/1 | IPv6 LL | FE80::2 | FE80::/10 | loopback |
-| OV-R3 | Loopback64501 | IPv4 | 10.0.0.3 | 10.0.0.3/32 | loopback |
+| OV-R3 | Loopback64501 | IPv4 | 10.0.3.3 | 10.0.3.3/32 | loopback |
 | OV-R3 | Loopback64501 | IPv6 | FD00:CCFF:200D::3 | FD00:CCFF:200D::/128 | loopback |
 | OV-R3 | Loopback64501 | IPv6 LL | FE80::3 | FE80::/10 | link-local |
 | LP-R2 | e0/0 | IPv4 | 35.11.2.1 | 35.11.2.0/24 | to LP-R3 |
@@ -309,7 +309,7 @@
 | LP-R2 | e0/2 | IPv4 | 35.11.0.2 | 35.11.0.0/24 | to LP-R1 |
 | LP-R2 | e0/2 | IPv6 | 20FF:CCFF:200B:A1::2 | 20FF:CCFF:200B:A1::/64 | to LP-R1 |
 | LP-R2 | e0/2 | IPv6 LL | FE80::2 | FE80::/10 | link-local |
-| LP-R2 | Loopback64500 | IPv4 | 10.0.0.2 | 10.0.0.2/32 | loopback |
+| LP-R2 | Loopback64500 | IPv4 | 10.0.2.2 | 10.0.2.2/32 | loopback |
 | LP-R2 | Loopback64500 | IPv6 | FD00:CCFF:200B::2 | FD00:CCFF:200B::/128 | loopback |
 | LP-R2 | Loopback64500 | IPv6 LL | FE80::2 | FE80::/10 | link-local |
 | LP-R3 | e0/0 | IPv4 | 35.11.2.2 | 35.11.2.0/24 | to LP-R2 |
@@ -318,6 +318,36 @@
 | LP-R3 | e0/1 | IPv4 | 35.11.1.2 | 35.11.1.0/24 | to LP-R1 |
 | LP-R3 | e0/1 | IPv6 | 20FF:CCFF:200B:A2::2 | 20FF:CCFF:200B:A2::/64 | to LP-R1 |
 | LP-R3 | e0/1 | IPv6 LL | FE80::2 | FE80::/10 | link-local |
-| LP-R3 | Loopback64500 | IPv4 | 10.0.0.3 | 10.0.0.3/32 | loopback |
+| LP-R3 | Loopback64500 | IPv4 | 10.0.2.3 | 10.0.2.3/32 | loopback |
 | LP-R3 | Loopback64500 | IPv6 | FD00:CCFF:200B::3 | FD00:CCFF:200B::/128 | loopback |
 | LP-R3 | Loopback64500 | IPv6 LL | FE80::3 | FE80::/10 | link-local |
+| DP-R2 | e0/0 | IPv4 | 50.50.102.1 | 50.50.102.0/24 | to DP-R4 |
+| DP-R2 | e0/0 | IPv6 | 20FF:CCFF:200C:A5::1 | 20FF:CCFF:200C:A5::/64 | to DP-R4 |
+| DP-R2 | e0/0 | IPV6 LL | FE80::1 | FE80::/10 | link-local |
+| DP-R2 | e0/1 | IPv4 | 50.50.101.1 | 50.50.101.0/24 | to DP-R3 |
+| DP-R2 | e0/1 | IPv6 | 20FF:CCFF:200C:A4::1 | 20FF:CCFF:200C:A4::/64 | to DP-R3 |
+| DP-R2 | e0/1 | IPV6 LL | FE80::1 | FE80::/10 | link-local |
+| DP-R2 | e0/3 | IPv4 | 50.50.100.2 | 50.50.100.0/24 | to DP-R1 |
+| DP-R2 | e0/3 | IPv6 | 20FF:CCFF:200C:A3::2 | 20FF:CCFF:200C:A3::/64 | to DP-R1 |
+| DP-R2 | e0/3 | IPV6 LL | FE80::2 | FE80::/10 | link-local |
+| DP-R2 | Loopback64501 | IPv4 | 10.0.1.2 | 10.0.1.2/32 | for iBGP |
+| DP-R2 | Loopback64501 | IPv6 | FD00:CCFF:200C::2 | FD00:CCFF:200C::/128 | for iBGP |
+| DP-R2 | Loopback64501 | IPv6 LL | FE80::2 | FE80::/10 | link-local |
+| DP-R3 | e0/1 | IPv4 | 50.50.101.2 | 50.50.101.0/24 | to DP-R2 |
+| DP-R3 | e0/1 | IPv6 | 20FF:CCFF:200C:A4::2 | 20FF:CCFF:200C:A4::/64 | to DP-R2 |
+| DP-R3 | e0/1 | IPV6 LL | FE80::2 | FE80::/10 | link-local |
+| DP-R3 | e0/2 | IPv4 | 50.50.96.2 | 50.50.96.0/23 | to DP-R1 |
+| DP-R3 | e0/2 | IPv6 | 20FF:CCFF:200C:A1::2 | 20FF:CCFF:200C:A1::/64 | to DP-R1 |
+| DP-R3 | e0/2 | IPv6 LL | FE80::2 | FE80::/10 | link-local |
+| DP-R3 | Loopback64501 | IPv4 | 10.0.1.3 | 10.0.1.3/32 | for iBGP |
+| DP-R3 | Loopback64501 | IPv6 | FD00:CCFF:200C::3 | FD00:CCFF:200C::/128 | for iBGP |
+| DP-R3 | Loopback64501 | IPv6 LL | FE80::3 | FE80::/10 | link-local |
+| DP-R4 | e0/0 | IPv4 | 50.50.102.2 | 50.50.102.0/24 | to DP-R2 |
+| DP-R4 | e0/0 | IPv6 | 20FF:CCFF:200C:A5::2 | 20FF:CCFF:200C:A5::/64 | to DP-R2 |
+| DP-R4 | e0/0 | IPV6 LL | FE80::2 | FE80::/10 | link-local |
+| DP-R4 | e0/1 | IPv4 | 50.50.98.2 | 50.50.98.0/23 | to DP-R1 |
+| DP-R4 | e0/1 | IPv6 | 20FF:CCFF:200C:A2::2 | 20FF:CCFF:200C:A2::/64 | to DP-R1 |
+| DP-R4 | e0/1 | IPv6 LL | FE80::2 | FE80::/10 | link-local |
+| DP-R4 | Loopback64501 | IPv4 | 10.0.1.4 | 10.0.1.4/32 | for iBGP |
+| DP-R4 | Loopback64501 | IPv6 | FD00:CCFF:200C::4 | FD00:CCFF:200C::/128 | for iBGP |
+| DP-R4 | Loopback64501 | IPv6 LL | FE80::4 | FE80::/10 | link-local |
