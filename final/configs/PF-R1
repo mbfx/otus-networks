@@ -114,3 +114,43 @@ conf t
   ip policy route-map PBRv4_TO_ETH00
   ipv6 policy route-map PBRv6_TO_ETH00
   exit
+
+ router bgp 64510
+  bgp router-id 99.99.132.1
+  neighbor 99.99.132.2 remote-as 64510
+  neighbor 99.99.134.2 remote-as 64509
+  neighbor 99.99.136.1 remote-as 64511
+  neighbor 99.99.144.1 remote-as 64500
+  neighbor 20FF:CCFE:FFFF:1::2 remote-as 64510
+  neighbor 20FF:CCFE:FFFF:2::2 remote-as 64509
+  neighbor 20FF:CCFF:FFFF:1::1 remote-as 64511
+  neighbor 20FF:CCFE:FFFF:3::1 remote-as 64500
+
+  address-family ipv4
+   neighbor 99.99.132.2 activate
+   neighbor 99.99.132.2 next-hop-self
+   neighbor 99.99.134.2 activate
+   neighbor 99.99.136.1 activate
+   neighbor 99.99.144.1 activate
+   no neighbor 20FF:CCFE:FFFF:1::2 activate
+   no neighbor 20FF:CCFE:FFFF:2::2 activate
+   no neighbor 20FF:CCFF:FFFF:1::1 activate
+   no neighbor 20FF:CCFE:FFFF:3::1 activate
+   network 99.99.132.0 mask 255.255.254.0
+   network 99.99.134.0 mask 255.255.254.0
+   network 99.99.144.0 mask 255.255.255.254
+   exit-address-family
+
+ address-family ipv6
+   neighbor 20FF:CCFE:FFFF:1::2 activate
+   neighbor 20FF:CCFE:FFFF:2::2 activate
+   neighbor 20FF:CCFF:FFFF:1::1 activate
+   neighbor 20FF:CCFE:FFFF:3::1 activate
+   network 20FF:CCFE:FFFF:1::/64
+   network 20FF:CCFE:FFFF:2::/64
+   network 20FF:CCFE:FFFF:3::/127
+   exit-address-family
+  exit
+ exit
+
+

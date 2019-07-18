@@ -137,3 +137,25 @@ conf t
   passive-interface Ethernet0/3
   exit
  exit
+
+ ip route 35.11.0.0 255.255.252.0 Null0 120 name "Summary net for BGP"
+ ipv6 route 20FF:CCFF:200B::/48 Null0 120 name "Summary net for BGP"
+
+ router bgp 64500
+  bgp router-id 99.99.148.1
+  neighbor 99.99.148.0 remote-as 64511
+  neighbor 20FF:CCFF:FFFF:3::0 remote-as 64511
+
+  address-family ipv4
+  neighbor 99.99.148.0 activate
+   no neighbor 20FF:CCFF:FFFF:3::0 activate
+   network 35.11.0.0 mask 255.255.252.0
+   exit-address-family
+
+ address-family ipv6
+   neighbor 20FF:CCFF:FFFF:3::0 activate
+   network 20FF:CCFF:200B::/48
+   exit-address-family
+  exit
+ exit
+ 

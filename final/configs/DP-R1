@@ -220,3 +220,22 @@ conf t
    exit-address-family
   exit
  exit
+
+ router bgp 64501
+  bgp router-id 99.99.140.1
+  neighbor 99.99.140.0 remote-as 64509
+  neighbor 20FF:CCFD:FFFF:3::0 remote-as 64509
+
+  address-family ipv4
+  neighbor 99.99.140.0 activate
+   no neighbor 20FF:CCFD:FFFF:3::0 activate
+   network 50.50.96.0 mask 255.255.248.0
+   exit-address-family
+
+ address-family ipv6
+   neighbor 20FF:CCFD:FFFF:3::0 activate
+   network 20FF:CCFF:200C::/48
+   exit-address-family
+  exit
+ exit
+ 
