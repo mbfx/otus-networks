@@ -64,6 +64,11 @@ conf t
  ipv6 prefix-list ONLY_DEFAULT_TO_CLIENT seq 5 permit ::/0
  ipv6 prefix-list ONLY_DEFAULT_TO_CLIENT seq 100 deny ::/0 le 128
 
+ ip as-path access-list 1 deny _64510_
+ ip as-path access-list 1 permit .*
+ ip as-path access-list 2 deny _64509_
+ ip as-path access-list 2 permit .*
+
  router bgp 64511
   bgp router-id 99.99.136.1
   neighbor 99.99.138.2 remote-as 64510
@@ -78,7 +83,9 @@ conf t
   address-family ipv4
    neighbor 99.99.138.2 activate
    neighbor 99.99.130.1 activate
+   neighbor 99.99.130.1 filter-list 1 out
    neighbor 99.99.136.2 activate
+   neighbor 99.99.136.2 filter-list 2 out
    neighbor 99.99.148.1 activate
    neighbor 99.99.148.1 default-originate
    neighbor 99.99.148.1 prefix-list ONLY_DEFAULT_TO_CLIENT out
@@ -94,7 +101,9 @@ conf t
  address-family ipv6
    neighbor 20FF:CCFF:FFFF:2::2 activate
    neighbor 20FF:CCFD:FFFF:2::1 activate
+   neighbor 20FF:CCFD:FFFF:2::1 filter-list 1 out
    neighbor 20FF:CCFF:FFFF:1::2 activate
+   neighbor 20FF:CCFF:FFFF:1::2 filter-list 2 out
    neighbor 20FF:CCFF:FFFF:3::1 activate
    neighbor 20FF:CCFF:FFFF:3::1 default-originate
    neighbor 20FF:CCFF:FFFF:3::1 prefix-list ONLY_DEFAULT_TO_CLIENT out

@@ -58,11 +58,13 @@ conf t
   exit
  exit
 
- ip prefix-list ONLY_DEFAULT_TO_CLIENT seq 5 permit 0.0.0.0/0
- ip prefix-list ONLY_DEFAULT_TO_CLIENT seq 100 deny 0.0.0.0/0 le 32
+ ip prefix-list TO_CLIENT_DP-R1 seq 5 permit 0.0.0.0/0
+ ip prefix-list TO_CLIENT_DP-R1 seq 10 permit 50.50.104.0/23
+ ip prefix-list TO_CLIENT_DP-R1 seq 100 deny 0.0.0.0/0 le 32
 
- ipv6 prefix-list ONLY_DEFAULT_TO_CLIENT seq 5 permit ::/0
- ipv6 prefix-list ONLY_DEFAULT_TO_CLIENT seq 100 deny ::/0 le 128
+ ipv6 prefix-list TO_CLIENT_DP-R1 seq 5 permit ::/0
+ ipv6 prefix-list TO_CLIENT_DP-R1 seq 10 permit 20FF:CCFF:200D::/48
+ ipv6 prefix-list TO_CLIENT_DP-R1 seq 100 deny ::/0 le 128
 
  router bgp 64509
   bgp router-id 99.99.128.1
@@ -81,7 +83,7 @@ conf t
    neighbor 99.99.134.1 activate
    neighbor 99.99.140.1 activate
    neighbor 99.99.140.1 default-originate
-   neighbor 99.99.140.1 prefix-list ONLY_DEFAULT_TO_CLIENT out
+   neighbor 99.99.140.1 prefix-list TO_CLIENT_DP-R1 out
    no neighbor 20FF:CCFD:FFFF:1::2 activate
    no neighbor 20FF:CCFD:FFFF:2::2 activate
    no neighbor 20FF:CCFE:FFFF:2::1 activate
@@ -97,7 +99,7 @@ conf t
    neighbor 20FF:CCFE:FFFF:2::1 activate
    neighbor 20FF:CCFD:FFFF:3::1 activate
    neighbor 20FF:CCFD:FFFF:3::1 default-originate
-   neighbor 20FF:CCFD:FFFF:3::1 prefix-list ONLY_DEFAULT_TO_CLIENT out
+   neighbor 20FF:CCFD:FFFF:3::1 prefix-list TO_CLIENT_DP-R1 out
    network 20FF:CCFD:FFFF:1::/64
    network 20FF:CCFD:FFFF:2::/64
    network 20FF:CCFD:FFFF:3::/127
