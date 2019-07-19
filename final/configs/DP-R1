@@ -225,17 +225,49 @@ conf t
   bgp router-id 99.99.140.1
   neighbor 99.99.140.0 remote-as 64509
   neighbor 20FF:CCFD:FFFF:3::0 remote-as 64509
+  neighbor 64501AS peer-group
+  neighbor 64501AS remote-as 64501
+  neighbor 64501AS update-source Loopback64501
+  neighbor 64501AS route-reflector-client
+  neighbor 64501AS next-hop-self
+  neighbor 64501AS password bgppass
+  neighbor 10.0.1.2 peer-group 64501AS
+  neighbor 10.0.1.3 peer-group 64501AS
+  neighbor 10.0.1.4 peer-group 64501AS
+  neighbor 64501AS6 peer-group
+  neighbor 64501AS6 remote-as 64501
+  neighbor 64501AS6 update-source Loopback64501
+  neighbor 64501AS6 route-reflector-client
+  neighbor 64501AS6 next-hop-self
+  neighbor 64501AS6 password bgppass
+  neighbor FD00:CCFF:200C::2 peer-group 64501AS6
+  neighbor FD00:CCFF:200C::3 peer-group 64501AS6
+  neighbor FD00:CCFF:200C::4 peer-group 64501AS6
 
   address-family ipv4
-  neighbor 99.99.140.0 activate
-   no neighbor 20FF:CCFD:FFFF:3::0 activate
    network 50.50.96.0 mask 255.255.248.0
+   network 50.50.96.0 mask 255.255.254.0
+   network 50.50.98.0 mask 255.255.254.0 
+   network 50.50.100.0 mask 255.255.255.0
+   neighbor 99.99.140.0 activate
+   neighbor 10.0.1.2 activate
+   neighbor 10.0.1.3 activate
+   neighbor 10.0.1.4 activate
+   no neighbor 20FF:CCFD:FFFF:3::0 activate
+   no neighbor FD00:CCFF:200C::2 activate
+   no neighbor FD00:CCFF:200C::3 activate
+   no neighbor FD00:CCFF:200C::4 activate
    exit-address-family
 
  address-family ipv6
    neighbor 20FF:CCFD:FFFF:3::0 activate
+   neighbor FD00:CCFF:200C::2 activate
+   neighbor FD00:CCFF:200C::3 activate
+   neighbor FD00:CCFF:200C::4 activate  
    network 20FF:CCFF:200C::/48
+   network 20FF:CCFF:200C:A1::/64
+   network 20FF:CCFF:200C:A2::/64
+   network 20FF:CCFF:200C:A3::/64
    exit-address-family
   exit
  exit
- 
