@@ -115,6 +115,12 @@ conf t
   ipv6 policy route-map PBRv6_TO_ETH00
   exit
 
+ ip prefix-list ONLY_DEFAULT_TO_CLIENT seq 5 permit 0.0.0.0/0
+ ip prefix-list ONLY_DEFAULT_TO_CLIENT seq 100 deny 0.0.0.0/0 le 32
+
+ ipv6 prefix-list ONLY_DEFAULT_TO_CLIENT seq 5 permit ::/0
+ ipv6 prefix-list ONLY_DEFAULT_TO_CLIENT seq 100 deny ::/0 le 128
+
  router bgp 64510
   bgp router-id 99.99.132.1
   neighbor 99.99.132.2 remote-as 64510
@@ -132,6 +138,8 @@ conf t
    neighbor 99.99.134.2 activate
    neighbor 99.99.136.1 activate
    neighbor 99.99.144.1 activate
+   neighbor 99.99.144.1 default-originate
+   neighbor 99.99.144.1 prefix-list ONLY_DEFAULT_TO_CLIENT out
    no neighbor 20FF:CCFE:FFFF:1::2 activate
    no neighbor 20FF:CCFE:FFFF:2::2 activate
    no neighbor 20FF:CCFF:FFFF:1::1 activate
@@ -146,6 +154,8 @@ conf t
    neighbor 20FF:CCFE:FFFF:2::2 activate
    neighbor 20FF:CCFF:FFFF:1::1 activate
    neighbor 20FF:CCFE:FFFF:3::1 activate
+   neighbor 20FF:CCFE:FFFF:3::1 default-originate
+   neighbor 20FF:CCFE:FFFF:3::1 prefix-list ONLY_DEFAULT_TO_CLIENT out
    network 20FF:CCFE:FFFF:1::/64
    network 20FF:CCFE:FFFF:2::/64
    network 20FF:CCFE:FFFF:3::/127

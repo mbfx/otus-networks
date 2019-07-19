@@ -138,8 +138,11 @@ conf t
   exit
  exit
 
- ip route 35.11.0.0 255.255.252.0 Null0 120 name "Summary net for BGP"
- ipv6 route 20FF:CCFF:200B::/48 Null0 120 name "Summary net for BGP"
+ ip prefix-list ONLY_DEFAULT_FROM_ISP seq 5 permit 0.0.0.0/0
+ ip prefix-list ONLY_DEFAULT_FROM_ISP seq 100 deny 0.0.0.0/0 le 32
+
+ ipv6 prefix-list ONLY_DEFAULT_FROM_ISP seq 5 permit ::/0
+ ipv6 prefix-list ONLY_DEFAULT_FROM_ISP seq 100 deny ::/0 le 128
 
  router bgp 64500
   bgp router-id 99.99.148.1
@@ -147,14 +150,22 @@ conf t
   neighbor 20FF:CCFF:FFFF:3::0 remote-as 64511
 
   address-family ipv4
-  neighbor 99.99.148.0 activate
+   neighbor 99.99.148.0 activate
+   neighbor 99.99.148.0 prefix-list ONLY_DEFAULT_FROM_ISP in
    no neighbor 20FF:CCFF:FFFF:3::0 activate
-   network 35.11.0.0 mask 255.255.252.0
+   network 35.11.0.0 mask 255.255.255.0
+   network 35.11.1.0 mask 255.255.255.0
+   network 35.11.2.0 mask 255.255.255.0
+   aggregate-address 35.11.0.0 255.255.252.0 summary-only
    exit-address-family
 
- address-family ipv6
+  address-family ipv6
    neighbor 20FF:CCFF:FFFF:3::0 activate
-   network 20FF:CCFF:200B::/48
+   neighbor 20FF:CCFF:FFFF:3::0 prefix-list ONLY_DEFAULT_FROM_ISP in
+   network 20FF:CCFF:200B:A1::/64
+   network 20FF:CCFF:200B:A2::/64
+   network 20FF:CCFF:200B:A3::/64
+   aggregate-address 20FF:CCFF:200B::/48 summary-only
    exit-address-family
   exit
  exit

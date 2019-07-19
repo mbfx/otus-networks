@@ -221,6 +221,12 @@ conf t
   exit
  exit
 
+ ip prefix-list ONLY_DEFAULT_FROM_ISP seq 5 permit 0.0.0.0/0
+ ip prefix-list ONLY_DEFAULT_FROM_ISP seq 100 deny 0.0.0.0/0 le 32
+
+ ipv6 prefix-list ONLY_DEFAULT_FROM_ISP seq 5 permit ::/0
+ ipv6 prefix-list ONLY_DEFAULT_FROM_ISP seq 100 deny ::/0 le 128
+
  router bgp 64501
   bgp router-id 99.99.140.1
   neighbor 99.99.140.0 remote-as 64509
@@ -245,11 +251,12 @@ conf t
   neighbor FD00:CCFF:200C::4 peer-group 64501AS6
 
   address-family ipv4
-   network 50.50.96.0 mask 255.255.248.0
    network 50.50.96.0 mask 255.255.254.0
    network 50.50.98.0 mask 255.255.254.0 
    network 50.50.100.0 mask 255.255.255.0
+   aggregate-address 50.50.96.0 255.255.248.0 summary-only
    neighbor 99.99.140.0 activate
+   neighbor 99.99.140.0 prefix-list ONLY_DEFAULT_FROM_ISP in
    neighbor 10.0.1.2 activate
    neighbor 10.0.1.3 activate
    neighbor 10.0.1.4 activate
@@ -261,13 +268,14 @@ conf t
 
  address-family ipv6
    neighbor 20FF:CCFD:FFFF:3::0 activate
+   neighbor 20FF:CCFD:FFFF:3::0 prefix-list ONLY_DEFAULT_FROM_ISP in
    neighbor FD00:CCFF:200C::2 activate
    neighbor FD00:CCFF:200C::3 activate
    neighbor FD00:CCFF:200C::4 activate  
-   network 20FF:CCFF:200C::/48
    network 20FF:CCFF:200C:A1::/64
    network 20FF:CCFF:200C:A2::/64
    network 20FF:CCFF:200C:A3::/64
+   aggregate-address 20FF:CCFF:200C::/48 summary-only
    exit-address-family
   exit
  exit
