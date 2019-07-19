@@ -101,3 +101,31 @@ conf t
   auto-cost reference-bandwidth 1000
   area 42 stub no-summary
   exit
+
+ router bgp 64500
+  bgp router-id 10.0.0.3
+  neighbor 10.0.0.1 remote-as 64500
+  neighbor 10.0.0.1 update-source Loopback64500
+  neighbor 10.0.0.1 password bgppass
+  neighbor FD00:CCFF:200A::1 remote-as 64500
+  neighbor FD00:CCFF:200A::1 update-source Loopback64500
+  neighbor FD00:CCFF:200A::1 password bgppass
+
+  address-family ipv4
+   network 35.10.8.0 mask 255.255.254.0
+   network 35.10.12.0 mask 255.255.255.0
+   network 35.10.65.0 mask 255.255.255.128
+   network 35.10.65.128 mask 255.255.255.128
+   no neighbor FD00:CCFF:200A::1 activate
+   neighbor 10.0.0.1 activate
+   exit-address-family
+
+  address-family ipv6
+   network 20FF:CCFF:200A:A2::/64
+   network 20FF:CCFF:200A:A4::/64
+   network 20FF:CCFF:200A:B2::/64
+   network 20FF:CCFF:200A:B3::/64
+   neighbor FD00:CCFF:200A::1 activate
+   exit-address-family
+  exit
+ exit

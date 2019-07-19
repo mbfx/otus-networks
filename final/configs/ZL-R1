@@ -181,6 +181,30 @@ conf t
   bgp router-id 99.99.144.1
   neighbor 99.99.144.0 remote-as 64510
   neighbor 20FF:CCFE:FFFF:3::0 remote-as 64510
+  neighbor 64500AS peer-group
+  neighbor 64500AS remote-as 64500
+  neighbor 64500AS update-source Loopback64500
+  neighbor 64500AS route-reflector-client
+  neighbor 64500AS next-hop-self
+  neighbor 64500AS password bgppass
+  neighbor 10.0.0.2 peer-group 64500AS
+  neighbor 10.0.0.3 peer-group 64500AS
+  neighbor 10.0.0.4 peer-group 64500AS
+  neighbor 10.0.0.5 peer-group 64500AS
+  neighbor 10.0.0.6 peer-group 64500AS
+  neighbor 10.0.0.7 peer-group 64500AS
+  neighbor 64500AS6 peer-group
+  neighbor 64500AS6 remote-as 64500
+  neighbor 64500AS6 update-source Loopback64500
+  neighbor 64500AS6 route-reflector-client
+  neighbor 64500AS6 next-hop-self
+  neighbor 64500AS6 password bgppass
+  neighbor FD00:CCFF:200A::2 peer-group 64500AS6
+  neighbor FD00:CCFF:200A::3 peer-group 64500AS6
+  neighbor FD00:CCFF:200A::4 peer-group 64500AS6
+  neighbor FD00:CCFF:200A::5 peer-group 64500AS6
+  neighbor FD00:CCFF:200A::6 peer-group 64500AS6
+  neighbor FD00:CCFF:200A::7 peer-group 64500AS6
 
   address-family ipv4
    neighbor 99.99.144.0 activate
@@ -198,6 +222,18 @@ conf t
    network 35.10.193.0 mask 255.255.255.0
    network 35.10.194.0 mask 255.255.255.128
    aggregate-address 35.10.0.0 255.255.0.0 summary-only
+   neighbor 10.0.0.2 activate
+   neighbor 10.0.0.3 activate
+   neighbor 10.0.0.4 activate
+   neighbor 10.0.0.5 activate
+   neighbor 10.0.0.6 activate
+   neighbor 10.0.0.7 activate
+   no neighbor FD00:CCFF:200A::2 activate
+   no neighbor FD00:CCFF:200A::3 activate
+   no neighbor FD00:CCFF:200A::4 activate
+   no neighbor FD00:CCFF:200A::5 activate
+   no neighbor FD00:CCFF:200A::6 activate
+   no neighbor FD00:CCFF:200A::7 activate   
    exit-address-family
 
   address-family ipv6
@@ -215,6 +251,12 @@ conf t
    network 20FF:CCFF:200A:D2::/64
    network 20FF:CCFF:200A:D3::/64
    aggregate-address 20FF:CCFF:200A::/48 summary-only
+   neighbor FD00:CCFF:200A::2 activate
+   neighbor FD00:CCFF:200A::3 activate
+   neighbor FD00:CCFF:200A::4 activate
+   neighbor FD00:CCFF:200A::5 activate
+   neighbor FD00:CCFF:200A::6 activate
+   neighbor FD00:CCFF:200A::7 activate  
    exit-address-family
   exit
  exit
