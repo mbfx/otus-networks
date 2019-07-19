@@ -66,6 +66,19 @@ conf t
  ipv6 prefix-list TO_CLIENT_DP-R1 seq 10 permit 20FF:CCFF:200D::/48
  ipv6 prefix-list TO_CLIENT_DP-R1 seq 100 deny ::/0 le 128
 
+ ip as-path access-list 1 permit ^64511_
+ ip as-path access-list 1 deny .*
+
+ ip as-path access-list 500 permit .*
+
+ route-map SET_LP_80_FROM_64511 permit 10
+  match as-path 1
+  set local-preference 80
+  exit
+ route-map SET_LP_80_FROM_64511 permit 500
+  match as-path 500
+  exit
+
  router bgp 64509
   bgp router-id 99.99.128.1
   neighbor 99.99.128.2 remote-as 64510
@@ -80,6 +93,7 @@ conf t
   address-family ipv4
    neighbor 99.99.128.2 activate
    neighbor 99.99.130.2 activate
+   neighbor 99.99.130.2 route-map SET_LP_80_FROM_64511 in
    neighbor 99.99.134.1 activate
    neighbor 99.99.140.1 activate
    neighbor 99.99.140.1 default-originate
@@ -96,6 +110,7 @@ conf t
  address-family ipv6
    neighbor 20FF:CCFD:FFFF:1::2 activate
    neighbor 20FF:CCFD:FFFF:2::2 activate
+   neighbor 20FF:CCFD:FFFF:2::2 route-map SET_LP_80_FROM_64511 in
    neighbor 20FF:CCFE:FFFF:2::1 activate
    neighbor 20FF:CCFD:FFFF:3::1 activate
    neighbor 20FF:CCFD:FFFF:3::1 default-originate

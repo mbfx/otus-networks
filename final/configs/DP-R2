@@ -128,6 +128,13 @@ conf t
   exit
  exit
 
+ ip as-path access-list 1 permit .*
+
+ route-map MED_PRIORITY permit 10
+  match as-path 1
+  set metric 1500
+  exit
+
  router bgp 64501
   bgp router-id 10.0.1.2
   neighbor 10.0.1.1 remote-as 64501
@@ -136,20 +143,22 @@ conf t
   neighbor FD00:CCFF:200C::1 remote-as 64501
   neighbor FD00:CCFF:200C::1 update-source Loopback64501
   neighbor FD00:CCFF:200C::1 password bgppass
-! 
+
   address-family ipv4
    network 50.50.100.0 mask 255.255.255.0
    network 50.50.101.0 mask 255.255.255.0
    network 50.50.102.0 mask 255.255.255.0
    no neighbor FD00:CCFF:200C::1 activate
    neighbor 10.0.1.1 activate
+   neighbor 10.0.1.1 route-map MED_PRIORITY out
    exit-address-family
-! 
+
   address-family ipv6
    network 20FF:CCFF:200C:A3::/64
    network 20FF:CCFF:200C:A4::/64
    network 20FF:CCFF:200C:A5::/64
    neighbor FD00:CCFF:200C::1 activate
+   neighbor FD00:CCFF:200C::1 route-map MED_PRIORITY out
    exit-address-family
   exit
  exit
