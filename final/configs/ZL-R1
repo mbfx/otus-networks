@@ -129,8 +129,6 @@ conf t
   no shutdown
   exit
 
-
-
  ip route 0.0.0.0 0.0.0.0 99.99.144.0 30 name "to ISP"
  ipv6 route ::/0 20FF:CCFE:FFFF:3::0 30 name "to ISP"
 
