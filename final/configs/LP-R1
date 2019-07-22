@@ -224,15 +224,15 @@ conf t
 
  ip dhcp pool DHCP_POOL_1
   network 35.11.0.0 255.255.255.0
-  default-router 35.11.0.1 35.11.1.1
+  default-router 35.11.0.1 35.11.0.2
   domain-name lp.com
   dns-server 35.11.0.1 35.11.1.1
   lease 8
   exit
 
- ip dhcp pool DHCP_POOL_1
+ ip dhcp pool DHCP_POOL_2
   network 35.11.1.0 255.255.255.0
-  default-router 35.11.1.1 35.11.0.1
+  default-router 35.11.1.1 35.11.1.2
   domain-name lp.com
   dns-server 35.11.1.1 35.11.0.1
   lease 8

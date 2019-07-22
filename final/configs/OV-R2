@@ -149,3 +149,33 @@ conf t
 
  ip route 0.0.0.0 0.0.0.0 50.50.105.1 1 name "to OV-R1"
  ipv6 route ::/0 20FF:CCFF:200D:A2::1 1 name "to OV-R1"
+
+ ip dhcp excluded-address 0.0.0.0 50.50.104.2
+ ip dhcp excluded-address 50.50.104.254 255.255.255.255
+
+ service dhcp
+
+ ip dhcp pool DHCP_POOL_1
+  network 50.50.104.0 255.255.255.0
+  default-router 50.50.105.1 50.50.105.129
+  domain-name ov.com
+  dns-server 50.50.104.1 50.50.104.2
+  lease 8
+  exit
+
+ ipv6 dhcp pool DHCP_POOL_IPV6_1
+  address prefix 20FF:CCFF:200D:A1::/64 lifetime 2073600 691200
+  domain-name ov.com
+  dns-server 20FF:CCFF:200D:A1::1
+  exit
+
+ interface Ethernet0/0
+  ipv6 dhcp server DHCP_POOL_IPV6_1
+  ipv6 nd managed-config-flag
+  exit
+
+ interface Ethernet0/2
+  ip helper-address 50.50.105.1
+  ipv6 dhcp relay destination FE80::1
+  exit
+  
