@@ -169,4 +169,13 @@ conf t
  ip domain-lookup
  ip domain name dp.com
  ip name-server 50.50.98.1 50.50.96.1 50.50.100.1 20FF:CCFF:200C:A2::1 20FF:CCFF:200C:A1::1 20FF:CCFF:200C:A3::1
- 
+
+ interface Ethernet0/1
+  ip helper-address 50.50.101.1
+  ipv6 dhcp relay destination FE80::1
+  exit
+
+ interface Ethernet0/2
+  ip helper-address 50.50.96.1
+  ipv6 dhcp relay destination FE80::1
+  exit

@@ -215,3 +215,47 @@ conf t
  ip dns primary lp.com soa ns.lp.com admin@lp.com
  ip host lp.com ns ns.lp.com
  ip host ns.lp.com 35.11.0.1 35.11.1.1 20FF:CCFF:200B:A1::1 20FF:CCFF:200B:A2::1
+
+ ip dhcp excluded-address 0.0.0.0 35.11.0.2
+ ip dhcp excluded-address 35.11.0.254 35.11.1.2
+ ip dhcp excluded-address 35.11.1.254 255.255.255.255
+
+ service dhcp
+
+ ip dhcp pool DHCP_POOL_1
+  network 35.11.0.0 255.255.255.0
+  default-router 35.11.0.1 35.11.1.1
+  domain-name lp.com
+  dns-server 35.11.0.1 35.11.1.1
+  lease 8
+  exit
+
+ ip dhcp pool DHCP_POOL_1
+  network 35.11.1.0 255.255.255.0
+  default-router 35.11.1.1 35.11.0.1
+  domain-name lp.com
+  dns-server 35.11.1.1 35.11.0.1
+  lease 8
+  exit
+
+ ipv6 dhcp pool DHCP_POOL_IPV6_1
+  address prefix 20FF:CCFF:200B:A1::/64 lifetime 2073600 691200
+  domain-name dp.com
+  dns-server 20FF:CCFF:200B:A1::1
+  exit
+
+ ipv6 dhcp pool DHCP_POOL_IPV6_2
+  address prefix 20FF:CCFF:200B:A2::/64 lifetime 2073600 691200
+  domain-name dp.com
+  dns-server 20FF:CCFF:200B:A2::1
+  exit
+
+ interface Ethernet0/2
+  ipv6 dhcp server DHCP_POOL_IPV6_1
+  ipv6 nd managed-config-flag
+  exit
+
+ interface Ethernet0/1
+  ipv6 dhcp server DHCP_POOL_IPV6_2
+  ipv6 nd managed-config-flag
+  exit

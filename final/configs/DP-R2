@@ -196,4 +196,53 @@ conf t
  ip domain-lookup
  ip domain name dp.com
  ip name-server 50.50.98.1 50.50.96.1 50.50.100.1 20FF:CCFF:200C:A2::1 20FF:CCFF:200C:A1::1 20FF:CCFF:200C:A3::1
- 
+
+ ip dhcp excluded-address 0.0.0.0 50.50.101.2
+ ip dhcp excluded-address 50.50.101.254 50.50.102.2 
+ ip dhcp excluded-address 50.50.102.254 255.255.255.255
+
+ service dhcp
+
+ ip dhcp pool DHCP_POOL_1
+  network 50.50.101.0 255.255.255.0
+  default-router 50.50.101.1 50.50.101.2
+  domain-name dp.com
+  dns-server 50.50.96.1 50.50.100.1 50.50.98.1
+  lease 8
+  exit
+
+ ip dhcp pool DHCP_POOL_2
+  network 50.50.102.0 255.255.255.0
+  default-router 50.50.102.1 50.50.102.2 
+  domain-name dp.com
+  dns-server 50.50.98.1 50.50.100.1 50.50.96.1
+  lease 8
+  exit
+
+ ipv6 dhcp pool DHCP_POOL_IPV6_1
+  address prefix 20FF:CCFF:200C:A4::/64 lifetime 2073600 691200
+  domain-name dp.com
+  dns-server 20FF:CCFF:200C:A3::1
+  exit
+
+ ipv6 dhcp pool DHCP_POOL_IPV6_2
+  address prefix 20FF:CCFF:200C:A2::/64 lifetime 2073600 691200
+  domain-name dp.com
+  dns-server 20FF:CCFF:200C:A3::1
+  exit
+
+ interface Ethernet0/0
+  ipv6 dhcp server DHCP_POOL_IPV6_1
+  ipv6 nd managed-config-flag
+  exit
+
+ interface Ethernet0/1
+  ipv6 dhcp server DHCP_POOL_IPV6_2
+  ipv6 nd managed-config-flag
+  exit
+
+ interface Ethernet0/3
+  ip helper-address 50.50.100.1
+  ipv6 dhcp relay destination FE80::1
+  exit
+  

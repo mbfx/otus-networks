@@ -334,3 +334,67 @@ conf t
  ip dns primary dp.com soa ns.dp.com admin@dp.com
  ip host dp.com ns ns.dp.com
  ip host ns.dp.com 50.50.98.1 50.50.96.1 50.50.100.1 20FF:CCFF:200C:A2::1 20FF:CCFF:200C:A1::1 20FF:CCFF:200C:A3::1
+
+ ip dhcp excluded-address 0.0.0.0 50.50.96.2
+ ip dhcp excluded-address 50.50.97.254 50.50.98.2
+ ip dhcp excluded-address 50.50.99.254 50.50.100.2
+ ip dhcp excluded-address 50.50.100.254 255.255.255.255
+
+ service dhcp
+
+ ip dhcp pool DHCP_POOL_1
+  network 50.50.96.0 255.255.254.0
+  default-router 50.50.96.1 50.50.100.1 50.50.98.1
+  domain-name dp.com
+  dns-server 50.50.96.1 50.50.100.1 50.50.98.1
+  lease 8
+  exit
+
+ ip dhcp pool DHCP_POOL_2
+  network 50.50.98.0 255.255.254.0
+  default-router 50.50.98.1 50.50.100.1 50.50.96.1 
+  domain-name dp.com
+  dns-server 50.50.98.1 50.50.100.1 50.50.96.1
+  lease 8
+  exit
+
+ ip dhcp pool DHCP_POOL_3
+  network 50.50.100.0 255.255.255.0
+  default-router 50.50.100.1 50.50.96.1 50.50.98.1
+  domain-name dp.com
+  dns-server 50.50.100.1 50.50.96.1 50.50.98.1
+  lease 8
+  exit
+
+ ipv6 dhcp pool DHCP_POOL_IPV6_1
+  address prefix 20FF:CCFF:200C:A1::/64 lifetime 2073600 691200
+  domain-name dp.com
+  dns-server 20FF:CCFF:200C:A1::1
+  exit
+
+ ipv6 dhcp pool DHCP_POOL_IPV6_2
+  address prefix 20FF:CCFF:200C:A2::/64 lifetime 2073600 691200
+  domain-name dp.com
+  dns-server 20FF:CCFF:200C:A2::1
+  exit
+
+ ipv6 dhcp pool DHCP_POOL_IPV6_3
+  address prefix 20FF:CCFF:200C:A3::/64 lifetime 2073600 691200
+  domain-name dp.com
+  dns-server 20FF:CCFF:200C:A3::1
+  exit
+
+ interface Ethernet0/2
+  ipv6 dhcp server DHCP_POOL_IPV6_1
+  ipv6 nd managed-config-flag
+  exit
+
+ interface Ethernet0/1
+  ipv6 dhcp server DHCP_POOL_IPV6_2
+  ipv6 nd managed-config-flag
+  exit
+  
+ interface Ethernet0/3
+  ipv6 dhcp server DHCP_POOL_IPV6_3
+  ipv6 nd managed-config-flag
+  exit

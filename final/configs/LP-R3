@@ -109,4 +109,14 @@ conf t
  ip domain-lookup
  ip domain name lp.com
  ip name-server 35.11.0.1 35.11.1.1 20FF:CCFF:200B:A1::1 20FF:CCFF:200B:A2::1
+
+ interface Ethernet0/0
+  ip helper-address 35.11.2.1
+  ipv6 dhcp relay destination FE80::1
+  exit
+
+ interface Ethernet0/1
+  ip helper-address 35.11.1.1
+  ipv6 dhcp relay destination FE80::1
+  exit
  
