@@ -147,3 +147,9 @@ conf t
  ntp trusted-key 1
  clock timezone UTC 2
  ntp master 1
+
+ip dns server
+ip domain name test.com
+ip dns primary test.com soa ns.test.com admin@test.com
+ip host test.com ns ns.test.com
+ip host ns.test.com 99.99.130.1 99.99.128.1 99.99.134.2 20FF:CCFD:FFFF:2::1 20FF:CCFD:FFFF:1::1 20FF:CCFE:FFFF:2::2

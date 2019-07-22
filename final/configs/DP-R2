@@ -191,3 +191,9 @@ conf t
  ntp server 20FF:CCFF:200C:A2::1 key 1
  ntp server 50.50.100.1 prefer key 1
  ntp server 20FF:CCFF:200C:A3::1 prefer key 1
+
+ ip dns server
+ ip domain-lookup
+ ip domain name dp.com
+ ip name-server 50.50.98.1 50.50.96.1 50.50.100.1 20FF:CCFF:200C:A2::1 20FF:CCFF:200C:A1::1 20FF:CCFF:200C:A3::1
+ 

@@ -236,8 +236,6 @@ conf t
   neighbor 64501AS peer-group
   neighbor 64501AS remote-as 64501
   neighbor 64501AS update-source Loopback64501
-  neighbor 64501AS route-reflector-client
-  neighbor 64501AS next-hop-self
   neighbor 64501AS password bgppass
   neighbor 10.0.1.2 peer-group 64501AS
   neighbor 10.0.1.3 peer-group 64501AS
@@ -245,8 +243,6 @@ conf t
   neighbor 64501AS6 peer-group
   neighbor 64501AS6 remote-as 64501
   neighbor 64501AS6 update-source Loopback64501
-  neighbor 64501AS6 route-reflector-client
-  neighbor 64501AS6 next-hop-self
   neighbor 64501AS6 password bgppass
   neighbor FD00:CCFF:200C::2 peer-group 64501AS6
   neighbor FD00:CCFF:200C::3 peer-group 64501AS6
@@ -257,6 +253,9 @@ conf t
    network 50.50.98.0 mask 255.255.254.0 
    network 50.50.100.0 mask 255.255.255.0
    aggregate-address 50.50.96.0 255.255.248.0 summary-only
+   neighbor 64501AS route-reflector-client
+   neighbor 64501AS next-hop-self
+   neighbor 64501AS default-originate
    neighbor 99.99.140.0 activate
    neighbor 99.99.140.0 prefix-list FROM_ISP in
    neighbor 10.0.1.2 activate
@@ -268,16 +267,19 @@ conf t
    no neighbor FD00:CCFF:200C::4 activate
    exit-address-family
 
- address-family ipv6
-   neighbor 20FF:CCFD:FFFF:3::0 activate
-   neighbor 20FF:CCFD:FFFF:3::0 prefix-list FROM_ISP in
-   neighbor FD00:CCFF:200C::2 activate
-   neighbor FD00:CCFF:200C::3 activate
-   neighbor FD00:CCFF:200C::4 activate  
+  address-family ipv6
    network 20FF:CCFF:200C:A1::/64
    network 20FF:CCFF:200C:A2::/64
    network 20FF:CCFF:200C:A3::/64
    aggregate-address 20FF:CCFF:200C::/48 summary-only
+   neighbor 64501AS6 route-reflector-client
+   neighbor 64501AS6 next-hop-self
+   neighbor 64501AS6 default-originate
+   neighbor FD00:CCFF:200C::2 activate
+   neighbor FD00:CCFF:200C::3 activate
+   neighbor FD00:CCFF:200C::4 activate 
+   neighbor 20FF:CCFD:FFFF:3::0 activate
+   neighbor 20FF:CCFD:FFFF:3::0 prefix-list FROM_ISP in
    exit-address-family
   exit
  exit
@@ -324,4 +326,11 @@ conf t
  ntp access-group ipv6 serve-only NTPSERVER_LAN_IPV6_ACL
  clock timezone UTC 2
  ntp master 3
- 
+
+ ip dns server
+ ip domain-lookup
+ ip name-server 99.99.130.1 99.99.128.1 99.99.134.2 20FF:CCFD:FFFF:2::1 20FF:CCFD:FFFF:1::1 20FF:CCFE:FFFF:2::2
+ ip domain name dp.com
+ ip dns primary dp.com soa ns.dp.com admin@dp.com
+ ip host dp.com ns ns.dp.com
+ ip host ns.dp.com 50.50.98.1 50.50.96.1 50.50.100.1 20FF:CCFF:200C:A2::1 20FF:CCFF:200C:A1::1 20FF:CCFF:200C:A3::1
