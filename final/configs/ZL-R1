@@ -182,8 +182,6 @@ conf t
   neighbor 64500AS peer-group
   neighbor 64500AS remote-as 64500
   neighbor 64500AS update-source Loopback64500
-  neighbor 64500AS route-reflector-client
-  neighbor 64500AS next-hop-self
   neighbor 64500AS password bgppass
   neighbor 10.0.0.2 peer-group 64500AS
   neighbor 10.0.0.3 peer-group 64500AS
@@ -194,8 +192,6 @@ conf t
   neighbor 64500AS6 peer-group
   neighbor 64500AS6 remote-as 64500
   neighbor 64500AS6 update-source Loopback64500
-  neighbor 64500AS6 route-reflector-client
-  neighbor 64500AS6 next-hop-self
   neighbor 64500AS6 password bgppass
   neighbor FD00:CCFF:200A::2 peer-group 64500AS6
   neighbor FD00:CCFF:200A::3 peer-group 64500AS6
@@ -220,6 +216,9 @@ conf t
    network 35.10.193.0 mask 255.255.255.0
    network 35.10.194.0 mask 255.255.255.128
    aggregate-address 35.10.0.0 255.255.0.0 summary-only
+   neighbor 64500AS route-reflector-client
+   neighbor 64500AS next-hop-self
+   neighbor 64500AS default-originate
    neighbor 10.0.0.2 activate
    neighbor 10.0.0.3 activate
    neighbor 10.0.0.4 activate
@@ -249,6 +248,9 @@ conf t
    network 20FF:CCFF:200A:D2::/64
    network 20FF:CCFF:200A:D3::/64
    aggregate-address 20FF:CCFF:200A::/48 summary-only
+   neighbor 64500AS6 route-reflector-client
+   neighbor 64500AS6 next-hop-self
+   neighbor 64500AS6 default-originate
    neighbor FD00:CCFF:200A::2 activate
    neighbor FD00:CCFF:200A::3 activate
    neighbor FD00:CCFF:200A::4 activate
