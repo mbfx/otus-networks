@@ -104,3 +104,9 @@ conf t
  ntp server 20FF:CCFF:200B:A1::1 prefer key 1
  ntp server 35.11.1.1 key 1
  ntp server 20FF:CCFF:200B:A2::1 key 1
+
+ ip dns server
+ ip domain-lookup
+ ip domain name lp.com
+ ip name-server 35.11.0.1 35.11.1.1 20FF:CCFF:200B:A1::1 20FF:CCFF:200B:A2::1
+ 

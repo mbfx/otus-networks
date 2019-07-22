@@ -207,4 +207,11 @@ conf t
  ntp access-group ipv6 serve-only NTPSERVER_LAN_IPV6_ACL
  clock timezone UTC 2
  ntp master 3
- 
+
+ ip dns server
+ ip domain-lookup
+ ip name-server 99.99.138.1 99.99.136.1 99.99.130.2 20FF:CCFF:FFFF:1::1 20FF:CCFF:FFFF:2::1 20FF:CCFD:FFFF:2::1
+ ip domain name lp.com
+ ip dns primary lp.com soa ns.lp.com admin@lp.com
+ ip host lp.com ns ns.lp.com
+ ip host ns.lp.com 35.11.0.1 35.11.1.1 20FF:CCFF:200B:A1::1 20FF:CCFF:200B:A2::1

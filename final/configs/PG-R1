@@ -150,4 +150,11 @@ conf t
  ntp access-group ipv6 serve-only NTPSERVER_LAN_IPV6_ACL
  clock timezone UTC 2
  ntp master 2
- 
+
+ ip dns server
+ ip domain-lookup
+ ip name-server 99.99.130.1 99.99.128.1 99.99.134.2 20FF:CCFD:FFFF:2::1 20FF:CCFD:FFFF:1::1 20FF:CCFE:FFFF:2::2
+ ip domain name pg.com
+ ip dns primary pg.com soa ns.pg.com admin@pg.com
+ ip host pg.com ns ns.pg.com
+ ip host ns.pg.com 99.99.138.1 99.99.136.1 99.99.130.2 20FF:CCFF:FFFF:1::1 20FF:CCFF:FFFF:2::1 20FF:CCFD:FFFF:2::1
