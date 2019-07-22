@@ -259,3 +259,36 @@ conf t
   ipv6 dhcp server DHCP_POOL_IPV6_2
   ipv6 nd managed-config-flag
   exit
+
+ ip domain-name lp.com
+
+ crypto key generate rsa label LPR1IPSECVPN modulus 2048
+
+ crypto pki trustpoint DPR1TRP
+  enrollment url http://172.31.254.1
+  subject-name CN=LP-R1,OU=LP,O=lp,O=com,C=ru
+  revocation-check none
+  rsakeypair LPR1IPSECVPN
+  exit
+
+ crypto pki authenticate DPR1TRP
+ crypto pki enroll DPR1TRP
+! NOTE - NEED ENTER challenge NO SN NO IP
+! ON DP-R1 - do crypto pki server DPR1PKISERVER grant all
+
+ crypto isakmp policy 1
+  authentication rsa-sig
+  exit
+
+ crypto ipsec transform-set IPSEC_TRANSF_SET_1 esp-aes esp-sha-hmac
+  mode tunnel
+  exit
+ crypto ipsec profile IPSEC_PROFILE_1
+  set transform-set IPSEC_TRANSF_SET_1
+  set pfs group1
+  exit
+
+ interface Tunnel0
+  tunnel protection ipsec profile IPSEC_PROFILE_1
+  exit
+ exit

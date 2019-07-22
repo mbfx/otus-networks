@@ -398,3 +398,74 @@ conf t
   ipv6 dhcp server DHCP_POOL_IPV6_3
   ipv6 nd managed-config-flag
   exit
+
+ ip domain-name dp.com
+
+ ip access-list standard 3
+  remark "permit access to HTTP server"
+  10 permit 99.99.148.1 0.0.0.0
+  20 permit 99.99.144.1 0.0.0.0
+  30 permit 99.99.144.3 0.0.0.0
+  40 permit 10.0.1.1 0.0.0.0
+  50 permit 172.31.254.0 0.0.0.0
+  60 permit 172.31.255.2 0.0.0.0
+  70 permit 172.31.255.3 0.0.0.0
+  500 deny any
+  exit
+ ip http access-class 3
+
+ ipv6 access-list HTTPSERVER_IPV6
+  remark "permit access to HTTP server"
+  deny tcp any host 20FF:CCFD:FFFF:3::1 eq 80 sequence 10
+  deny tcp any host FE80::1 eq 80 sequence 20
+  deny tcp any 20FF:CCFF:200C::/48 eq 80 sequence 30
+  permit ipv6 any any sequence 500
+  deny ipv6 any any sequence 501
+  exit
+
+ interface e0/0
+  ipv6 traffic-filter HTTPSERVER_IPV6 in
+  exit
+
+ ip http server
+
+ crypto key generate rsa general-keys exportable modulus 4096 label DPR1CA
+ crypto pki server DPR1PKISERVER
+  no shutdown
+! NOTE - NEED ENTER passphrase
+  exit
+
+ crypto key generate rsa label DPR1IPSECVPN modulus 2048
+
+ crypto pki trustpoint DPR1TRP
+  enrollment url http://99.99.140.1
+  subject-name CN=DP-R1,OU=DP,O=dp,O=com,C=ru
+  revocation-check none
+  rsakeypair DPR1IPSECVPN
+  exit
+
+ crypto pki authenticate DPR1TRP
+ crypto pki enroll DPR1TRP
+! NOTE - NEED ENTER challenge NO SN NO IP
+ do crypto pki server DPR1PKISERVER grant all
+
+ crypto isakmp policy 1
+  authentication rsa-sig
+  exit
+
+ crypto ipsec transform-set IPSEC_TRANSF_SET_1 esp-aes esp-sha-hmac
+  mode tunnel
+  exit
+ crypto ipsec profile IPSEC_PROFILE_1
+  set transform-set IPSEC_TRANSF_SET_1
+  set pfs group1
+  exit
+
+ interface Tunnel1
+  tunnel protection ipsec profile IPSEC_PROFILE_1
+  exit
+
+ interface Tunnel2
+  tunnel protection ipsec profile IPSEC_PROFILE_1
+  exit
+

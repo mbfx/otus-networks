@@ -41,9 +41,10 @@ conf t
 !
  ip http server
 !
- crypto key generate rsa general-keys exportable modulus 4096 label R9CA
- crypto pki server R9
+ crypto key generate rsa general-keys exportable modulus 4096 label DP-R1-CA
+ crypto pki server DP-R1
   no shutdown
+! NOTE - need passphrase
   exit
  exit
 !
@@ -61,6 +62,7 @@ conf t
 !
  crypto pki authenticate IPSECVPNR9TP
  crypto pki enroll IPSECVPNR9TP
+! NOTE - need challenge
  exit
 !
 !
