@@ -141,3 +141,12 @@ conf t
  ntp server 20FF:CCFF:200D:A2::1 key 1
  ntp server 50.50.105.129 prefer key 1
  ntp server 20FF:CCFF:200D:A3::1 prefer key 1
+
+ ip dns server
+ ip domain-lookup
+ ip domain name ov.com
+ ip name-server 50.50.105.1 50.50.105.129 20FF:CCFF:200D:A2::1 20FF:CCFF:200D:A3::1
+
+ ip route 0.0.0.0 0.0.0.0 50.50.105.129 1 name "to OV-R1"
+ ipv6 route ::/0 20FF:CCFF:200D:A3::1 1 name "to OV-R1"
+ 

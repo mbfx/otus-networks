@@ -287,4 +287,11 @@ conf t
  ntp access-group ipv6 serve-only NTPSERVER_LAN_IPV6_ACL
  clock timezone UTC 2
  ntp master 3
- 
+
+ ip dns server
+ ip domain-lookup
+ ip name-server 99.99.128.2 99.99.138.2 99.99.132.2 20FF:CCFD:FFFF:1::2 20FF:CCFF:FFFF:2::2 20FF:CCFE:FFFF:1::2
+ ip domain name ov.com
+ ip dns primary ov.com soa ns.ov.com admin@ov.com
+ ip host ov.com ns ns.ov.com
+ ip host ns.ov.com 50.50.105.1 50.50.105.129 20FF:CCFF:200D:A2::1 20FF:CCFF:200D:A3::1

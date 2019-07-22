@@ -200,3 +200,10 @@ conf t
  clock timezone UTC 2
  ntp master 2
  
+ ip dns server
+ ip domain-lookup
+ ip name-server 99.99.128.1 99.99.134.2 99.99.132.2 20FF:CCFD:FFFF:1::1 20FF:CCFE:FFFF:2::2 20FF:CCFE:FFFF:1::2
+ ip domain name pf.com
+ ip dns primary pf.com soa ns.pf.com admin@pf.com
+ ip host pf.com ns ns.pf.com
+ ip host ns.pf.com 99.99.134.1 99.99.136.2 99.99.132.1 20FF:CCFE:FFFF:2::1 20FF:CCFF:FFFF:1::2 20FF:CCFE:FFFF:1::1
