@@ -104,3 +104,9 @@ conf t
  ntp server 20FF:CCFF:200A:D1::1 key 1
  ntp server 35.10.193.1 prefer key 1
  ntp server 20FF:CCFF:200A:D2::1 prefer key 1
+
+ ip dns server
+ ip domain-lookup
+ ip domain name ol.com
+ ip name-server 35.10.192.1 35.10.193.1 20FF:CCFF:200A:D1::1 20FF:CCFF:200A:D2::1
+ 

@@ -296,4 +296,11 @@ conf t
  ntp access-group ipv6 serve-only NTPSERVER_LAN_IPV6_ACL
  clock timezone UTC 2
  ntp master 3
- 
+
+ ip dns server
+ ip domain-lookup
+ ip name-server 99.99.134.1 99.99.136.2 99.99.132.1 20FF:CCFE:FFFF:2::1 20FF:CCFF:FFFF:1::2 20FF:CCFE:FFFF:1::1
+ ip domain name zl.com
+ ip dns primary zl.com soa ns.zl.com admin@zl.com
+ ip host zl.com ns ns.zl.com
+ ip host ns.zl.com 35.10.0.1 35.10.8.1 20FF:CCFF:200A:A1::1 20FF:CCFF:200A:A2::1
