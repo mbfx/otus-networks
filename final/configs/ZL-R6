@@ -140,4 +140,32 @@ conf t
  ip domain-lookup
  ip domain name zl.com
  ip name-server 35.10.0.1 35.10.8.1 20FF:CCFF:200A:A1::1 20FF:CCFF:200A:A2::1
- 
+
+ ip dhcp excluded-address 0.0.0.0 35.10.65.130
+ ip dhcp excluded-address 35.10.65.255 255.255.255.255
+
+ service dhcp
+
+ ip dhcp pool DHCP_POOL_1
+  network 35.10.65.128 255.255.255.128
+  default-router 35.10.65.129 35.10.65.130
+  domain-name zl.com
+  dns-server 35.10.8.1 35.10.0.1
+  lease 8
+  exit
+
+ ipv6 dhcp pool DHCP_POOL_IPV6_1
+  address prefix 20FF:CCFF:200A:B3::/64 lifetime 2073600 691200
+  domain-name zl.com
+  dns-server 20FF:CCFF:200A:A2::1
+  exit
+
+ interface Ethernet0/3
+  ipv6 dhcp server DHCP_POOL_IPV6_1
+  ipv6 nd managed-config-flag
+  exit
+
+ interface Ethernet0/0
+  ip helper-address 35.10.64.1
+  ipv6 dhcp relay destination FE80::1
+  exit

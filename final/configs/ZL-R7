@@ -171,3 +171,68 @@ conf t
  ip dns primary ol.com soa ns.ol.com admin@ol.com
  ip host ol.com ns ns.ol.com
  ip host ns.ol.com 35.10.192.1 35.10.193.1 20FF:CCFF:200A:D1::1 20FF:CCFF:200A:D2::1
+
+ ip dhcp excluded-address 0.0.0.0 35.10.128.2
+ ip dhcp excluded-address 35.10.128.63 35.10.192.2
+ ip dhcp excluded-address 35.10.192.255 35.10.193.2
+ ip dhcp excluded-address 35.10.193.255 35.10.194.2
+ ip dhcp excluded-address 35.10.194.127 255.255.255.255
+
+ service dhcp
+
+ ip dhcp pool DHCP_POOL_1
+  network 35.10.128.0 255.255.255.192
+  default-router 35.10.128.1 35.10.128.2
+  domain-name zl.com
+  dns-server 35.10.0.1 35.10.8.1
+  lease 8
+  exit
+
+ ip dhcp pool DHCP_POOL_2
+  network 35.10.192.0 255.255.255.0
+  default-router 35.10.192.1 35.10.192.2 
+  domain-name ol.com
+  dns-server 35.10.192.1 35.10.193.1 
+  lease 8
+  exit
+
+ ip dhcp pool DHCP_POOL_3
+  network 35.10.193.0 255.255.255.0
+  default-router 35.10.193.1 35.10.193.2 
+  domain-name ol.com
+  dns-server 35.10.193.1 35.10.192.1 
+  lease 8
+  exit
+
+ ipv6 dhcp pool DHCP_POOL_IPV6_1
+  address prefix 20FF:CCFF:200A:C1::/64 lifetime 2073600 691200
+  domain-name zl.com
+  dns-server 20FF:CCFF:200A:A1::1
+  exit
+
+ ipv6 dhcp pool DHCP_POOL_IPV6_2
+  address prefix 20FF:CCFF:200A:D1::/64 lifetime 2073600 691200
+  domain-name ol.com
+  dns-server 20FF:CCFF:200A:D1::1
+  exit
+
+ ipv6 dhcp pool DHCP_POOL_IPV6_3
+  address prefix 20FF:CCFF:200A:D2::/64 lifetime 2073600 691200
+  domain-name ol.com
+  dns-server 20FF:CCFF:200A:D2::1
+  exit
+
+ interface Ethernet0/0
+  ipv6 dhcp server DHCP_POOL_IPV6_1
+  ipv6 nd managed-config-flag
+  exit
+
+ interface Ethernet0/2
+  ipv6 dhcp server DHCP_POOL_IPV6_2
+  ipv6 nd managed-config-flag
+  exit
+
+ interface Ethernet0/1
+  ipv6 dhcp server DHCP_POOL_IPV6_3
+  ipv6 nd managed-config-flag
+  exit

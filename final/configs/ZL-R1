@@ -306,3 +306,48 @@ conf t
  ip dns primary zl.com soa ns.zl.com admin@zl.com
  ip host zl.com ns ns.zl.com
  ip host ns.zl.com 35.10.0.1 35.10.8.1 20FF:CCFF:200A:A1::1 20FF:CCFF:200A:A2::1
+
+ ip dhcp excluded-address 0.0.0.0 35.10.0.2
+ ip dhcp excluded-address 35.10.7.255 35.10.8.2
+ ip dhcp excluded-address 35.10.9.255 255.255.255.255
+
+ service dhcp
+
+ ip dhcp pool DHCP_POOL_1
+  network 35.10.0.0 255.255.248.0
+  default-router 35.10.0.1 35.10.8.1
+  domain-name zl.com
+  dns-server 35.10.0.1 35.10.8.1
+  lease 8
+  exit
+
+ ip dhcp pool DHCP_POOL_2
+  network 35.10.8.0 255.255.254.0
+  default-router 35.10.8.1 35.10.0.1 
+  domain-name zl.com
+  dns-server 35.10.8.1 35.10.0.1 
+  lease 8
+  exit
+
+ ipv6 dhcp pool DHCP_POOL_IPV6_1
+  address prefix 20FF:CCFF:200C:A1::/64 lifetime 2073600 691200
+  domain-name zl.com
+  dns-server 20FF:CCFF:200A:A1::1
+  exit
+
+ ipv6 dhcp pool DHCP_POOL_IPV6_2
+  address prefix 20FF:CCFF:200C:A2::/64 lifetime 2073600 691200
+  domain-name zl.com
+  dns-server 20FF:CCFF:200A:A2::1
+  exit
+
+ interface Ethernet0/1
+  ipv6 dhcp server DHCP_POOL_IPV6_1
+  ipv6 nd managed-config-flag
+  exit
+
+ interface Ethernet0/2
+  ipv6 dhcp server DHCP_POOL_IPV6_2
+  ipv6 nd managed-config-flag
+  exit
+
