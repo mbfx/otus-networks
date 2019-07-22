@@ -77,5 +77,5 @@ DHCP (Dynamic Host Configuration Protocol)
 CAS (Certificate Authority Server)
 IPsec (Internet Protocol Security)
 ### Безопасность и мониторинг
-AAA
-ACL
+AAA (Authentication, Autorization and Accounting)
+ACL (Access Control Lists)
