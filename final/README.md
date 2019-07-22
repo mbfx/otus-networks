@@ -55,3 +55,27 @@ v  7. Оптимизировать работу протокола BGP;
 ###  3. Задокументируем выделенные для маршрутизаторов IP-адреса.
 
 [Таблица назначенных сетевых адресов на интерфейсах маршрутизаторов.](docs/addresses.md)
+
+### Статическая маршрутизация
+Static routing
+PBR (Policy-based routing)
+IP SLA (Internet protocol service level agreement)
+### VPN-туннели
+GRE (Generic Routing Encapsulation)
+DMVPN (Dynamic Multipoint VPN)
+### Динамическая маршрутизация
+OSPF (Open Shortest Path First)
+EIGRP (Enhanced Interior Gateway Routing Protocol)
+BGP (Border Gateway Protocol)
+ - eBGP (Exterior Border Gateway Protocol)
+ - iBGP (Interior Border Gateway Protocol) 
+### Инфраструктурные сервисы
+NTP (Network Time Protocol)
+DNS (Domain Name System)
+DHCP (Dynamic Host Configuration Protocol)
+### Защита VPN-туннелей
+CAS (Certificate Authority Server)
+IPsec (Internet Protocol Security)
+### Безопасность и мониторинг
+AAA
+ACL

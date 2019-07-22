@@ -281,3 +281,47 @@ conf t
    exit-address-family
   exit
  exit
+
+ ip access-list standard 1
+  remark "permit to NTP server access"
+  10 permit 99.99.140.0 0.0.0.0
+  500 deny any
+  exit
+ ntp access-group ipv4 peer 1
+
+ ipv6 access-list NTPSERVER_IPV6_ACL
+  remark "permit to NTP server access"
+  permit ipv6 host 20FF:CCFD:FFFF:3::0 any sequence 10
+  deny ipv6 any any sequence 500
+  exit
+ ntp access-group ipv6 peer NTPSERVER_IPV6_ACL
+
+ ntp authenticate
+ ntp authentication-key 1 md5 ntpkey
+ ntp trusted-key 1
+ ntp update-calendar
+ ntp server 99.99.140.0 prefer key 1
+ ntp server 20FF:CCFD:FFFF:3::0 prefer key 1
+
+ ip access-list standard 2
+  remark "permit to NTP local server from LAN"
+  10 permit 50.50.96.0 0.0.1.255
+  20 permit 50.50.98.0 0.0.1.255
+  30 permit 50.50.100.0 0.0.0.255
+  40 permit 50.50.101.0 0.0.0.255
+  50 permit 50.50.102.0 0.0.0.255
+  500 deny any
+  exit
+ ntp access-group ipv4 serve-only 2
+
+ ipv6 access-list NTPSERVER_LAN_IPV6_ACL
+  remark "permit to NTP server access"
+  permit ipv6 20FF:CCFF:200C::/48 host 20FF:CCFF:200C:A1::1 sequence 10
+  permit ipv6 20FF:CCFF:200C::/48 host 20FF:CCFF:200C:A2::1 sequence 20
+  permit ipv6 20FF:CCFF:200C::/48 host 20FF:CCFF:200C:A3::1 sequence 30
+  deny ipv6 any any sequence 500
+  exit
+ ntp access-group ipv6 serve-only NTPSERVER_LAN_IPV6_ACL
+ clock timezone UTC 2
+ ntp master 3
+ 

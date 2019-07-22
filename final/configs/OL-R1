@@ -79,4 +79,28 @@ conf t
   passive-interface Ethernet0/1
   passive-interface Ethernet0/3
   exit
-  
+
+ ip access-list standard 1
+  remark "permit to NTP server access"
+  10 permit 35.10.193.1 0.0.0.0
+  20 permit 35.10.192.1 0.0.0.0
+  500 deny any
+  exit
+ ntp access-group ipv4 peer 1
+
+ ipv6 access-list NTPSERVER_IPV6_ACL
+  remark "permit to NTP server access"
+  permit ipv6 host 20FF:CCFF:200A:D1::1 any sequence 10
+  permit ipv6 host 20FF:CCFF:200A:D2::1 any sequence 20
+  deny ipv6 any any sequence 500
+  exit
+ ntp access-group ipv6 peer NTPSERVER_IPV6_ACL
+
+ ntp authenticate
+ ntp authentication-key 1 md5 ntpkey
+ ntp trusted-key 1
+ ntp update-calendar
+ ntp server 35.10.192.1 prefer key 1
+ ntp server 20FF:CCFF:200A:D1::1 prefer key 1
+ ntp server 35.10.193.1 key 1
+ ntp server 20FF:CCFF:200A:D2::1 key 1
