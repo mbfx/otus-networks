@@ -1,7 +1,7 @@
 ### Таблица статических маршрутов.
 
-| Eq  | Proto |Dst network | Next-hop | Metric | Comment |
-|-----|-------|------------|----------|--------|---------|
+| Equip | Proto | Dst net | Next-hop | M | Comment |
+|-------|-------|---------|----------|---|---------|
 | DP-R1 | IPv4 | 0.0.0.0/0 | 99.99.140.0 | 30 | to ISP |
 | DP-R1 | IPv6 | ::/0 | 20FF:CCFD:FFFF:3::0 | 30 | to ISP |
 | DP-R1 | IPv4 | 172.31.255.0/24 | 172.31.254.0 | 1 | to DMVPN net through GRE tunnel |
