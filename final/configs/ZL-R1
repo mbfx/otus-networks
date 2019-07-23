@@ -119,7 +119,6 @@ conf t
   tunnel source Ethernet0/0
   tunnel destination 20FF:CCFD:FFFF:3::1
   tunnel mode gre ipv6
-  ipv6 ospf authentication ipsec spi 504 md5 1234567890abcdef1234567890abcdef
   ipv6 ospf hello-interval 20
   ipv6 ospf dead-interval 60
   ipv6 ospf 64500 area 0
@@ -374,20 +373,26 @@ conf t
  crypto ipsec transform-set IPSEC_TRANSF_SET_1 esp-aes esp-sha-hmac
   mode tunnel
   exit
+ crypto ipsec profile IPSEC_PROFILE_0
+  set transform-set IPSEC_TRANSF_SET_1
+  set pfs group1
+  exit
  crypto ipsec profile IPSEC_PROFILE_1
   set transform-set IPSEC_TRANSF_SET_1
   set pfs group1
   exit
-
- interface Tunnel1
-  tunnel protection ipsec profile IPSEC_PROFILE_1 shared
-  exit
-
- interface Tunnel2
-  tunnel protection ipsec profile IPSEC_PROFILE_1 shared
+ crypto ipsec profile IPSEC_PROFILE_2
+  set transform-set IPSEC_TRANSF_SET_1
+  set pfs group1
   exit
 
  interface Tunnel0
-  tunnel protection ipsec profile IPSEC_PROFILE_1 shared
+  tunnel protection ipsec profile IPSEC_PROFILE_0
   exit
- 
+ interface Tunnel1
+  tunnel protection ipsec profile IPSEC_PROFILE_1
+  exit
+ interface Tunnel2
+  tunnel protection ipsec profile IPSEC_PROFILE_2
+  exit
+

@@ -120,14 +120,14 @@ conf t
   neighbor FD00:CCFF:200C::1 remote-as 64501
   neighbor FD00:CCFF:200C::1 update-source Loopback64501
   neighbor FD00:CCFF:200C::1 password bgppass
-! 
+ 
   address-family ipv4
    network 50.50.98.0 mask 255.255.254.0
    network 50.50.102.0 mask 255.255.255.0
    no neighbor FD00:CCFF:200C::1 activate
    neighbor 10.0.1.1 activate
    exit-address-family
-! 
+
   address-family ipv6
    network 20FF:CCFF:200C:A2::/64
    network 20FF:CCFF:200C:A5::/64

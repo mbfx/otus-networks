@@ -73,7 +73,6 @@ conf t
   tunnel source Ethernet0/0
   tunnel destination 20FF:CCFE:FFFF:3::1
   tunnel mode gre ipv6
-  ipv6 ospf authentication ipsec spi 504 md5 1234567890abcdef1234567890abcdef
   ipv6 ospf hello-interval 20
   ipv6 ospf dead-interval 60
   ipv6 ospf 64501 area 0
