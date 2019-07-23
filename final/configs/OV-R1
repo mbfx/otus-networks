@@ -94,7 +94,6 @@ conf t
   ipv6 nhrp registration timeout 4
   ipv6 nhrp shortcut
   ipv6 nhrp redirect
-  ipv6 ospf authentication ipsec spi 503 md5 1234567890abcdef1234567890abcdef
   ipv6 ospf hello-interval 20
   ipv6 ospf dead-interval 60
   ipv6 ospf 64501 area 0

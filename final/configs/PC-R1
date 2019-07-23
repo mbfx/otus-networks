@@ -185,8 +185,8 @@ conf t
   120 deny esp any host 99.99.140.0
   130 permit esp any any
   remark "AH"
-  140 deny esp any host 99.99.140.0
-  150 permit esp any any
+  140 deny ahp any host 99.99.140.0
+  150 permit ahp any any
   remark "ISAKMP"
   160 deny udp any host 99.99.140.0 eq 500
   170 permit udp any any eq 500
@@ -223,23 +223,15 @@ conf t
   deny esp any host 20FF:CCFD:FFFF:3::0 sequence 120
   permit esp any any sequence 130
   remark "AH"
-  deny esp any host 20FF:CCFD:FFFF:3::0 sequence 140
-  permit esp any any sequence 150
+  deny ahp any host 20FF:CCFD:FFFF:3::0 sequence 140
+  permit ahp any any sequence 150
   remark "ISAKMP"
   deny udp any host 20FF:CCFD:FFFF:3::0 eq 500 sequence 160
   permit udp any any eq 500 sequence 170
-  remark "NAT-T"
-  deny udp any host 20FF:CCFD:FFFF:3::0 eq 4500 sequence 180
-  permit udp any any eq 4500 sequence 190
   remark "General Rules"
   deny ipv6 any host 20FF:CCFD:FFFF:3::0 sequence 500
   permit ipv6 any any sequence 510
   deny ipv6 any any sequence 520
-  exit
-
- interface Ethernet0/0
-  ip access-group ACL_E00_IN in
-  ipv6 traffic-filter ACLV6_E00_IN in
   exit
 
  ip access-list extended ACL_E00_OUT
@@ -252,28 +244,59 @@ conf t
   remark "NTP"
   40 permit udp any any eq 123
   remark "BGP"
-  70 permit tcp any any eq 179
+  50 permit tcp any any eq 179
   remark "OSPF"
-  80 deny ospf any any
+  60 deny ospf any any
   remark "EIGRP"
-  90 deny eigrp any any
+  70 deny eigrp any any
   remark "allow GRE"
-  110 permit gre any any
+  80 permit gre any any
   remark "ESP"
-  130 permit esp any any
+  90 permit esp any any
   remark "AH"
-  150 permit esp any any
+  100 permit ahp any any
   remark "ISAKMP"
-  170 permit udp any any eq 500
+  110 permit udp any any eq 500
   remark "NAT-T"
-  190 permit udp any any eq 4500
+  120 permit udp any any eq 4500
   remark "General Rules"
   500 permit ip any any
   510 deny ip any any
   exit
 
+ ipv6 access-list ACLV6_E00_OUT
+  remark "allow any ICMP"
+  permit icmp any any sequence 10
+  remark "SSH"
+  permit tcp any any eq 22 sequence 20
+  remark "DNS"
+  permit udp any any eq 53 sequence 30
+  remark "NTP"
+  permit udp any any eq 123 sequence 40
+  remark "BGP"
+  permit tcp any any eq 179 sequence 50
+  remark "OSPF"
+  deny 89 any any sequence 60
+  remark "EIGRP"
+  deny 88 any any sequence 70
+  remark "allow GRE"
+  permit 47 any any sequence 80
+  remark "ESP"
+  permit esp any any sequence 90
+  remark "AH"
+  permit ahp any any sequence 100
+  remark "ISAKMP"
+  permit udp any any eq 500 sequence 110
+  remark "General Rules"
+  permit ipv6 any any sequence 500
+  deny ipv6 any any sequence 510
+  exit
+
  interface Ethernet0/0
+  ip access-group ACL_E00_IN in
   ip access-group ACL_E00_OUT out
+  ipv6 traffic-filter ACLV6_E00_IN in
+  ipv6 traffic-filter ACLV6_E00_OUT out
   exit
 
  ip access-list extended ACL_E01_IN
@@ -302,8 +325,8 @@ conf t
   120 deny esp any host 99.99.130.1
   130 permit esp any any
   remark "AH"
-  140 deny esp any host 99.99.130.1
-  150 permit esp any any
+  140 deny ahp any host 99.99.130.1
+  150 permit ahp any any
   remark "ISAKMP"
   160 deny udp any host 99.99.130.1 eq 500
   170 permit udp any any eq 500
@@ -316,8 +339,41 @@ conf t
   520 deny ip any any
   exit
 
- interface Ethernet0/1
-  ip access-group ACL_E01_IN in
+ ipv6 access-list ACLV6_E01_IN
+  remark "allow any ICMP"
+  permit icmp any any sequence 10
+  remark "SSH"
+  deny tcp any any eq 22 log sequence 20
+  remark "DNS"
+  permit udp any any eq 53 sequence 30
+  remark "NTP"
+  permit udp any any eq 123 sequence 40
+  remark "BGP"
+  permit tcp host 20FF:CCFD:FFFF:2::2 host 20FF:CCFD:FFFF:2::1 eq 179 sequence 50
+  permit tcp host 20FF:CCFE:FFFF:1::1 host 20FF:CCFD:FFFF:2::1 eq 179 sequence 60
+  permit tcp host 20FF:CCFF:FFFF:1::2 host 20FF:CCFD:FFFF:2::1 eq 179 sequence 70
+  permit tcp host 20FF:CCFF:FFFF:2::2 host 20FF:CCFD:FFFF:2::1 eq 179 sequence 80
+  deny tcp any host 20FF:CCFD:FFFF:2::1 eq 179 sequence 90
+  remark "OSPF"
+  deny 89 any any sequence 100
+  remark "EIGRP"
+  deny 88 any any sequence 110
+  remark "allow GRE"
+  deny 47 any host 20FF:CCFD:FFFF:2::1 sequence 120
+  permit 47 any any sequence 130
+  remark "ESP"
+  deny esp any host 20FF:CCFD:FFFF:2::1 sequence 140
+  permit esp any any sequence 150
+  remark "AH"
+  deny ahp any host 20FF:CCFD:FFFF:2::1 sequence 160
+  permit ahp any any sequence 170
+  remark "ISAKMP"
+  deny udp any host 20FF:CCFD:FFFF:2::1 eq 500 sequence 180
+  permit udp any any eq 500 sequence 190
+  remark "General Rules"
+  deny ip any host 20FF:CCFD:FFFF:2::1 sequence 220
+  permit ip any any sequence 230
+  deny ip any any sequence 240
   exit
 
  ip access-list extended ACL_E01_OUT
@@ -340,7 +396,7 @@ conf t
   remark "ESP"
   130 permit esp any any
   remark "AH"
-  150 permit esp any any
+  150 permit ahp any any
   remark "ISAKMP"
   170 permit udp any any eq 500
   remark "NAT-T"
@@ -350,8 +406,39 @@ conf t
   510 deny ip any any
   exit
 
+ ipv6 access-list ACLV6_E01_OUT
+  remark "allow any ICMP"
+  permit icmp any any sequence 10
+  remark "SSH"
+  permit tcp any any eq 22 sequence 20
+  remark "DNS"
+  permit udp any any eq 53 sequence 30
+  remark "NTP"
+  permit udp any any eq 123 sequence 40
+  remark "BGP"
+  permit tcp any any eq 179 sequence 50
+  remark "OSPF"
+  deny 89 any any sequence 60
+  remark "EIGRP"
+  deny 88 any any sequence 70
+  remark "allow GRE"
+  permit 47 any any sequence 80
+  remark "ESP"
+  permit esp any any sequence 90
+  remark "AH"
+  permit ahp any any sequence 100
+  remark "ISAKMP"
+  permit udp any any eq 500 sequence 110
+  remark "General Rules"
+  permit ipv6 any any sequence 500
+  deny ipv6 any any sequence 510
+  exit
+
  interface Ethernet0/1
+  ip access-group ACL_E01_IN in
   ip access-group ACL_E01_OUT out
+  ipv6 traffic-filter ACLV6_E01_IN in
+  ipv6 traffic-filter ACLV6_E01_OUT out
   exit
 
  ip access-list extended ACL_E02_IN
@@ -380,8 +467,8 @@ conf t
   120 deny esp any host 99.99.128.1
   130 permit esp any any
   remark "AH"
-  140 deny esp any host 99.99.128.1
-  150 permit esp any any
+  140 deny ahp any host 99.99.128.1
+  150 permit ahp any any
   remark "ISAKMP"
   160 deny udp any host 99.99.128.1 eq 500
   170 permit udp any any eq 500
@@ -394,8 +481,41 @@ conf t
   520 deny ip any any
   exit
 
- interface Ethernet0/2
-  ip access-group ACL_E02_IN in
+ ipv6 access-list ACLV6_E02_IN
+  remark "allow any ICMP"
+  permit icmp any any sequence 10
+  remark "SSH"
+  deny tcp any any eq 22 log sequence 20
+  remark "DNS"
+  permit udp any any eq 53 sequence 30
+  remark "NTP"
+  permit udp any any eq 123 sequence 40
+  remark "BGP"
+  permit tcp host 20FF:CCFD:FFFF:1::2 host 20FF:CCFD:FFFF:1::1 eq 179 sequence 50
+  permit tcp host 20FF:CCFE:FFFF:2::1 host 20FF:CCFD:FFFF:1::1 eq 179 sequence 60
+  permit tcp host 20FF:CCFF:FFFF:1::1 host 20FF:CCFD:FFFF:1::1 eq 179 sequence 70
+  permit tcp host 20FF:CCFF:FFFF:2::1 host 20FF:CCFD:FFFF:1::1 eq 179 sequence 80
+  deny tcp any host 20FF:CCFD:FFFF:1::1 eq 179 sequence 90
+  remark "OSPF"
+  deny 89 any any sequence 100
+  remark "EIGRP"
+  deny 88 any any sequence 110
+  remark "allow GRE"
+  deny 47 any host 20FF:CCFD:FFFF:1::1 sequence 120
+  permit 47 any any sequence 130
+  remark "ESP"
+  deny esp any host 20FF:CCFD:FFFF:1::1 sequence 140
+  permit esp any any sequence 150
+  remark "AH"
+  deny ahp any host 20FF:CCFD:FFFF:1::1 sequence 160
+  permit ahp any any sequence 170
+  remark "ISAKMP"
+  deny udp any host 20FF:CCFD:FFFF:1::1 eq 500 sequence 180
+  permit udp any any eq 500 sequence 190
+  remark "General Rules"
+  deny ip any host 20FF:CCFD:FFFF:1::1 sequence 220
+  permit ip any any sequence 230
+  deny ip any any sequence 240
   exit
 
  ip access-list extended ACL_E02_OUT
@@ -418,7 +538,7 @@ conf t
   remark "ESP"
   130 permit esp any any
   remark "AH"
-  150 permit esp any any
+  150 permit ahp any any
   remark "ISAKMP"
   170 permit udp any any eq 500
   remark "NAT-T"
@@ -428,8 +548,39 @@ conf t
   510 deny ip any any
   exit
 
+ ipv6 access-list ACLV6_E02_OUT
+  remark "allow any ICMP"
+  permit icmp any any sequence 10
+  remark "SSH"
+  permit tcp any any eq 22 sequence 20
+  remark "DNS"
+  permit udp any any eq 53 sequence 30
+  remark "NTP"
+  permit udp any any eq 123 sequence 40
+  remark "BGP"
+  permit tcp any any eq 179 sequence 50
+  remark "OSPF"
+  deny 89 any any sequence 60
+  remark "EIGRP"
+  deny 88 any any sequence 70
+  remark "allow GRE"
+  permit 47 any any sequence 80
+  remark "ESP"
+  permit esp any any sequence 90
+  remark "AH"
+  permit ahp any any sequence 100
+  remark "ISAKMP"
+  permit udp any any eq 500 sequence 110
+  remark "General Rules"
+  permit ipv6 any any sequence 500
+  deny ipv6 any any sequence 510
+  exit
+
  interface Ethernet0/2
+  ip access-group ACL_E02_IN in
   ip access-group ACL_E02_OUT out
+  ipv6 traffic-filter ACLV6_E02_IN in
+  ipv6 traffic-filter ACLV6_E02_OUT out
   exit
 
  ip access-list extended ACL_E03_IN
@@ -459,8 +610,8 @@ conf t
   120 deny esp any host 99.99.134.2
   130 permit esp any any
   remark "AH"
-  140 deny esp any host 99.99.134.2
-  150 permit esp any any
+  140 deny ahp any host 99.99.134.2
+  150 permit ahp any any
   remark "ISAKMP"
   160 deny udp any host 99.99.134.2 eq 500
   170 permit udp any any eq 500
@@ -473,8 +624,42 @@ conf t
   520 deny ip any any
   exit
 
- interface Ethernet0/3
-  ip access-group ACL_E03_IN in
+ ipv6 access-list ACLV6_E03_IN
+  remark "allow any ICMP"
+  permit icmp any any sequence 10
+  remark "SSH"
+  deny tcp any any eq 22 log sequence 20
+  remark "DNS"
+  permit udp any any eq 53 sequence 30
+  remark "NTP"
+  permit udp any any eq 123 sequence 40
+  remark "BGP"
+  permit tcp host 20FF:CCFE:FFFF:2::1 host 20FF:CCFE:FFFF:2::2 eq 179 sequence 50
+  permit tcp host 20FF:CCFE:FFFF:1::2 host 20FF:CCFE:FFFF:2::2 eq 179 sequence 60
+  permit tcp host 20FF:CCFF:FFFF:1::1 host 20FF:CCFE:FFFF:2::2 eq 179 sequence 70
+  permit tcp host 20FF:CCFF:FFFF:2::1 host 20FF:CCFE:FFFF:2::2 eq 179 sequence 80
+  permit tcp host 20FF:CCFF:FFFF:2::2 host 20FF:CCFE:FFFF:2::2 eq 179 sequence 81
+  deny tcp any host 20FF:CCFE:FFFF:2::2 eq 179 sequence 90
+  remark "OSPF"
+  deny 89 any any sequence 100
+  remark "EIGRP"
+  deny 88 any any sequence 110
+  remark "allow GRE"
+  deny 47 any host 20FF:CCFE:FFFF:2::2 sequence 120
+  permit 47 any any sequence 130
+  remark "ESP"
+  deny esp any host 20FF:CCFE:FFFF:2::2 sequence 140
+  permit esp any any sequence 150
+  remark "AH"
+  deny ahp any host 20FF:CCFE:FFFF:2::2 sequence 160
+  permit ahp any any sequence 170
+  remark "ISAKMP"
+  deny udp any host 20FF:CCFE:FFFF:2::2 eq 500 sequence 180
+  permit udp any any eq 500 sequence 190
+  remark "General Rules"
+  deny ip any host 20FF:CCFE:FFFF:2::2 sequence 220
+  permit ip any any sequence 230
+  deny ip any any sequence 240
   exit
 
  ip access-list extended ACL_E03_OUT
@@ -497,7 +682,7 @@ conf t
   remark "ESP"
   130 permit esp any any
   remark "AH"
-  150 permit esp any any
+  150 permit ahp any any
   remark "ISAKMP"
   170 permit udp any any eq 500
   remark "NAT-T"
@@ -507,6 +692,37 @@ conf t
   510 deny ip any any
   exit
 
+ ipv6 access-list ACLV6_E03_OUT
+  remark "allow any ICMP"
+  permit icmp any any sequence 10
+  remark "SSH"
+  permit tcp any any eq 22 sequence 20
+  remark "DNS"
+  permit udp any any eq 53 sequence 30
+  remark "NTP"
+  permit udp any any eq 123 sequence 40
+  remark "BGP"
+  permit tcp any any eq 179 sequence 50
+  remark "OSPF"
+  deny 89 any any sequence 60
+  remark "EIGRP"
+  deny 88 any any sequence 70
+  remark "allow GRE"
+  permit 47 any any sequence 80
+  remark "ESP"
+  permit esp any any sequence 90
+  remark "AH"
+  permit ahp any any sequence 100
+  remark "ISAKMP"
+  permit udp any any eq 500 sequence 110
+  remark "General Rules"
+  permit ipv6 any any sequence 500
+  deny ipv6 any any sequence 510
+  exit
+
  interface Ethernet0/3
+  ip access-group ACL_E03_IN in
   ip access-group ACL_E03_OUT out
+  ipv6 traffic-filter ACLV6_E03_IN in
+  ipv6 traffic-filter ACLV6_E03_OUT out
   exit
