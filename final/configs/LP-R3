@@ -119,4 +119,39 @@ conf t
   ip helper-address 35.11.1.1
   ipv6 dhcp relay destination FE80::1
   exit
+
+ crypto key generate rsa usage-keys label SSH modulus 2048
+ service password-encryption
+ password encryption aes
+ password logging
  
+ aaa new-model
+ aaa authentication login default local
+ aaa authorization console
+ aaa authorization exec default local
+ 
+ username admin privilege 15 algorithm-type scrypt secret adminpassword
+ username support privilege 1 algorithm-type scrypt secret supppass
+ enable algorithm-type scrypt secret level 15 adminpassword
+ enable algorithm-type scrypt secret level 1 supportassword
+ enable algorithm-type scrypt secret level 2 editdesc
+ privilege exec level 2 configure terminal
+ privilege configure level 2 interface 
+ privilege interface level 2 description
+
+ line vty 0 4
+  transport input ssh
+  login authentication default
+  logging synchronous
+  exit
+ line console 0
+  logging synchronous
+  exit
+ logging on
+ logging console 3
+ logging buffered 3
+ logging buffered 32000
+ logging trap 6
+ logging facility local1
+ logging host 35.11.0.3
+ logging host ipv6 20FF:CCFE:200B:A1::3
