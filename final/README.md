@@ -26,30 +26,29 @@
  - [Таблица назначенных сетевых адресов на интерфейсах маршрутизаторов.](docs/rtr_addresses.md)
 
 ###  2. Статическая маршрутизация
- - Static routing
- - PBR (Policy-based routing)
- - IP SLA (Internet protocol service level agreement)
+ - [Static routing](docs/static_routing.md)
+ - [PBR (Policy-based routing)](docs/static_routing.md)
 
 ###  3. VPN-туннели
- - GRE (Generic Routing Encapsulation)
- - DMVPN (Dynamic Multipoint VPN)
+ - [GRE (Generic Routing Encapsulation)](docs/vpn.md)
+ - [DMVPN (Dynamic Multipoint VPN)](docs/vpn.md)
 
 ###  4. Динамическая маршрутизация
- - OSPF (Open Shortest Path First)
- - EIGRP (Enhanced Interior Gateway Routing Protocol)
- - BGP (Border Gateway Protocol)
-   - eBGP (Exterior Border Gateway Protocol)
-   - iBGP (Interior Border Gateway Protocol) 
+ - [OSPF (Open Shortest Path First)](docs/OSPF.md)
+ - [EIGRP (Enhanced Interior Gateway Routing Protocol)](docs/EIGRP.md)
+ - [BGP (Border Gateway Protocol)](docs/BGP.md)
+   - [eBGP (Exterior Border Gateway Protocol)](docs/BGP.md)
+   - [iBGP (Interior Border Gateway Protocol)](docs/BGP.md)
 
 ###  5. Инфраструктурные сервисы
- - NTP (Network Time Protocol)
- - DNS (Domain Name System)
- - DHCP (Dynamic Host Configuration Protocol)
+ - [NTP (Network Time Protocol)](docs/NTP.md)
+ - [DNS (Domain Name System)](docs/DNS.md)
+ - [DHCP (Dynamic Host Configuration Protocol)](docs/DHCP.md)
 
 ###  6. Защита VPN-туннелей
- - CAS (Certificate Authority Server)
- - IPsec (Internet Protocol Security)
+ - [CAS (Certificate Authority Server)](docs/CA_and_IPSec.md)
+ - [IPsec (Internet Protocol Security)](docs/CA_and_IPSec.md)
 
 ###  7. Безопасность и мониторинг
- - AAA (Authentication, Autorization and Accounting)
- - ACL (Access Control Lists)
+ - [AAA (Authentication, Autorization and Accounting)](docs/AAA.md)
+ - [ACL (Access Control Lists)](docs/ACL.md)
