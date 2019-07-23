@@ -1,3 +1,7 @@
+####  Схема назначенных IP адесов.
+
+![](../pics/addresses.png)
+
 ####  Таблица назначенных сетевых адресов на интерфейсах маршрутизаторов.
 
 | Equip | Port | AddrTyp | Address | Network | Description |
