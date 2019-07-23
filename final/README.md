@@ -3,79 +3,53 @@
 
 #### Задание:
 
-v  1. Распределить адресное пространство;
-v  2. Реализовать нескольких видов статической маршрутизации;
-v  3. Настроить VPN-туннели (статические и динамические);
-v  4. Настроить протоколы маршрутизации OSPF и EIGRP внутри локальных сетей;
-v  5. Настроить протокол маршрутизации BGP;
-v  6. Оптимизировать основные параметры и метрики протоколов IGP;
-v  7. Оптимизировать работу протокола BGP;
+  1. Распределить адресное пространство;
+  2. Реализовать нескольких видов статической маршрутизации;
+  3. Настроить VPN-туннели (статические и динамические);
+  4. Настроить протоколы маршрутизации OSPF и EIGRP внутри локальных сетей;
+  5. Настроить протокол маршрутизации BGP;
+  6. Оптимизировать основные параметры и метрики протоколов IGP;
+  7. Оптимизировать работу протокола BGP;
   8. Настроить инфраструктурные сервисы (NTP, DNS, DHCP и т.п.);
   9. Обеспечить шифрование VPN-туннелей;
   10. Обеспечить безопасность и мониторинг сетевой инфраструктуры;
   11. Задокументировать все выполненные действия.
 
-
-
-###  1. Задокументируем общее адресное пространство IPv4/IPv6.
-
-#### Автономные системы и принадлежащие им публичные адреса сетей IPv4.
-
-| ASN | Company | Summary IPv4 | Addresses |
-|-----|---------|--------------|-----------|
-| 64500 | Завод "Левый" | 35.10.0.0/16 | 35.10.0.0 - 35.10.255.255 |
-| 64500 | Лаборатория "Поиск" | 35.11.0.0/22 | 35.11.0.0 - 35.11.3.255 |
-| 64501 | ДЦ "Правое дело" | 50.50.96.0/21 | 50.50.96.0 - 50.50.103.255 |
-| 64501 | Офис "Верхний" | 50.50.104.0/23 | 50.50.104.0 - 50.50.105.255 |
-| 64509 | Cloudbuilders CS ISP | 99.99.128.0/22 | 99.99.128.0 - 99.99.131.255 |
-| 64510 | Фишка ISP | 99.99.132.0/22 | 99.99.132.0 - 99.99.135.255 |
-| 64511 | Гнездо ISP | 99.99.136.0/22 | 99.99.136.0 - 99.99.139.255 |
-
-#### Автономные системы и принадлежащие им публичные адреса сетей IPv6.
-
-| ASN | Company | Summary IPv6 |
-|-----|--------------|--------------|
-| 64500 | Завод "Левый" | 20FF:CCFF:**200A**::/48 |
-| 64500 | Лаборатория "Поиск" | 20FF:CCFF:**200B**::/48 |
-| 64501 | ДЦ "Правое дело" | 20FF:CCFF:**200C**::/48 |
-| 64501 | Офис "Верхний" | 20FF:CCFF:**200D**::/48 |
-| 64509 | Cloudbuilders CS ISP | 20FF:**CCFD**::/32 |
-| 64510 | Фишка ISP | 20FF:**CCFE**::/32 |
-| 64511 | Гнездо ISP | 20FF:**CCFF**::/32 |
-
 #### Базовая схема.
 
 ![](pics/final_base.png)
 
-###  2. Задокументируем используемые подсети IPv4/IPv6.
+###  1. Адресное пространство
+ - [Автономные системы и принадлежащие им публичные адреса сетей](docs/AS_and_their_addresses.md)
+ - [Таблица используемых подсетей IPv4.](docs/subnets_ipv4.md)
+ - [Таблица используемых подсетей IPv6.](docs/subnets_ipv6.md)
+ - [Таблица назначенных сетевых адресов на интерфейсах маршрутизаторов.](docs/rtr_addresses.md)
 
-[Таблица используемых подсетей IPv4.](docs/subnets_ipv4.md)
-[Таблица используемых подсетей IPv6.](docs/subnets_ipv6.md)
+###  2. Статическая маршрутизация
+ - Static routing
+ - PBR (Policy-based routing)
+ - IP SLA (Internet protocol service level agreement)
 
-###  3. Задокументируем выделенные для маршрутизаторов IP-адреса.
+###  3. VPN-туннели
+ - GRE (Generic Routing Encapsulation)
+ - DMVPN (Dynamic Multipoint VPN)
 
-[Таблица назначенных сетевых адресов на интерфейсах маршрутизаторов.](docs/addresses.md)
+###  4. Динамическая маршрутизация
+ - OSPF (Open Shortest Path First)
+ - EIGRP (Enhanced Interior Gateway Routing Protocol)
+ - BGP (Border Gateway Protocol)
+   - eBGP (Exterior Border Gateway Protocol)
+   - iBGP (Interior Border Gateway Protocol) 
 
-### Статическая маршрутизация
-Static routing
-PBR (Policy-based routing)
-IP SLA (Internet protocol service level agreement)
-### VPN-туннели
-GRE (Generic Routing Encapsulation)
-DMVPN (Dynamic Multipoint VPN)
-### Динамическая маршрутизация
-OSPF (Open Shortest Path First)
-EIGRP (Enhanced Interior Gateway Routing Protocol)
-BGP (Border Gateway Protocol)
- - eBGP (Exterior Border Gateway Protocol)
- - iBGP (Interior Border Gateway Protocol) 
-### Инфраструктурные сервисы
-NTP (Network Time Protocol)
-DNS (Domain Name System)
-DHCP (Dynamic Host Configuration Protocol)
-### Защита VPN-туннелей
-CAS (Certificate Authority Server)
-IPsec (Internet Protocol Security)
-### Безопасность и мониторинг
-AAA (Authentication, Autorization and Accounting)
-ACL (Access Control Lists)
+###  5. Инфраструктурные сервисы
+ - NTP (Network Time Protocol)
+ - DNS (Domain Name System)
+ - DHCP (Dynamic Host Configuration Protocol)
+
+###  6. Защита VPN-туннелей
+ - CAS (Certificate Authority Server)
+ - IPsec (Internet Protocol Security)
+
+###  7. Безопасность и мониторинг
+ - AAA (Authentication, Autorization and Accounting)
+ - ACL (Access Control Lists)
