@@ -2,6 +2,9 @@
 
 Между ZL-R1 и DP-R1 подняты два GRE тоннеля: для IPv4 и для IPv6.
 
+  [GRE на ZL-R1](../configs/ZL-R1#L99-L128)
+  [GRE на DP-R1](../configs/DP-R1#L56-L81)
+
 | Network IPv6 | Site & Description |
 |--------------|--------------------|
 | 172.31.254.0/31 | Для GRE-туннеля между заводом "Левый" (ZL-R1) и ДЦ "Правое дело" (DP-R1) |
@@ -33,6 +36,10 @@
 #### DMVPN
 
 Между ZL-R1, OV-R1 и LP-R1 поднят DMVPN в 3-ей фазе, где ZL-R1 - hub, а OV-R1 и LP-R1 - spoke.
+
+  [DMVPN hub на ZL-R1](../configs/ZL-R1#L67-L97)
+  [DMVPN spoke на OV-R1](../configs/OV-R1#L81-L117)
+  [DMVPN spoke на LP-R1](../configs/LP-R1#L67-L103)
 
 | Network IPv6 | Site & Description |
 |--------------|--------------------|

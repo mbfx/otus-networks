@@ -14,6 +14,9 @@
 | OV-R1 | Caching DNS | Офис "Верхний" | ov.com |
 | LP-R1 | Caching DNS | Лаборатория "Поиск" | lp.com |
 
+  [DNS server на PC-R1](../configs/PC-R1#L151-L162)
+  [DNS server на ZL-R1](../configs/ZL-R1#L300-L306)
+
 ###  Схема иерархии DNS 
 
 ![](../pics/dns.png)

@@ -34,6 +34,8 @@
 
 ### eBGP (Exterior Border Gateway Protocol)
 
+  [Настройка на PC-R1](../configs/PC-R1#L61-L123)
+
 #### Таблица соединений eBGP
 
 | ASN   | Eq    | RouterID    | Nbr ASN | Nbr RouterID | Neighbor IP         |
@@ -124,6 +126,8 @@
 
 
 ### iBGP (Interior Border Gateway Protocol)
+
+  [Настройка RR на DP-R1](../configs/DP-R1#L231-L284)
 
   Для стабильной работы iBGP поднят на Loopback-интерфейсах, котороые распространены через имеющиеся протоколы IGP.
   Адреса для Loopback возьмем из служебного адресного пространства исходя из логики **10.0.{номер офиса}.{номер маршрутизатора}** для IPv4. 

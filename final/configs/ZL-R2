@@ -72,6 +72,16 @@ conf t
   no shutdown
   exit
 
+ ip prefix-list FILTER-area42to10 seq 10 deny 35.10.64.0/24
+ ip prefix-list FILTER-area42to10 seq 20 deny 35.10.65.0/25
+ ip prefix-list FILTER-area42to10 seq 30 deny 35.10.65.128/27
+ ip prefix-list FILTER-area42to10 seq 500 permit 0.0.0.0/0 le 32
+
+ ipv6 prefix-list FILTERv6-area42to10 seq 5 deny 20FF:CCFF:200A:B1::/64
+ ipv6 prefix-list FILTERv6-area42to10 seq 10 deny 20FF:CCFF:200A:B2::/64
+ ipv6 prefix-list FILTERv6-area42to10 seq 15 deny 20FF:CCFF:200A:B3::/64
+ ipv6 prefix-list FILTERv6-area42to10 seq 20 permit ::/0 le 128
+
  router ospf 64500
   router-id 10.0.0.2
   auto-cost reference-bandwidth 1000
@@ -83,6 +93,7 @@ conf t
   network 35.10.10.0 0.0.1.255 area 0
   network 35.10.128.0 0.0.0.63 area 10
   area 10 virtual-link 10.0.0.7
+  area 10 filter-list prefix FILTER-area42to10 in
   exit
 
  ipv6 router ospf 64500
@@ -90,6 +101,7 @@ conf t
   auto-cost reference-bandwidth 1000
   passive-interface Ethernet0/2
   area 10 virtual-link 6.0.0.7
+  area 10 filter-list prefix FILTER-area42to10 in
   exit
 
  router bgp 64500

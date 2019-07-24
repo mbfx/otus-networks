@@ -42,6 +42,21 @@
 
   Зона 42 знает только маршрут по-умолчанию (totally stub). На ZL-R2 и ZL-R7 настроена фильтрация маршрутной информации так, что зона 10 не знает о зоне 42 (фильтр LSA type 3). ZL-R1 распространяет информацию о маршруте по-умолчанию.
 
+#### Примеры
+
+  [Пример area0 на ZL-R1](../configs/ZL-R1#L148-L168)
+  [Пример interfaces на ZL-R1](../configs/ZL-R1#L7-L128)
+
+  [Пример filter на ZL-R2](../configs/ZL-R2#L75-L105)
+
+  [Пример totally stub на ZL-R3](../configs/ZL-R3#L96)
+  [Пример totally stub на ZL-R6](../configs/ZL-R6#L79)
+
+  [Пример cost increase на ZL-R6](../configs/ZL-R6#L56-L57)
+
+  [Пример virtual-link на ZL-R2](../configs/ZL-R2#L95)
+  [Пример virtual-link на ZL-R7](../configs/ZL-R7#L95)
+
 ###  Схема зон OSPF с учетом PtP/NBMA и отметками о фильтрации
 
 ![](../pics/ospf.png)
