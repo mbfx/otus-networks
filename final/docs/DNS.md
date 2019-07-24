@@ -4,7 +4,7 @@
   
 | Equip | Role | Site | Domain name |
 |-------|------|------|-------------|
-| PC-R1 | Rublic DNS | Cloudbuilders CS ISP | test.com |
+| PC-R1 | Public DNS | Cloudbuilders CS ISP | test.com |
 | PG-R1 | Caching DNS | Гнездо ISP | pg.com |
 | PF-R1 | Caching DNS | Фишка ISP | pf.com |
 | PF-R2 | Caching DNS | Фишка ISP | pf.com |
