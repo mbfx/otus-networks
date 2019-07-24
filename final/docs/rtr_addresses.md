@@ -133,9 +133,9 @@
 | OV-R1 | Loopback64501 | IPv4 | 10.0.3.1 | 10.0.3.1/32 | loopback |
 | OV-R1 | Loopback64501 | IPv6 | FD00:CCFF:200D::1 | FD00:CCFF:200D::/128 | loopback |
 | OV-R1 | Loopback64501 | IPv6 LL | FE80::1 | FE80::/10 | link-local |
-| LP-R1 | tunnel0 | IPv4 | 172.31.255.3 | 172.31.255.0/24 | DMVPN spoke |
-| LP-R1 | tunnel0 | IPv6 | FD00:CCFF:3000::3 | FD00:CCFF:3000::/48 | DMVPN spoke |
-| LP-R1 | tunnel0 | IPv6 LL | FE80::3  | FE80::/10 | link-local |
+| OV-R1 | tunnel0 | IPv4 | 172.31.255.3 | 172.31.255.0/24 | DMVPN spoke |
+| OV-R1 | tunnel0 | IPv6 | FD00:CCFF:3000::3 | FD00:CCFF:3000::/48 | DMVPN spoke |
+| OV-R1 | tunnel0 | IPv6 LL | FE80::3  | FE80::/10 | link-local |
 | OV-R2 | e0/0 | IPv4 | 50.50.104.1 | 50.50.104.0/24 | to OV-R3 |
 | OV-R2 | e0/0 | IPv6 | 20FF:CCFF:200D:A1::1 | 20FF:CCFF:200D:A1::/64 | to OV-R3 |
 | OV-R2 | e0/0 | IPv6 LL | FE80::1 | FE80::/10 | loopback |
