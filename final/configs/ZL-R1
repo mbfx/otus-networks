@@ -328,13 +328,13 @@ conf t
   exit
 
  ipv6 dhcp pool DHCP_POOL_IPV6_1
-  address prefix 20FF:CCFF:200C:A1::/64 lifetime 2073600 691200
+  address prefix 20FF:CCFF:200A:A1::/64 lifetime 2073600 691200
   domain-name zl.com
   dns-server 20FF:CCFF:200A:A1::1
   exit
 
  ipv6 dhcp pool DHCP_POOL_IPV6_2
-  address prefix 20FF:CCFF:200C:A2::/64 lifetime 2073600 691200
+  address prefix 20FF:CCFF:200A:A2::/64 lifetime 2073600 691200
   domain-name zl.com
   dns-server 20FF:CCFF:200A:A2::1
   exit
