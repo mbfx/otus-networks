@@ -10,7 +10,7 @@
 
 | Eq  | Interface | Network | Excluded | Pool |
 |-----|------|---------|----------|------|
-| DP-R1 | any match | 50.50.96.0/23 | 50.50.96.0-2, 50.50.97.255 | DHCP_POOL_1 |
+| DP-R1 | any match | 50.50.96.0/23 | 50.50.96.0-3, 50.50.97.255 | DHCP_POOL_1 |
 | DP-R1 | any match | 50.50.98.0/23 | 50.50.98.0-2, 50.50.98.255 | DHCP_POOL_2 |
 | DP-R1 | any match | 50.50.100.0/24 | 50.50.100.0-2, 50.50.100.255 | DHCP_POOL_3 |
 | DP-R1 | e0/1 | 20FF:CCFF:200C:A1::/64 | | DHCP_POOL_IPV6_1 |
@@ -20,7 +20,7 @@
 | DP-R2 | any match | 50.50.102.0/24 | 50.50.102.0-2, 50.50.102.255 | DHCP_POOL_2 |
 | DP-R2 | e0/1 | 20FF:CCFF:200C:A4::/64 | | DHCP_POOL_IPV6_1 |
 | DP-R2 | e0/0 | 20FF:CCFF:200C:A2::/64 | | DHCP_POOL_IPV6_2 |
-| LP-R1 | any match | 35.11.0.0/24 | 35.11.0.0-2, 35.11.0.255 | DHCP_POOL_1 |
+| LP-R1 | any match | 35.11.0.0/24 | 35.11.0.0-3, 35.11.0.255 | DHCP_POOL_1 |
 | LP-R1 | any match | 35.11.1.0/24 | 35.11.1.0-2, 35.11.1.255 | DHCP_POOL_2 |
 | LP-R1 | e0/2 | 20FF:CCFF:200B:A1::/64 | | DHCP_POOL_IPV6_1 |
 | LP-R1 | e0/1 | 20FF:CCFF:200B:A2::/64 | | DHCP_POOL_IPV6_2 |
@@ -28,13 +28,13 @@
 | LP-R2 | e0/0 | 20FF:CCFF:200B:A3::/64 | | DHCP_POOL_IPV6_1 |
 | OL-R1 | any match | 35.10.194.0/25 | 35.10.194.0-2, 35.10.194.127 | DHCP_POOL_1 |
 | OL-R1 | e0/0 | 20FF:CCFF:200A:D1::/64 | | DHCP_POOL_IPV6_1 |
-| OV-R1 | any match | 50.50.105.0/25 | 50.50.105.0-2, 50.50.105.127 | DHCP_POOL_1 |
+| OV-R1 | any match | 50.50.105.0/25 | 50.50.105.0-3, 50.50.105.127 | DHCP_POOL_1 |
 | OV-R1 | any match | 50.50.105.128/25 | 50.50.105.128-130, 50.50.105.255 | DHCP_POOL_2 |
 | OV-R1 | e0/2 | 20FF:CCFF:200D:A2::/64 | | DHCP_POOL_IPV6_1 |
 | OV-R1 | e0/1 | 20FF:CCFF:200D:A3::/64 | | DHCP_POOL_IPV6_2 |
 | OV-R2 | any match | 50.50.104.0/24 | 50.50.104.0-2, 50.50.104.255 | DHCP_POOL_1 |
 | OV-R2 | e0/0 | 20FF:CCFF:200D:A1::/64 | | DHCP_POOL_IPV6_1 |
-| ZL-R1 | any match | 35.10.0.0/21 | 35.10.0.0-2, 35.10.7.255 | DHCP_POOL_1 |
+| ZL-R1 | any match | 35.10.0.0/21 | 35.10.0.0-3, 35.10.7.255 | DHCP_POOL_1 |
 | ZL-R1 | any match | 35.10.8.0/23 | 35.10.8.0-2, 35.10.9.255 | DHCP_POOL_2 |
 | ZL-R1 | e0/1 | 20FF:CCFF:200A:A1::/64 | | DHCP_POOL_IPV6_1 |
 | ZL-R1 | e0/2 | 20FF:CCFF:200A:A2::/64 | | DHCP_POOL_IPV6_2 |

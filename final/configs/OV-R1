@@ -295,7 +295,7 @@ conf t
  ip host ov.com ns ns.ov.com
  ip host ns.ov.com 50.50.105.1 50.50.105.129 20FF:CCFF:200D:A2::1 20FF:CCFF:200D:A3::1
 
- ip dhcp excluded-address 0.0.0.0 50.50.105.2
+ ip dhcp excluded-address 0.0.0.0 50.50.105.3
  ip dhcp excluded-address 50.50.105.127 50.50.105.130
  ip dhcp excluded-address 50.50.105.254 255.255.255.255
 
