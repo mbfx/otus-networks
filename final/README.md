@@ -37,8 +37,8 @@
  - [OSPF (Open Shortest Path First)](docs/OSPF.md)
  - [EIGRP (Enhanced Interior Gateway Routing Protocol)](docs/EIGRP.md)
  - [BGP (Border Gateway Protocol)](docs/BGP.md)
-   - [eBGP (Exterior Border Gateway Protocol)](docs/BGP.md#ebgp-interior-border-gateway-protocol)
-   - [iBGP (Interior Border Gateway Protocol)](docs/BGP.md#ibgp-exterior-border-gateway-protocol)
+   - [eBGP (Exterior Border Gateway Protocol)](docs/BGP.md#ebgp-exterior-border-gateway-protocol)
+   - [iBGP (Interior Border Gateway Protocol)](docs/BGP.md#ibgp-interior-border-gateway-protocol)
 
 ###  5. Инфраструктурные сервисы
  - [NTP (Network Time Protocol)](docs/NTP.md)
