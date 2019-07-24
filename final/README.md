@@ -31,7 +31,7 @@
 
 ###  3. VPN-туннели
  - [GRE (Generic Routing Encapsulation)](docs/vpn.md)
- - [DMVPN (Dynamic Multipoint VPN)](docs/vpn.md)
+ - [DMVPN (Dynamic Multipoint VPN)](docs/vpn.md#DMVPN)
 
 ###  4. Динамическая маршрутизация
  - [OSPF (Open Shortest Path First)](docs/OSPF.md)
