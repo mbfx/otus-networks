@@ -46,8 +46,8 @@
  - [DHCP (Dynamic Host Configuration Protocol)](docs/DHCP.md)
 
 ###  6. Защита VPN-туннелей
- - [CAS (Certificate Authority Server)](docs/CA_and_IPSec.md)
- - [IPsec (Internet Protocol Security)](docs/CA_and_IPSec.md)
+ - [CAS (Certificate Authority Server)](docs/CA_and_IPSec.md#cas-certificate-authority-server)
+ - [IPsec (Internet Protocol Security)](docs/CA_and_IPSec.md#ipsec-internet-protocol-security)
 
 ###  7. Безопасность и мониторинг
  - [AAA (Authentication, Autorization and Accounting)](docs/AAA.md)
